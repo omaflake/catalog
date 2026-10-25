@@ -69,9 +69,9 @@
       "kind": "macos",
       "name": "minimal",
       "path": "recipes/omaflake/macos/minimal",
-      "description": "macOS with Nix, terminal tools, a minimal Dock and a dark look.",
+      "description": "macOS with Nix, terminal tools, a minimal Dock and the look's appearance (light or dark, accent, icons, wallpaper).",
       "descriptions": {
-        "de": "macOS mit Nix, Terminal-Werkzeugen, schlichtem Dock und dunklem Aussehen."
+        "de": "macOS mit Nix, Terminal-Werkzeugen, schlichtem Dock und dem Erscheinungsbild des Looks (hell oder dunkel, Akzent, Symbole, Hintergrund)."
       },
       "tags": [
         "nix",
@@ -93,7 +93,7 @@
         "share": true,
         "ephemeral": false
       },
-      "version": "c7bc4569c3068c9c0a8aef6c69a61bfe3bce090254071474de058a5f9cdda717",
+      "version": "30267b3424111fc9699f8441aac4501d984c6a4deccb48f46bae41b2949848a1",
       "files": [
         {
           "path": "assets/safari-bookmarks-seed.plist",
@@ -112,13 +112,13 @@
         },
         {
           "path": "default.nix",
-          "size": 6449,
-          "sha256": "213fca5fa1f9a92a5882e46ff253c3bb0be7e8d5cb75e295c618f36c5c5e5eda"
+          "size": 7216,
+          "sha256": "b909d63fdaf2649a069d0d7a9d27b9db118b74da319850f78c825ec9becc1aa2"
         },
         {
           "path": "recipe.toml",
-          "size": 731,
-          "sha256": "f7d4ab9942ba058e62b816eee4ac655f9f31a25351bbdd278b8f1b93184bf882"
+          "size": 846,
+          "sha256": "63bd07d1eb588c2d5c1f4914549f8f27bf29b0dc2be374cffbceeaf125e83944"
         }
       ]
     },

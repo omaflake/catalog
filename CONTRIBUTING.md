@@ -129,6 +129,12 @@ cursor_theme = "Bibata-Modern-Classic"   # Bibata-Modern-/Bibata-Original- + Cla
 theme = "catppuccin"             # catppuccin (flavour) | rose-pine (variant) | modus (style)
 flavour = "mocha"
 
+[macos]                          # optional, macOS guests (light or dark: appearance); left out: graphite and clear
+accent = "graphite"              #   icons for a dark look, macOS' own for a light one
+icons = "clear"                  # accent: multicolor | graphite; icons: default | clear
+folders = "graphite"             # folders: default | graphite; wallpaper: default | black
+wallpaper = "black"              # (more values once they are checked in a guest)
+
 [emacs]                          # optional, as [neovim]: catppuccin (flavour) | modus (style)
 theme = "modus"
 style = "modus-vivendi"

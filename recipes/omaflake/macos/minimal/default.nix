@@ -1,10 +1,14 @@
-# Recipe: minimal (macOS) – the base plus Nix, terminal tools, a minimal Dock, a dark, graphite look and a
-# private-by-default Safari with google.com as start page.
+# Recipe: minimal (macOS) – the base plus Nix, terminal tools, a minimal Dock, the guest look's system appearance
+# (light or dark, accent, icons, folders, wallpaper) and a private-by-default Safari with google.com as start page.
 # Keys were read from a guest after setting them by hand in System Settings (plan BM22).
-{ pkgs, settings, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 let
   user = settings.macUser;
+  # The guest look's macOS part (omaflake's modules/look.nix, plan B141): { dark; accent; icons; folders; wallpaper };
+  # null – no look, Vanilla – leaves macOS' own appearance
+  look = config.omaflake.lookMacos or null;
+  is = key: value: look != null && look.${key} == value;
 in
 {
   networking.hostName = "minimal";
@@ -35,17 +39,22 @@ in
     NewWindowTargetPath = "file:///Users/${user}/Downloads/";
   };
 
-  # ---------- Appearance: dark, graphite accent and folders, clear icons ----------
+  # ---------- Appearance: from the guest's look – values checked in a guest (BM22) ----------
   system.defaults.NSGlobalDomain = {
-    AppleInterfaceStyle = "Dark";
-    AppleIconAppearanceTheme = "ClearDark";
     NSTableViewDefaultSizeMode = 2;
+  } // lib.optionalAttrs (is "dark" true) {
+    AppleInterfaceStyle = "Dark";
+  } // lib.optionalAttrs (is "dark" true && is "icons" "clear") {
+    # OPEN: clear icons in a light look (the key's light value, not checked yet)
+    AppleIconAppearanceTheme = "ClearDark";
   };
-  system.defaults.CustomUserPreferences.NSGlobalDomain = {
-    AppleAccentColor = -1; # graphite
+  system.defaults.CustomUserPreferences.NSGlobalDomain = lib.optionalAttrs (is "accent" "graphite") {
+    AppleAccentColor = -1;
     AppleAquaColorVariant = 6;
     AppleHighlightColor = "0.847059 0.847059 0.862745 Graphite";
-    AppleIconAppearanceTintColor = "Graphite"; # folder color
+  } // lib.optionalAttrs (is "folders" "graphite") {
+    AppleIconAppearanceTintColor = "Graphite";
+  } // lib.optionalAttrs (is "icons" "clear") {
     NSGlassTintAmount = 0.0;
   };
 
@@ -58,17 +67,19 @@ in
     StandardHideDesktopIcons = true; # no "Macintosh HD" etc. on the desktop
   };
 
-  # ---------- Wallpaper (solid black) and Safari ----------
+  # ---------- Wallpaper (solid black when the look says so) and Safari ----------
   # No nix-darwin options (plan BM1, BM24): the wallpaper store is a per-user file; Safari keeps its
   # settings in its sandbox container (created by the first login in the base) and its favorites in
   # Bookmarks.plist. WallpaperAgent and Safari are stopped so that they do not write old state back.
   system.activationScripts.postActivation.text = ''
     home="/Users/${user}"
+  '' + lib.optionalString (is "wallpaper" "black") ''
     wp="$home/Library/Application Support/com.apple.wallpaper/Store"
     mkdir -p "$wp"
     /usr/bin/plutil -convert binary1 -o "$wp/Index.plist" ${./assets/wallpaper-black.plist}
     chown -R ${user}:staff "$home/Library/Application Support/com.apple.wallpaper"
     /usr/bin/killall -u ${user} WallpaperAgent 2>/dev/null || true
+  '' + ''
 
     # Safari imports its default favorites on its first launch and overwrites any bookmarks file put
     # there before (BM24). So: launch it once, wait for the import, quit, then empty Favorites and

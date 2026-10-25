@@ -134,7 +134,10 @@ LOOK_REQUIRED = ("$schema", "author", "license", "title", "description", "tags")
 # A look that sets colours (not plain = true, Vanilla) needs these too
 LOOK_COLORED = ("appearance", "colors", "terminal")
 LOOK_COLORS = ("background", "surface", "selection", "text", "subtext", "muted", "accent", "urgent")
-LOOK_TABLES = {"colors", "terminal", "desktop", "neovim", "emacs"}
+LOOK_TABLES = {"colors", "terminal", "desktop", "neovim", "emacs", "macos"}
+# macOS guests: only values checked in a guest (plan BM22 in omaflake/omaflake)
+MACOS = {"accent": ("multicolor", "graphite"), "icons": ("default", "clear"), "folders": ("default", "graphite"),
+         "wallpaper": ("default", "black")}
 GTK = ("adw-gtk3", "adw-gtk3-dark")
 CURSORS = tuple(f"Bibata-{a}-{b}" for a in ("Modern", "Original") for b in ("Classic", "Ice", "Amber"))
 # Editor themes omaflake's image flake knows (nixpkgs), with their options; without one the theme comes from the colours
@@ -230,6 +233,11 @@ def check_look(folder: Path, data: dict, tags: set[str], licenses: list[str], er
                 errors.append(f"{where}: desktop.cursor_theme is one of {', '.join(CURSORS)}")
         else:
             errors.append(f"{where}: desktop has no {key}")
+    for key, value in data.get("macos", {}).items():
+        if key not in MACOS:
+            errors.append(f"{where}: macos has no {key}")
+        elif value not in MACOS[key]:
+            errors.append(f"{where}: macos.{key} is one of {', '.join(MACOS[key])}")
     for editor, themes in EDITOR_THEMES.items():
         e = data.get(editor)
         if e is None:
