@@ -98,7 +98,8 @@ description = "An arctic, north-bluish palette."          # English – required
 description_de = "Eine arktische, nordisch-bläuliche Palette."   # optional, any language code
 tags = ["dark"]                  # from tags.toml's [looks] – required
 homepage = "https://…"           # optional: the theme's own page
-appearance = "dark"              # dark | light – required
+appearance = "dark"              # dark | light – required (not for plain = true)
+# plain = true                   # instead of all colours: the look sets none (like Vanilla)
 
 [colors]                         # every colour is "#RRGGBB" – all required but cursor
 background = "#2e3440"           # desktop, terminal, editors

@@ -40,11 +40,13 @@ tools/catalog.py                checks every recipe and look and writes catalog.
 
 | Look | |
 |---|---|
+| `omaflake/omaflake` | omaflake's own – black and high contrast, red and cyan as fine accents |
 | `omaflake/catppuccin` | Catppuccin Mocha – soothing pastel on a dark base |
 | `omaflake/rose-pine-dawn` | Rosé Pine Dawn – light and mild: cream, rose, iris and gold |
+| `omaflake/vanilla` | every program in its own colours (`plain = true`) |
 
-omaflake's own look (black, high contrast) and Vanilla (every program's own colours) are built into omaflake's image
-flake, so a build never depends on this repository being reachable.
+No look is built into omaflake: every one is installed from here and can be removed. omaflake's Doctor recommends
+`omaflake/omaflake` and `omaflake/catppuccin` when none is installed (plan B140, B141).
 
 ## Recipes
 

@@ -390,6 +390,7 @@
       ],
       "license": "MIT",
       "appearance": "dark",
+      "plain": false,
       "homepage": "https://catppuccin.com",
       "swatches": {
         "background": "#1e1e2e",
@@ -426,6 +427,58 @@
       ]
     },
     {
+      "id": "omaflake.look.omaflake",
+      "author": "omaflake",
+      "name": "omaflake",
+      "path": "looks/omaflake/omaflake",
+      "title": "omaflake",
+      "description": "Black and high contrast with white text; red and cyan only as fine accents.",
+      "descriptions": {
+        "de": "Schwarz und kontrastreich mit weißer Schrift; Rot und Cyan nur als feine Akzente."
+      },
+      "tags": [
+        "dark",
+        "high-contrast"
+      ],
+      "license": "MIT",
+      "appearance": "dark",
+      "plain": false,
+      "homepage": "https://omaflake.dev",
+      "swatches": {
+        "background": "#000000",
+        "surface": "#121212",
+        "text": "#FFFFFF",
+        "accent": "#00E5FF",
+        "urgent": "#FF3B3B",
+        "terminal": [
+          "#1E1E1E",
+          "#FF3B3B",
+          "#30D158",
+          "#F5FF3B",
+          "#4DA3FF",
+          "#FF66CC",
+          "#00E5FF",
+          "#B3B3B3",
+          "#6E6E6E",
+          "#FF3B3B",
+          "#30D158",
+          "#F5FF3B",
+          "#4DA3FF",
+          "#FF66CC",
+          "#00E5FF",
+          "#FFFFFF"
+        ]
+      },
+      "version": "9796914e68ebc69b7e701cd9ea50d59e5326f4c050d0521d682a1c132d723442",
+      "files": [
+        {
+          "path": "look.toml",
+          "size": 1415,
+          "sha256": "37a577e2a09deda5ced3f04b7ef4549227eccb3ccf0217d534d3a217914b8997"
+        }
+      ]
+    },
+    {
       "id": "omaflake.look.rose-pine-dawn",
       "author": "omaflake",
       "name": "rose-pine-dawn",
@@ -441,6 +494,7 @@
       ],
       "license": "MIT",
       "appearance": "light",
+      "plain": false,
       "homepage": "https://rosepinetheme.com",
       "swatches": {
         "background": "#faf4ed",
@@ -473,6 +527,33 @@
           "path": "look.toml",
           "size": 1301,
           "sha256": "fb346f9b8ed498d145c4c02fc20ea5a9af0ad388924de3f053fd3f0408811aab"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.look.vanilla",
+      "author": "omaflake",
+      "name": "vanilla",
+      "path": "looks/omaflake/vanilla",
+      "title": "Vanilla",
+      "description": "Every program in its own colours – fonts, layout and keys stay omaflake's.",
+      "descriptions": {
+        "de": "Jedes Programm in seinen eigenen Farben – Schriften, Anordnung und Tasten bleiben omaflakes."
+      },
+      "tags": [
+        "plain"
+      ],
+      "license": "MIT",
+      "appearance": null,
+      "plain": true,
+      "homepage": "",
+      "swatches": null,
+      "version": "a85263c5ac050812227c8997da3d96b3ab5d0cb9ed739d6e7fdc2ea665bd423e",
+      "files": [
+        {
+          "path": "look.toml",
+          "size": 394,
+          "sha256": "eebbbb82f5db605b9d0f3bf30c9fede6c2a4acd150ad4a33bf89fc38c8479768"
         }
       ]
     }

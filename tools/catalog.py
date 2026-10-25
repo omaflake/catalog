@@ -129,8 +129,10 @@ def check_recipe(folder: Path, data: dict, tags: set[str], licenses: list[str], 
 # look.toml (schema look/v1): a look is data – colours and a few choices; omaflake's image flake turns it into each
 # program's configuration, so a look runs no code
 COLOR = re.compile(r"#[0-9a-fA-F]{6}")
-LOOK_META = {"$schema", "author", "license", "title", "description", "tags", "homepage", "appearance"}
-LOOK_REQUIRED = ("$schema", "author", "license", "title", "description", "tags", "appearance", "colors", "terminal")
+LOOK_META = {"$schema", "author", "license", "title", "description", "tags", "homepage", "appearance", "plain"}
+LOOK_REQUIRED = ("$schema", "author", "license", "title", "description", "tags")
+# A look that sets colours (not plain = true, Vanilla) needs these too
+LOOK_COLORED = ("appearance", "colors", "terminal")
 LOOK_COLORS = ("background", "surface", "selection", "text", "subtext", "muted", "accent", "urgent")
 LOOK_TABLES = {"colors", "terminal", "desktop", "neovim", "emacs"}
 GTK = ("adw-gtk3", "adw-gtk3-dark")
@@ -153,9 +155,16 @@ def check_look(folder: Path, data: dict, tags: set[str], licenses: list[str], er
         errors.append(f"{where}: author and name use lowercase letters, digits and -")
     if data.get("author") != author:
         errors.append(f"{where}: author = \"{data.get('author')}\" in look.toml, but the folder says {author}")
-    for key in LOOK_REQUIRED:
+    plain = data.get("plain", False)
+    if not isinstance(plain, bool):
+        errors.append(f"{where}: plain is true or false")
+    for key in LOOK_REQUIRED + (() if plain else LOOK_COLORED):
         if key not in data:
             errors.append(f"{where}: look.toml needs {key}")
+    if plain:
+        for key in sorted(LOOK_TABLES & set(data)):
+            errors.append(f"{where}: a plain look sets no colours – no [{key}]")
+        return
     if "$schema" in data and data["$schema"] != LOOK_SCHEMA:
         errors.append(f"{where}: \"$schema\" = {data['$schema']!r} – look.toml names \"{LOOK_SCHEMA}\"")
     for key in data:
@@ -331,10 +340,11 @@ def build() -> tuple[dict, list[str], list[str]]:
             "descriptions": descriptions,
             "tags": data.get("tags", []),
             "license": data.get("license", ""),
-            "appearance": data.get("appearance", ""),
+            "appearance": data.get("appearance"),   # null for a plain look
+            "plain": data.get("plain", False),
             "homepage": data.get("homepage", ""),
             # For a preview without downloading: the main colours and the terminal's
-            "swatches": {"background": c.get("background", ""), "surface": c.get("surface", ""),
+            "swatches": None if data.get("plain") else {"background": c.get("background", ""), "surface": c.get("surface", ""),
                          "text": c.get("text", ""), "accent": c.get("accent", ""), "urgent": c.get("urgent", ""),
                          "terminal": t.get("normal", []) + t.get("bright", [])},
             "version": sha256("".join(f"{f['path']}\0{f['sha256']}\n" for f in files).encode()),
