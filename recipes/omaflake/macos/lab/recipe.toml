@@ -1,0 +1,21 @@
+# Recipe macos/lab – how a VM from it runs; what is inside it is default.nix next to this file.
+# Fields: see CONTRIBUTING.md at the root of this repository.
+# Development recipe for macOS guests: minimal + "omaflake Test" and tools, fresh at every start
+
+"$schema" = "https://omaflake.dev/schema/recipe/v1.json"
+systems = ["aarch64-darwin"] # what it can be built for: aarch64-linux, x86_64-linux | aarch64-darwin
+author = "omaflake"
+license = "MIT"
+requires = ["omaflake/macos/minimal"]   # imported as ../minimal in default.nix
+display = "window"
+description = "For developing omaflake on macOS: minimal plus the omaflake Test app (sound, microphone, clipboard) and tools; fresh at every start."
+description_de = "Zum Entwickeln von omaflake unter macOS: minimal plus die App omaflake Test (Ton, Mikrofon, Zwischenablage) und Werkzeuge; bei jedem Start frisch."
+tags = ["development", "test"]
+lab = true             # development recipe: shown only in developer mode
+cpus = 4
+memory_gb = 8
+disk_gb = 60
+network = "shared"
+share = true
+ephemeral = true
+microphone = true

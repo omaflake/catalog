@@ -1,0 +1,17 @@
+# Recipe nixos/emacs-minimal – how a VM from it runs; what is inside it is default.nix next to this file.
+# Fields: see CONTRIBUTING.md at the root of this repository.
+
+"$schema" = "https://omaflake.dev/schema/recipe/v1.json"
+systems = ["aarch64-linux", "x86_64-linux"] # what it can be built for: aarch64-linux, x86_64-linux | aarch64-darwin
+author = "omaflake"
+license = "MIT"
+display = "gpu"
+description = "NixOS with the Hyprland desktop and the emacs line: Emacs, preconfigured (Catppuccin, Vertico, Magit, Eglot, tree-sitter) – nothing else."
+description_de = "NixOS mit dem Hyprland-Desktop und der Emacs-Linie: vorkonfiguriertes Emacs (Catppuccin, Vertico, Magit, Eglot, Tree-sitter) – sonst nichts."
+tags = ["desktop", "hyprland", "emacs"]
+cpus = 4
+memory_gb = 4
+disk_gb = 40
+network = "shared"
+share = true
+ephemeral = false

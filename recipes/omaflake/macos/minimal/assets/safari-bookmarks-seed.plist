@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Children</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>History</string>
+			<key>WebBookmarkIdentifier</key>
+			<string>History</string>
+			<key>WebBookmarkType</key>
+			<string>WebBookmarkTypeProxy</string>
+			<key>WebBookmarkUUID</key>
+			<string>85ACA0D3-D4CC-40B3-B524-3867B96980C8</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>BookmarksBar</string>
+			<key>WebBookmarkType</key>
+			<string>WebBookmarkTypeList</string>
+			<key>WebBookmarkUUID</key>
+			<string>89B91329-838C-4554-B26B-6ACE4CA9C62C</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>BookmarksMenu</string>
+			<key>WebBookmarkType</key>
+			<string>WebBookmarkTypeList</string>
+			<key>WebBookmarkUUID</key>
+			<string>EFFF051E-840B-428F-AA39-ECC053FAC24C</string>
+		</dict>
+	</array>
+	<key>Title</key>
+	<string></string>
+	<key>WebBookmarkFileVersion</key>
+	<integer>1</integer>
+	<key>WebBookmarkType</key>
+	<string>WebBookmarkTypeList</string>
+	<key>WebBookmarkUUID</key>
+	<string>01C327C0-F02E-480F-987A-E6EE1FBBC247</string>
+</dict>
+</plist>

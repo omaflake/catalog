@@ -1,0 +1,5 @@
+.DS_Store
+result
+result-*
+__pycache__/
+_to_delete/

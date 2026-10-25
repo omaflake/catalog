@@ -1,0 +1,480 @@
+{
+  "$schema": "https://omaflake.dev/schema/catalog/v3.json",
+  "source": {
+    "name": "omaflake",
+    "description": "The official omaflake recipes and looks, reviewed by the omaflake core team.",
+    "homepage": "https://github.com/omaflake/catalog"
+  },
+  "recipes": [
+    {
+      "id": "omaflake.macos.lab",
+      "author": "omaflake",
+      "kind": "macos",
+      "name": "lab",
+      "path": "recipes/omaflake/macos/lab",
+      "description": "For developing omaflake on macOS: minimal plus the omaflake Test app (sound, microphone, clipboard) and tools; fresh at every start.",
+      "descriptions": {
+        "de": "Zum Entwickeln von omaflake unter macOS: minimal plus die App omaflake Test (Ton, Mikrofon, Zwischenablage) und Werkzeuge; bei jedem Start frisch."
+      },
+      "tags": [
+        "development",
+        "test"
+      ],
+      "license": "MIT",
+      "lab": true,
+      "systems": [
+        "aarch64-darwin"
+      ],
+      "requires": [
+        "omaflake/macos/minimal"
+      ],
+      "homepage": "",
+      "defaults": {
+        "display": "window",
+        "cpus": 4,
+        "memory_gb": 8,
+        "disk_gb": 60,
+        "network": "shared",
+        "share": true,
+        "ephemeral": true,
+        "microphone": true
+      },
+      "version": "6aab037ac5b75ca4156305cdf7b69e3e332d7be54c52e8c578d2bbd77a15001b",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 2042,
+          "sha256": "22f99a02894d3aa6db8df745e3a1ef9ff2042bf1238f0cb9aca78fc0d98109c1"
+        },
+        {
+          "path": "omaflake-test.icns",
+          "size": 347346,
+          "sha256": "9a148585e14904d699a6f79516b3c7bcd6842857355b7227b9736350e5e4c8e7"
+        },
+        {
+          "path": "omaflake-test.sh",
+          "size": 2578,
+          "sha256": "0dfccd7a6e713faaf069566a5df8939c0fe212e052e6c73be2a5abe803e2cd56"
+        },
+        {
+          "path": "recipe.toml",
+          "size": 1075,
+          "sha256": "1a7023f5d051bdda5030cdc3c5592d83c26e8e3097c4749be318766195844bc5"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.minimal",
+      "author": "omaflake",
+      "kind": "macos",
+      "name": "minimal",
+      "path": "recipes/omaflake/macos/minimal",
+      "description": "macOS with Nix, terminal tools, a minimal Dock and a dark look.",
+      "descriptions": {
+        "de": "macOS mit Nix, Terminal-Werkzeugen, schlichtem Dock und dunklem Aussehen."
+      },
+      "tags": [
+        "nix",
+        "terminal"
+      ],
+      "license": "MIT",
+      "lab": false,
+      "systems": [
+        "aarch64-darwin"
+      ],
+      "requires": [],
+      "homepage": "",
+      "defaults": {
+        "display": "window",
+        "cpus": 4,
+        "memory_gb": 8,
+        "disk_gb": 60,
+        "network": "shared",
+        "share": true,
+        "ephemeral": false
+      },
+      "version": "c7bc4569c3068c9c0a8aef6c69a61bfe3bce090254071474de058a5f9cdda717",
+      "files": [
+        {
+          "path": "assets/safari-bookmarks-seed.plist",
+          "size": 1219,
+          "sha256": "af7e561ecf841ea6f72086db8f24f1e99b7c5e01006ccca95f57d388f90f0cf5"
+        },
+        {
+          "path": "assets/wallpaper-black.plist",
+          "size": 1973,
+          "sha256": "53c05f86f2410796c06b1dc1c2bcc9fbaf10922b7fc6305529164ac8f670df7f"
+        },
+        {
+          "path": "assets/widgets-empty-placement.plist",
+          "size": 282,
+          "sha256": "61aea308236d97653daa83c04c0ca955b6babddbc8ddc9ea07837332bdbb2ca7"
+        },
+        {
+          "path": "default.nix",
+          "size": 6449,
+          "sha256": "213fca5fa1f9a92a5882e46ff253c3bb0be7e8d5cb75e295c618f36c5c5e5eda"
+        },
+        {
+          "path": "recipe.toml",
+          "size": 731,
+          "sha256": "f7d4ab9942ba058e62b816eee4ac655f9f31a25351bbdd278b8f1b93184bf882"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.research",
+      "author": "omaflake",
+      "kind": "macos",
+      "name": "research",
+      "path": "recipes/omaflake/macos/research",
+      "description": "Writing and research: TeX Live (full), VS Code for LaTeX and Typst (VS Code is unfree software), WezTerm with Zellij, Typst, pandoc, lazygit, Homebrew.",
+      "descriptions": {
+        "de": "Schreiben und Forschen: TeX Live (komplett), VS Code für LaTeX und Typst (VS Code ist keine freie Software), WezTerm mit Zellij, Typst, pandoc, lazygit, Homebrew."
+      },
+      "tags": [
+        "latex",
+        "typst",
+        "vscode",
+        "wezterm",
+        "zellij",
+        "pandoc",
+        "homebrew"
+      ],
+      "license": "MIT",
+      "lab": false,
+      "systems": [
+        "aarch64-darwin"
+      ],
+      "requires": [
+        "omaflake/macos/minimal"
+      ],
+      "homepage": "",
+      "defaults": {
+        "display": "window",
+        "cpus": 4,
+        "memory_gb": 8,
+        "disk_gb": 80,
+        "network": "shared",
+        "share": true,
+        "ephemeral": false
+      },
+      "version": "50e57f23509dd030b577e916dfd494870384c82b448dc3c49e1a387bae871afe",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 4711,
+          "sha256": "114ea7aa063dc1af8f14cedf8dc5ca3765f0a62de2fc97cf2d75488d86a1951f"
+        },
+        {
+          "path": "recipe.toml",
+          "size": 976,
+          "sha256": "9cf9c9a952c35897d775b854f2311baf42793dfcb7c68fefe2ceba0f85d8ef58"
+        },
+        {
+          "path": "wezterm.lua",
+          "size": 1668,
+          "sha256": "f77ff3663f2ec8bd2cef5914788a161aa7a14cc0d356de31a94c1ba04495b368"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.emacs-minimal",
+      "author": "omaflake",
+      "kind": "nixos",
+      "name": "emacs-minimal",
+      "path": "recipes/omaflake/nixos/emacs-minimal",
+      "description": "NixOS with the Hyprland desktop and the emacs line: Emacs, preconfigured (Catppuccin, Vertico, Magit, Eglot, tree-sitter) – nothing else.",
+      "descriptions": {
+        "de": "NixOS mit dem Hyprland-Desktop und der Emacs-Linie: vorkonfiguriertes Emacs (Catppuccin, Vertico, Magit, Eglot, Tree-sitter) – sonst nichts."
+      },
+      "tags": [
+        "desktop",
+        "hyprland",
+        "emacs"
+      ],
+      "license": "MIT",
+      "lab": false,
+      "systems": [
+        "aarch64-linux",
+        "x86_64-linux"
+      ],
+      "requires": [],
+      "homepage": "",
+      "defaults": {
+        "display": "gpu",
+        "cpus": 4,
+        "memory_gb": 4,
+        "disk_gb": 40,
+        "network": "shared",
+        "share": true,
+        "ephemeral": false
+      },
+      "version": "039e260ee8f08f340688a3d9929c1b86b6ba9fd2e9d69b986cb57d8c2be6c7e9",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 468,
+          "sha256": "beb765312995d76d973cee0ad257758d3446efba4d3a4f7c156766e4615a3e66"
+        },
+        {
+          "path": "recipe.toml",
+          "size": 841,
+          "sha256": "ae1a9c49ad7a202aa2c657eac1d08127db7f10e821d7ece240851da867100cec"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.lab",
+      "author": "omaflake",
+      "kind": "nixos",
+      "name": "lab",
+      "path": "recipes/omaflake/nixos/lab",
+      "description": "For developing omaflake: the omaflake Test app (camera, sound, microphone, clipboard), debug tools and omaflake itself to try its Linux app and TUI (VMs cannot start inside); fresh at every start.",
+      "descriptions": {
+        "de": "Zum Entwickeln von omaflake: die App omaflake Test (Kamera, Ton, Mikrofon, Zwischenablage), Debug-Werkzeuge und omaflake selbst, um seine Linux-App und TUI auszuprobieren (VMs starten darin nicht); bei jedem Start frisch."
+      },
+      "tags": [
+        "development",
+        "test"
+      ],
+      "license": "MIT",
+      "lab": true,
+      "systems": [
+        "aarch64-linux",
+        "x86_64-linux"
+      ],
+      "requires": [],
+      "homepage": "",
+      "defaults": {
+        "display": "gpu",
+        "cpus": 4,
+        "memory_gb": 8,
+        "disk_gb": 60,
+        "network": "shared",
+        "share": true,
+        "ephemeral": true,
+        "camera": true,
+        "microphone": true
+      },
+      "version": "6c9e7030d1cb7c3a5f995d2c658243dd3a7986c014b10a78ad1a6c58ad6d5c67",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 3612,
+          "sha256": "2a30ef9c61fee68410165e443fbe9704cc27a2982494ae4442bf37a5a2e0ed05"
+        },
+        {
+          "path": "omaflake-test.py",
+          "size": 7962,
+          "sha256": "c3ecdf4bf6ab3c0d189557a20d719b4282032fa3264bbeab7fcdf08593cdd030"
+        },
+        {
+          "path": "recipe.toml",
+          "size": 1170,
+          "sha256": "0a4d3ebef7650c817d0be5c572a4a0c3d650f4259367c4bc9c7a8acd0537673d"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.neovim-minimal",
+      "author": "omaflake",
+      "kind": "nixos",
+      "name": "neovim-minimal",
+      "path": "recipes/omaflake/nixos/neovim-minimal",
+      "description": "NixOS with the Hyprland desktop and the neovim line: Neovim, preconfigured, and Zellij – nothing else.",
+      "descriptions": {
+        "de": "NixOS mit dem Hyprland-Desktop und der Neovim-Linie: vorkonfiguriertes Neovim und Zellij – sonst nichts."
+      },
+      "tags": [
+        "desktop",
+        "hyprland",
+        "neovim",
+        "zellij"
+      ],
+      "license": "MIT",
+      "lab": false,
+      "systems": [
+        "aarch64-linux",
+        "x86_64-linux"
+      ],
+      "requires": [],
+      "homepage": "",
+      "defaults": {
+        "display": "gpu",
+        "cpus": 4,
+        "memory_gb": 4,
+        "disk_gb": 40,
+        "network": "shared",
+        "share": true,
+        "ephemeral": false
+      },
+      "version": "30640361335dfa81d4a6da0f0915d94792103030e50d25ae12d40a031d842355",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 184,
+          "sha256": "9f97c08df7d479662c2dde6b63602acebf4a917eb3bc9c71978681cc1df4f6e3"
+        },
+        {
+          "path": "recipe.toml",
+          "size": 991,
+          "sha256": "56520122b197ac47fe6a23f34171290a48165ef5ade405ec43f4f26f8cd9b5a1"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.neovim-research",
+      "author": "omaflake",
+      "kind": "nixos",
+      "name": "neovim-research",
+      "path": "recipes/omaflake/nixos/neovim-research",
+      "description": "Writing and research: TeX Live (full) and Typst with a live PDF beside neovim (vimtex, zathura), Jupyter, pandas, pandoc.",
+      "descriptions": {
+        "de": "Schreiben und Forschen: TeX Live (komplett) und Typst mit Live-PDF neben neovim (vimtex, zathura), Jupyter, pandas, pandoc."
+      },
+      "tags": [
+        "latex",
+        "typst",
+        "neovim",
+        "python",
+        "jupyter",
+        "pandoc"
+      ],
+      "license": "MIT",
+      "lab": false,
+      "systems": [
+        "aarch64-linux",
+        "x86_64-linux"
+      ],
+      "requires": [],
+      "homepage": "",
+      "defaults": {
+        "display": "gpu",
+        "cpus": 6,
+        "memory_gb": 12,
+        "disk_gb": 60,
+        "network": "shared",
+        "share": true,
+        "ephemeral": false
+      },
+      "version": "1c8fd930ad22d56b5b2c0fec7812fbf441bacc0ed97384068f595d456cb3ff45",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 4169,
+          "sha256": "f0c68cecbf91d70679f6ca1785c1e82679c2ab8d3631ce85d5e79850da4aa56b"
+        },
+        {
+          "path": "recipe.toml",
+          "size": 834,
+          "sha256": "5d1250c6e0e8773021586a839967dbb63c4f59ee7ffb2f2cb39581e4674a8285"
+        }
+      ]
+    }
+  ],
+  "looks": [
+    {
+      "id": "omaflake.look.catppuccin",
+      "author": "omaflake",
+      "name": "catppuccin",
+      "path": "looks/omaflake/catppuccin",
+      "title": "Catppuccin Mocha",
+      "description": "Soothing pastel on a dark base – the darkest of Catppuccin's four flavours.",
+      "descriptions": {
+        "de": "Beruhigende Pastelltöne auf dunklem Grund – die dunkelste der vier Catppuccin-Varianten."
+      },
+      "tags": [
+        "dark",
+        "pastel"
+      ],
+      "license": "MIT",
+      "appearance": "dark",
+      "homepage": "https://catppuccin.com",
+      "swatches": {
+        "background": "#1e1e2e",
+        "surface": "#1e1e2e",
+        "text": "#cdd6f4",
+        "accent": "#cba6f7",
+        "urgent": "#f38ba8",
+        "terminal": [
+          "#45475a",
+          "#f38ba8",
+          "#a6e3a1",
+          "#f9e2af",
+          "#89b4fa",
+          "#f5c2e7",
+          "#94e2d5",
+          "#bac2de",
+          "#585b70",
+          "#f38ba8",
+          "#a6e3a1",
+          "#f9e2af",
+          "#89b4fa",
+          "#f5c2e7",
+          "#94e2d5",
+          "#a6adc8"
+        ]
+      },
+      "version": "5022f476e02293c9db83d8a702a2a038760190bf58bed5f2746821fab586ab80",
+      "files": [
+        {
+          "path": "look.toml",
+          "size": 1381,
+          "sha256": "bb2155fa046a9700dd2a11e510f32e6b332e0bdeffff7f97993667f6e59a0d4b"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.look.rose-pine-dawn",
+      "author": "omaflake",
+      "name": "rose-pine-dawn",
+      "path": "looks/omaflake/rose-pine-dawn",
+      "title": "Rosé Pine Dawn",
+      "description": "Light and mild – cream, rose, iris and gold.",
+      "descriptions": {
+        "de": "Hell und mild – Creme, Rosé, Iris und Gold."
+      },
+      "tags": [
+        "light",
+        "pastel"
+      ],
+      "license": "MIT",
+      "appearance": "light",
+      "homepage": "https://rosepinetheme.com",
+      "swatches": {
+        "background": "#faf4ed",
+        "surface": "#fffaf3",
+        "text": "#575279",
+        "accent": "#907aa9",
+        "urgent": "#b4637a",
+        "terminal": [
+          "#f2e9e1",
+          "#b4637a",
+          "#286983",
+          "#ea9d34",
+          "#56949f",
+          "#907aa9",
+          "#d7827e",
+          "#575279",
+          "#9893a5",
+          "#b4637a",
+          "#286983",
+          "#ea9d34",
+          "#56949f",
+          "#907aa9",
+          "#d7827e",
+          "#575279"
+        ]
+      },
+      "version": "6d42160ecc1c6e667f27b5017fb3f868be1be8fe97539b6ae33ad13f3469def5",
+      "files": [
+        {
+          "path": "look.toml",
+          "size": 1301,
+          "sha256": "fb346f9b8ed498d145c4c02fc20ea5a9af0ad388924de3f053fd3f0408811aab"
+        }
+      ]
+    }
+  ]
+}

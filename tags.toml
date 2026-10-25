@@ -1,0 +1,28 @@
+# The tags recipes ([tags]) and looks ([looks]) may use – one list, so the Recipes tab can search by them and "tex" and "latex" do not drift apart.
+# A new tag goes in here, in the same pull request as the recipe that uses it. Lowercase; English.
+
+[tags]
+desktop = "a graphical desktop environment"
+development = "for developing software"
+emacs = "GNU Emacs"
+homebrew = "Homebrew inside the guest"
+hyprland = "the Hyprland Wayland compositor"
+jupyter = "Jupyter notebooks"
+latex = "LaTeX / TeX Live"
+neovim = "Neovim"
+nix = "Nix tooling in the guest"
+pandoc = "pandoc document conversion"
+python = "Python"
+terminal = "terminal tools"
+test = "testing omaflake itself"
+typst = "Typst"
+vscode = "Visual Studio Code"
+wezterm = "the WezTerm terminal"
+zellij = "the Zellij terminal multiplexer"
+
+# The tags looks may use (looks/<author>/<name>/look.toml)
+[looks]
+dark = "a dark background"
+light = "a light background"
+pastel = "soft, muted colours"
+high-contrast = "strong contrast, e.g. white on black"

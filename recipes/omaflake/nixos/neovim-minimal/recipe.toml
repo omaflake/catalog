@@ -1,0 +1,17 @@
+# Recipe nixos/neovim-minimal – how a VM from it runs; what is inside it is default.nix next to this file.
+# Fields: see CONTRIBUTING.md at the root of this repository.
+
+"$schema" = "https://omaflake.dev/schema/recipe/v1.json"
+systems = ["aarch64-linux", "x86_64-linux"] # what it can be built for: aarch64-linux, x86_64-linux | aarch64-darwin
+author = "omaflake"
+license = "MIT"
+display = "gpu"       # plain start: none (headless) | window | gpu (window with 3D)
+description = "NixOS with the Hyprland desktop and the neovim line: Neovim, preconfigured, and Zellij – nothing else."
+description_de = "NixOS mit dem Hyprland-Desktop und der Neovim-Linie: vorkonfiguriertes Neovim und Zellij – sonst nichts."
+tags = ["desktop", "hyprland", "neovim", "zellij"]
+cpus = 4
+memory_gb = 4
+disk_gb = 40
+network = "shared"     # shared | isolated | none
+share = true           # mount ~/.omaflake/share/<instance> at /mnt/share
+ephemeral = false      # true: changes are discarded at power-off
