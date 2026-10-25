@@ -2,7 +2,7 @@
   "$schema": "https://omaflake.dev/schema/catalog/v4.json",
   "source": {
     "name": "omaflake",
-    "description": "The official omaflake recipes and looks, reviewed by the omaflake core team.",
+    "description": "The official omaflake recipes, modules, key bindings and looks, reviewed by the omaflake core team.",
     "homepage": "https://github.com/omaflake/catalog"
   },
   "capabilities": {

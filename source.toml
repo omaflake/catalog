@@ -1,8 +1,8 @@
-# This source – what omaflake shows for it in the Recipes and Looks tabs and in Settings → Sources.
+# This source – what omaflake shows for it in the Recipes, Modules and Looks tabs and in Settings → Sources.
 # A fork or an own catalog changes these values (FORKING.md).
 
 name = "omaflake"
-description = "The official omaflake recipes and looks, reviewed by the omaflake core team."
+description = "The official omaflake recipes, modules, key bindings and looks, reviewed by the omaflake core team."
 homepage = "https://github.com/omaflake/catalog"
 
 # Licenses a recipe here may use (SPDX identifiers); empty = any
