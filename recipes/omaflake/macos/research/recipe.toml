@@ -1,18 +1,38 @@
-# Recipe macos/research – how a VM from it runs; what is inside it is default.nix next to this file.
-# Fields: see CONTRIBUTING.md at the root of this repository.
+# Recipe macos/research – what is in it (modules), how it looks and which keys it uses, how a VM from it runs.
+# A recipe is data only. Fields: see CONTRIBUTING.md at the root of this repository.
 
-"$schema" = "https://omaflake.dev/schema/recipe/v1.json"
-systems = ["aarch64-darwin"] # what it can be built for: aarch64-linux, x86_64-linux | aarch64-darwin
+"$schema" = "https://omaflake.dev/schema/recipe/v2.json"
 author = "omaflake"
 license = "MIT"
-requires = ["omaflake/macos/minimal"]   # imported as ../minimal in default.nix
 description = "Writing and research: TeX Live (full), VS Code for LaTeX and Typst (VS Code is unfree software), WezTerm with Zellij, Typst, pandoc, lazygit, Homebrew."
 description_de = "Schreiben und Forschen: TeX Live (komplett), VS Code für LaTeX und Typst (VS Code ist keine freie Software), WezTerm mit Zellij, Typst, pandoc, lazygit, Homebrew."
 tags = ["latex", "typst", "vscode", "wezterm", "zellij", "pandoc", "homebrew"]
-display = "window"
+platform = "macos"
+systems = ["aarch64-darwin"]
+
+modules = [
+  "omaflake/desktop",
+  "omaflake/shell",
+  "omaflake/wezterm",
+  "omaflake/zellij",
+  "omaflake/neovim",
+  "omaflake/latex",
+  "omaflake/typst",
+  "omaflake/vscode",
+  "omaflake/pandoc",
+  "omaflake/lazygit",
+  "omaflake/homebrew",
+]
+look = "omaflake/omaflake"          # suggested; the build may choose another installed look
+keymaps = ["omaflake/default"]
+
+[requirements]                     # the least a VM from it needs; a smaller profile gets a warning
 cpus = 4
 memory_gb = 8
 disk_gb = 80
+
+[vm]                               # how a VM from it runs
+display = "window"
 network = "shared"
 share = true
 ephemeral = false

@@ -1,0 +1,11 @@
+# Module nixos/zathura – a PDF viewer. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Zathura"
+description = "The zathura PDF viewer: reloads a PDF when it changes, copies to the clipboard, shows PDFs in the look's colours."
+description_de = "Der PDF-Betrachter zathura: lädt ein PDF neu, wenn es sich ändert, kopiert in die Zwischenablage, zeigt PDFs in den Farben des Looks."
+tags = ["pdf"]
+provides = ["pdf-viewer"]

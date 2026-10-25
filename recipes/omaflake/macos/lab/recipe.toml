@@ -1,20 +1,31 @@
-# Recipe macos/lab – how a VM from it runs; what is inside it is default.nix next to this file.
-# Fields: see CONTRIBUTING.md at the root of this repository.
-# Development recipe for macOS guests: minimal + "omaflake Test" and tools, fresh at every start
+# Recipe macos/lab – what is in it (modules), how it looks and which keys it uses, how a VM from it runs.
+# A recipe is data only. Fields: see CONTRIBUTING.md at the root of this repository.
 
-"$schema" = "https://omaflake.dev/schema/recipe/v1.json"
-systems = ["aarch64-darwin"] # what it can be built for: aarch64-linux, x86_64-linux | aarch64-darwin
+"$schema" = "https://omaflake.dev/schema/recipe/v2.json"
 author = "omaflake"
 license = "MIT"
-requires = ["omaflake/macos/minimal"]   # imported as ../minimal in default.nix
-display = "window"
 description = "For developing omaflake on macOS: minimal plus the omaflake Test app (sound, microphone, clipboard) and tools; fresh at every start."
 description_de = "Zum Entwickeln von omaflake unter macOS: minimal plus die App omaflake Test (Ton, Mikrofon, Zwischenablage) und Werkzeuge; bei jedem Start frisch."
 tags = ["development", "test"]
 lab = true             # development recipe: shown only in developer mode
+platform = "macos"
+systems = ["aarch64-darwin"]
+
+modules = [
+  "omaflake/desktop",
+  "omaflake/shell",
+  "omaflake/omaflake-dev",
+]
+look = "omaflake/omaflake"          # suggested; the build may choose another installed look
+keymaps = ["omaflake/default"]
+
+[requirements]                     # the least a VM from it needs; a smaller profile gets a warning
 cpus = 4
 memory_gb = 8
 disk_gb = 60
+
+[vm]                               # how a VM from it runs
+display = "window"
 network = "shared"
 share = true
 ephemeral = true

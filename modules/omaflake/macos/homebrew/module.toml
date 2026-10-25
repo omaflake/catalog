@@ -1,0 +1,10 @@
+# Module macos/homebrew – Homebrew. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Homebrew"
+description = "Homebrew, installed declaratively (nix-homebrew), for what Nix does not have; taps stay changeable."
+description_de = "Homebrew, deklarativ installiert (nix-homebrew), für das, was Nix nicht hat; Taps bleiben änderbar."
+tags = ["homebrew"]

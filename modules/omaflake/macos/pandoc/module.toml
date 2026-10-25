@@ -1,0 +1,10 @@
+# Module macos/pandoc – pandoc. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "pandoc"
+description = "pandoc, to convert between document formats."
+description_de = "pandoc, zum Umwandeln zwischen Dokumentformaten."
+tags = ["pandoc"]

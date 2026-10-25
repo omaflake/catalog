@@ -1,0 +1,17 @@
+# Module nixos/typst – Typst. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Typst"
+description = "Typst and the tinymist language server. With Neovim: a live PDF beside the editor, compiled on every save."
+description_de = "Typst und der Sprachserver tinymist. Mit Neovim: ein Live-PDF neben dem Editor, kompiliert bei jedem Speichern."
+tags = ["typst"]
+needs = ["pdf-viewer"]
+enhances = ["omaflake/neovim", "omaflake/zathura"]
+
+[actions.preview]
+title = "Typst: the PDF beside the editor, compiled on every save"
+key = "Space t p"
+context = "omaflake/neovim"

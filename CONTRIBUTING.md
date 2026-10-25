@@ -1,86 +1,181 @@
-# Contributing a recipe or a look
+# Contributing a recipe, a module, key bindings or a look
 
-1. Fork this repository and add your recipe as `recipes/<your GitHub name>/<kind>/<name>/` (`kind` is `nixos` or
+1. Fork this repository and add yours in your GitHub name's folder: `recipes/<you>/<platform>/<name>/`,
+   `modules/<you>/<platform>/<name>/`, `keymaps/<you>/<name>/` or `looks/<you>/<name>/` (`platform` is `nixos` or
    `macos`; names use lowercase letters, digits and `-`).
-2. Write `recipe.toml` and `default.nix` (below), test it in omaflake (below).
-3. Run `python3 tools/catalog.py` and commit the updated `catalog.json` with your recipe.
-4. Open a pull request – one recipe (or one recipe for both guest kinds) per pull request – and fill in the checklist.
+2. Write it (below) and test it in omaflake (below).
+3. Run `python3 tools/catalog.py` and commit the updated `catalog.json` with it.
+4. Open a pull request – one recipe, module, key binding set or look per pull request (a recipe may come with the
+   modules it is made of) – and fill in the checklist.
 
-The core team reviews every recipe against REVIEW.md: is it safe, does it work, does it add something the catalog
-does not have yet. Changes to a merged recipe go the same way; only its author or the core team change it.
+The core team reviews everything against REVIEW.md: is it safe, does it work, does it add something the catalog does
+not have yet. **Modules are code** and get the closest look; recipes, key bindings and looks are data. Changes to a
+merged entry go the same way; only its author or the core team change it.
+
+## Recipes are put together from building blocks
+
+| Block | What | Here |
+|---|---|---|
+| **Platform** | what the guest is: `nixos`, or `macos` on a macOS base – omaflake's own part (guest hardware, the omaflake agent, user, keys, locale and keyboards, the look's files) | omaflake's image flake |
+| **Module** | a piece of the guest – a desktop, a terminal, an editor, LaTeX … – in Nix | `modules/<author>/<platform>/<name>/` |
+| **Key bindings** | keys for the actions modules offer | `keymaps/<author>/<name>/keymap.toml` |
+| **Look** | colours and a few choices | `looks/<author>/<name>/look.toml` |
+| **Recipe** | a platform, modules, a suggested look, key bindings, what a VM needs and how it runs | `recipes/<author>/<platform>/<name>/recipe.toml` |
+
+A user's credential (who they are), locale (language, time zone, keyboards) and profile (CPU cores, RAM) are never in a
+recipe: they are chosen when an image is built or a VM created.
 
 ## `recipe.toml`
 
+A recipe is this one file – data, never code (Nix goes in a module):
+
 ```toml
-"$schema" = "https://omaflake.dev/schema/recipe/v1.json"   # the version of this format – required
-systems = ["aarch64-linux"]      # what it can be built for – required (below)
+"$schema" = "https://omaflake.dev/schema/recipe/v2.json"   # the version of this format – required
 author = "your-github-name"      # the folder's author – required
 license = "MIT"                  # SPDX identifier, one of source.toml's licenses – required
-description = "Rust development: rustup, rust-analyzer and neovim with the Rust LSP."   # English – required
-description_de = "Rust-Entwicklung: rustup, rust-analyzer und neovim mit Rust-LSP."     # optional, any language code
+description = "Rust development: Neovim with the Rust language server, Zellij, the Hyprland desktop."   # English – required
+description_de = "Rust-Entwicklung: Neovim mit Rust-Sprachserver, Zellij, der Hyprland-Desktop."     # optional, any language code
 tags = ["rust", "neovim"]        # from tags.toml (add new ones there) – required
 homepage = "https://…"           # optional: where to read more or report problems
-requires = ["omaflake/nixos/neovim-minimal"]   # optional: recipes of the same kind this one imports
+lab = false                      # optional: true = development recipe, shown only in omaflake's developer mode
+platform = "nixos"               # nixos | macos – the folder's – required
+systems = ["aarch64-linux", "x86_64-linux"]   # what it is built and tested for – required (below)
 
-# How a VM from it runs (defaults for new VMs; the user can change them)
+modules = [                      # what is in it, in this order – required
+  "omaflake/hyprland",           # the newest version
+  "omaflake/shell",
+  "omaflake/wezterm",
+  { id = "omaflake/neovim", min = "1.0.0" },            # a minimum and/or a maximum (both included) …
+  { id = "your-github-name/rust", version = "1.2.0" },  # … or exactly one version
+]
+look = "omaflake/omaflake"       # optional: suggested – the build may choose another installed look
+keymaps = ["omaflake/default"]   # optional: key binding sets in order – a later one wins for the same action
+
+[requirements]                   # the least a VM from it needs – required; a smaller profile gets a warning
 cpus = 4
 memory_gb = 8
 disk_gb = 40
-network = "shared"               # shared | isolated (NixOS only) | none
-share = true                     # share a Mac folder: /mnt/share (NixOS), ~/Share (macOS)
-ephemeral = false                # discard changes at power-off
+
+[vm]                             # how a VM from it runs – required
 display = "gpu"                  # none (headless) | window | gpu (window with 3D, NixOS)
+network = "shared"               # shared | isolated (NixOS only) | none – required
+share = true                     # share a folder: /mnt/share (NixOS), ~/Share (macOS) – required
+ephemeral = false                # discard changes at power-off – required
 audio = true                     # optional: audio, microphone, clipboard, camera (camera: NixOS)
-lab = false                      # optional: true = development recipe, shown only in omaflake's developer mode
+
+[locales]                        # optional: the locales it is made for – another one gets a warning at the build
+rtl = false                      # not for right-to-left languages
+languages = ["en", "de"]         # only these languages
 ```
 
+References point to the catalogs of the user's sources and to what is installed, with the official catalog always as
+the fallback; a recipe never loads modules from a source the user has not added. Installing a recipe brings what it is
+made of.
+
 `systems` names the architectures the recipe is built and tested for, as Nix names them: `aarch64-linux` (NixOS on
-a Mac with Apple silicon) and `x86_64-linux` for kind `nixos`, `aarch64-darwin` for kind `macos`. List only what you
+a Mac with Apple silicon) and `x86_64-linux` for platform `nixos`, `aarch64-darwin` for `macos`. List only what you
 have tested – omaflake shows a recipe only where it runs, and builds it only for a system it lists.
 
-## `default.nix`
+## Modules: `module.toml` and `default.nix`
 
-A NixOS module (kind `nixos`) or a nix-darwin module (kind `macos`). omaflake adds its guest modules around it – guest
-hardware, the omaflake agent, the user, SSH keys, locale and keyboard – so a recipe only says what makes it different.
-Its module arguments:
+```toml
+"$schema" = "https://omaflake.dev/schema/module/v1.json"   # required
+version = "1.0.0"                # required – raise it with every change (recipes may ask for a version)
+author = "your-github-name"      # required
+license = "MIT"                  # required
+title = "Zathura"                # required – its name in lists
+description = "The zathura PDF viewer: reloads a PDF when it changes."   # required
+tags = ["pdf"]                   # from tags.toml
+provides = ["pdf-viewer"]        # capabilities it provides (capabilities.toml)
+needs = ["terminal"]             # capabilities a recipe with it needs – a warning when no module provides one
+enhances = ["omaflake/neovim"]   # modules it adds to when the recipe has them too (<author>/<name>)
+runs_in = ["terminal"]           # capabilities whose programs it runs inside – for overlapping keys
+desktop = false                  # true: all its keys work on the whole desktop (a desktop module)
+own_keys = false                 # true: an editor's own keys – the key rule does not apply
+unfree = false                   # true: not free software (the user is told)
+
+[actions.open]                   # an action people can bind a key to, with its default key
+title = "Open zathura"
+key = "Super+z"
+desktop = true                   # optional: works everywhere on the desktop (a launcher)
+# mode = "normal"                # optional: only in this mode of the module
+# context = "omaflake/neovim"    # optional: bound inside another module's program
+```
+
+**Capabilities** are a short, fixed list (`capabilities.toml`): `desktop` (exclusive), `terminal`, `multiplexer`,
+`shell` (exclusive), `editor`, `default-editor` (exclusive – sets `$EDITOR`), `pdf-viewer`. Each says what a module
+providing it promises – a `pdf-viewer` is the default for PDFs and reloads a changed file. Two modules providing an
+exclusive one in a recipe are incompatible (a warning). A new capability is added rarely, in the same pull request as
+the module that needs it.
+
+`default.nix` is a NixOS module (platform `nixos`) or a nix-darwin module (platform `macos`). omaflake imports the
+recipe's modules on top of its platform and hands each, besides `config`, `lib` and `pkgs` (omaflake's pinned
+nixpkgs), these arguments:
 
 | Argument | |
 |---|---|
-| `pkgs`, `lib`, `config` | as usual; `pkgs` is omaflake's pinned nixpkgs (nixos-unstable) |
-| `settings` | the user's values from omaflake: `user`, `fullName`, `email`, `timeZone`, `locale`, `keyboard`, `macUser` (macOS) |
-| `nix-homebrew` | (macOS) the nix-homebrew flake, for recipes that want Homebrew |
+| `settings` | the user's values: `user`, `fullName`, `email`, `timeZone`, `locale`, `keyboard`, `keyboards`, `macUser` (macOS) |
+| `omaflake.keys` | this module's actions → keys (its defaults, the recipe's key binding sets over them), e.g. `omaflake.keys.open` = `"Super+z"` |
+| `omaflake.allKeys` | every module's keys in the recipe (`omaflake.allKeys."omaflake/zellij".session`) |
+| `omaflake.has "<author>/<name>"` | whether the recipe has that module – for what it enhances |
+| `omaflake.keyLib` | a key for Hyprland (`hyprland`), Zellij (`zellij`), WezTerm (`wezterm` → `{ key; mods; }`), Neovim (`neovim`), Emacs (`emacs`); `expand` for the `Digit` and `Arrow` placeholders |
+| `nix-homebrew` | (macOS) the nix-homebrew flake |
 
-NixOS recipes have home-manager: `home-manager.users.${settings.user} = { … };`. A NixOS recipe picks its editor
-line with `omaflake.editor = "neovim";` (Neovim, preconfigured, with Zellij – the default) or `"emacs"` (Emacs,
-preconfigured); the desktop, WezTerm and the terminal tools are the same in both. Name recipes after their line, e.g.
-`neovim-research`, `emacs-research`. To build on another recipe, list it
-in `requires` and import it relatively: `imports = [ ../neovim-minimal ];` (same author and kind) – omaflake keeps the
-`<author>/<kind>/<name>` layout when it downloads recipes, so the path stays valid.
+The platform's options modules share: NixOS `omaflake.terminal.open`/`run` (set by the terminal module, used by the
+desktop) and `omaflake.launchers` (`[{ key; command; }]` – keys that start a program anywhere on the desktop; the
+desktop module binds them); macOS `omaflake.homeFiles` and `omaflake.homeLinks` (files and links put into the user's
+home folder once, then theirs). The look's parts are `config.omaflake.lookColors` (the desktop's colours, null for a
+plain look), `lookMacos` and `lookParts`. NixOS modules configure the user with home-manager:
+`home-manager.users.${settings.user} = { … };`.
 
-**Variants per architecture.** A file `<system>.nix` next to `default.nix` – e.g. `x86_64-linux.nix` – is added to
-the recipe when it is built for that system (it must be one of `systems`). Put what differs there, such as a package
-that exists for one architecture only; for a small difference `lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 { … }` in
-`default.nix` works as well. A variant belongs to its own recipe: a recipe that imports another (`requires`) gets that
-one's `default.nix` only – import its variant yourself if you need it.
+**Setting another module's options:** only when the recipe has it – decided from the recipe, not the configuration:
+`lib.mkIf (omaflake.has "omaflake/neovim") { programs.neovim = …; }` for options that always exist (home-manager's),
+`lib.optionalAttrs (omaflake.has "omaflake/vscode") { omaflake.vscode.extensions = …; }` (inside `config =
+lib.mkMerge [ … ]`) for options another module declares.
 
-What a recipe must not do:
+**Keys:** written as a chord – modifiers (`Super`, the Mac's Cmd; `Ctrl`; `Alt`; `Shift`) and a key joined by `+`:
+`Super+Shift+Return`, `Ctrl+g` – or, for an editor, a sequence: `Space f f`. Keys are lowercase letters, digits,
+punctuation, `Return`, `Space`, `Escape`, `Tab`, `Backspace`, `Left`/`Right`/`Up`/`Down`, `F1`–`F12`, and the
+placeholders `Digit` (1–9) and `Arrow`. **The key rule:** without a mode a key is one chord starting with `Super` or
+`Ctrl` (optionally with `Shift`); plain keys only inside a mode; an editor's own keys (`own_keys`) stay as they are.
+`tools/catalog.py` checks that no two keys of a recipe overlap: the same context and mode; a desktop-wide one with any
+key without a mode; a program's key with one of a program that runs inside it (`runs_in`).
+
+What a module must not do:
 
 - bring its own flake, flake inputs or `flake.lock` – it uses omaflake's pinned inputs;
 - fetch anything without a hash, or download and run code at run time (`curl … | sh`, unpinned installers);
 - contain secrets, keys, personal data (names, e-mail addresses, host names, paths like `/Users/…`), telemetry or
   tracking;
-- read anything from the Mac it is evaluated on (`builtins.getEnv`, absolute paths);
-- switch off or change omaflake's guest agent or guest modules.
+- read anything from the computer it is evaluated on (`builtins.getEnv`, absolute paths);
+- switch off or change omaflake's guest agent or platform.
 
-Files: at most 1 MiB each and 5 MiB per recipe, no symbolic links.
+Files: at most 1 MiB each and 5 MiB per module, no symbolic links.
 
-## Testing your recipe
+## Key bindings: `keymap.toml`
 
-Add your fork's checkout as a local source – in omaflake's Settings → Recipe Sources ("Folder …"), or
-`omaf sources add <path to your checkout>` – and build the recipe from the Recipes tab or with
-`omaf build <author>/<kind>/<name>`. A local folder is used as it is: change a file, build again. Put the folder first
-in the list (`--first`, or the arrow in Settings) while it has a recipe of the same name as another source. Recipes
-it `requires` from this repository are in your fork already.
+```toml
+"$schema" = "https://omaflake.dev/schema/keymap/v1.json"   # required
+version = "1.0.0"                # required
+author = "your-github-name"      # required
+license = "MIT"                  # required
+title = "Mine"                   # required
+description = "Super+t opens a terminal."                    # required
+
+[keys."omaflake/hyprland"]       # a module's actions → keys (any of them)
+terminal = "Super+t"
+```
+
+A set gives keys only to the actions it names; a recipe may combine several (`keymaps = ["omaflake/default",
+"you/mine"]`), a later one wins.
+
+## Testing
+
+Add your fork's checkout as a local source – in omaflake's Settings → Sources ("Folder …"), or
+`omaf sources add <path to your checkout> --first` – and look at what a recipe is made of (`omaf recipes show
+<author>/<platform>/<name>`: its modules, keys and warnings), then build it from the Recipes tab or with `omaf build
+<author>/<platform>/<name>`. A local folder is used as it is: change a file, build again. Put the folder first in the
+list while it has an entry of the same name as another source.
 
 ## Contributing a look
 
@@ -91,6 +186,7 @@ look never breaks when omaflake changes how a program is configured, and it runs
 
 ```toml
 "$schema" = "https://omaflake.dev/schema/look/v1.json"   # the version of this format – required
+version = "1.0.0"                # raise it with every change – recipes may ask for a version
 author = "your-github-name"      # the folder's author – required
 license = "MIT"                  # one of source.toml's licenses – required
 title = "Nord"                   # its name as people know it – required
@@ -145,4 +241,3 @@ your checkout as a local source, build an image with the look (the build page, o
 <author>/<name>`) and look at the desktop, a terminal and an editor. The terminal's colours are what `ls`, `git`,
 `bat` and the prompt use – check them on the background.
 
-Status: omaflake reads looks from sources once plan B140 is done (OPEN); until then the format can still change.

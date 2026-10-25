@@ -1,4 +1,5 @@
 "$schema" = "https://omaflake.dev/schema/look/v1.json"
+version = "1.0.0"
 author = "omaflake"
 license = "MIT"
 title = "Vanilla"

@@ -1,0 +1,52 @@
+# Key bindings omaflake/default – omaflake's keys: Super (the Mac's Cmd) or Ctrl first, optionally Shift; plain keys
+# only inside a mode; an editor's keys are its own. Fields: see CONTRIBUTING.md at the root of this repository.
+# A recipe names key binding sets in `keymaps` (later ones win for the same action); without any, every module uses
+# the defaults of its module.toml. These are those defaults, written down as a set to start your own from.
+
+"$schema" = "https://omaflake.dev/schema/keymap/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "omaflake"
+description = "omaflake's keys: Super or Ctrl first, plain keys only in modes; Zellij unlocks with Ctrl+g, Neovim's leader is Space."
+description_de = "Die Tasten von omaflake: Super oder Strg zuerst, einfache Tasten nur in Modi; Zellij entsperrt mit Strg+G, Neovims Leader ist die Leertaste."
+tags = []
+
+[keys."omaflake/hyprland"]
+terminal = "Super+Return"
+launcher = "Super+d"
+close = "Super+q"
+exit = "Super+Shift+e"
+fullscreen = "Super+f"
+float = "Super+v"
+pseudo = "Super+p"
+split = "Super+j"
+focus = "Super+Arrow"
+move = "Super+Shift+Arrow"
+screenshot = "Super+Shift+s"
+resize = "Super+r"
+workspace = "Super+Digit"
+to-workspace = "Super+Shift+Digit"
+
+[keys."omaflake/zellij"]
+unlock = "Ctrl+g"
+lock = "Ctrl+g"
+quit = "Ctrl+q"
+session = "Super+Shift+Return"
+
+[keys."omaflake/emacs"]
+open = "Super+e"
+
+[keys."omaflake/neovim"]
+find-files = "Space f f"
+find-text = "Space f g"
+buffers = "Space f b"
+help = "Space f h"
+file-tree = "Space e"
+next-buffer = "Shift+l"
+previous-buffer = "Shift+h"
+save = "Space w"
+close = "Space q"
+
+[keys."omaflake/typst"]
+preview = "Space t p"

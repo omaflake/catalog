@@ -1,0 +1,12 @@
+# Module macos/vscode – VS Code. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "VS Code"
+description = "Visual Studio Code with LTeX+ (spelling and grammar), GitLens and the Nix IDE – LaTeX and Typst modules add theirs. VS Code is not free software."
+description_de = "Visual Studio Code mit LTeX+ (Rechtschreibung und Grammatik), GitLens und Nix IDE – die Module LaTeX und Typst ergänzen ihre. VS Code ist keine freie Software."
+tags = ["vscode"]
+provides = ["editor"]
+unfree = true

@@ -1,0 +1,18 @@
+# Module macos/zellij – Zellij. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Zellij"
+description = "The Zellij multiplexer; its session \"main\" opens in a WezTerm window of its own (Cmd+Shift+Return) or with zj."
+description_de = "Der Multiplexer Zellij; seine Sitzung „main“ öffnet sich in einem eigenen WezTerm-Fenster (Cmd+Umschalt+Return) oder mit zj."
+tags = ["zellij", "terminal"]
+provides = ["multiplexer"]
+needs = ["terminal"]
+runs_in = ["terminal"]
+
+[actions.session]
+title = "A terminal window in the Zellij session \"main\""
+key = "Super+Shift+Return"
+context = "omaflake/wezterm"

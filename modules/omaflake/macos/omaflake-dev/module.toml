@@ -1,0 +1,10 @@
+# Module macos/omaflake-dev – omaflake development. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "omaflake development"
+description = "For developing omaflake on macOS: the omaflake Test app (sound, microphone, clipboard status; in the Dock) and tools."
+description_de = "Zum Entwickeln von omaflake unter macOS: die App omaflake Test (Ton, Mikrofon, Zwischenablage; im Dock) und Werkzeuge."
+tags = ["development", "test"]

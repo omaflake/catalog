@@ -1,0 +1,11 @@
+# Module nixos/shell – the user's shell and terminal tools. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Shell"
+description = "Zsh with suggestions and highlighting, the Starship prompt, and ripgrep, fd, bat, eza, fzf, jq, btop and fastfetch."
+description_de = "Zsh mit Vorschlägen und Hervorhebung, der Starship-Prompt sowie ripgrep, fd, bat, eza, fzf, jq, btop und fastfetch."
+tags = ["terminal"]
+provides = ["shell"]

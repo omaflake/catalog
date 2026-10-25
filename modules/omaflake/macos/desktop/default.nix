@@ -1,20 +1,17 @@
-# Recipe: minimal (macOS) – the base plus Nix, terminal tools, a minimal Dock, the guest look's system appearance
-# (light or dark, accent, icons, folders, wallpaper) and a private-by-default Safari with google.com as start page.
-# Keys were read from a guest after setting them by hand in System Settings (plan BM22).
-{ config, lib, pkgs, settings, ... }:
+# Module: desktop (macOS) – a minimal Dock, Finder opening Downloads, the guest look's system appearance (light or
+# dark, accent, icons, folders, wallpaper), no desktop widgets, a quiet menu bar and a private-by-default Safari with
+# google.com as start page. Keys were read from a guest after setting them by hand in System Settings (omaflake plan
+# BM22).
+{ config, lib, settings, ... }:
 
 let
   user = settings.macUser;
-  # The guest look's macOS part (omaflake's modules/look.nix, plan B141): { dark; accent; icons; folders; wallpaper };
+  # The guest look's macOS part (omaflake's platform): { dark; accent; icons; folders; wallpaper };
   # null – no look, Vanilla – leaves macOS' own appearance
   look = config.omaflake.lookMacos or null;
   is = key: value: look != null && look.${key} == value;
 in
 {
-  networking.hostName = "minimal";
-
-  environment.systemPackages = with pkgs; [ git neovim ripgrep fd jq htop ];
-
   # ---------- Dock: Finder, Apps, Safari, Mail, Terminal, System Settings | Trash ----------
   system.defaults.dock = {
     persistent-apps = [

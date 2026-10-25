@@ -1,0 +1,11 @@
+# Module nixos/wezterm – the terminal. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "WezTerm"
+description = "The WezTerm terminal on the GPU, with JetBrains Mono and the look's colours."
+description_de = "Das Terminal WezTerm auf der GPU, mit JetBrains Mono und den Farben des Looks."
+tags = ["wezterm", "terminal"]
+provides = ["terminal"]

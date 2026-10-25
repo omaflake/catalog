@@ -1,17 +1,31 @@
-# Recipe nixos/emacs-minimal – how a VM from it runs; what is inside it is default.nix next to this file.
-# Fields: see CONTRIBUTING.md at the root of this repository.
+# Recipe nixos/emacs-minimal – what is in it (modules), how it looks and which keys it uses, how a VM from it runs.
+# A recipe is data only. Fields: see CONTRIBUTING.md at the root of this repository.
 
-"$schema" = "https://omaflake.dev/schema/recipe/v1.json"
-systems = ["aarch64-linux", "x86_64-linux"] # what it can be built for: aarch64-linux, x86_64-linux | aarch64-darwin
+"$schema" = "https://omaflake.dev/schema/recipe/v2.json"
 author = "omaflake"
 license = "MIT"
-display = "gpu"
 description = "NixOS with the Hyprland desktop and the emacs line: Emacs, preconfigured (Catppuccin, Vertico, Magit, Eglot, tree-sitter) – nothing else."
 description_de = "NixOS mit dem Hyprland-Desktop und der Emacs-Linie: vorkonfiguriertes Emacs (Catppuccin, Vertico, Magit, Eglot, Tree-sitter) – sonst nichts."
 tags = ["desktop", "hyprland", "emacs"]
+platform = "nixos"
+systems = ["aarch64-linux", "x86_64-linux"]
+
+modules = [
+  "omaflake/hyprland",
+  "omaflake/shell",
+  "omaflake/wezterm",
+  "omaflake/emacs",
+]
+look = "omaflake/omaflake"          # suggested; the build may choose another installed look
+keymaps = ["omaflake/default"]
+
+[requirements]                     # the least a VM from it needs; a smaller profile gets a warning
 cpus = 4
 memory_gb = 4
 disk_gb = 40
+
+[vm]                               # how a VM from it runs
+display = "gpu"
 network = "shared"
 share = true
 ephemeral = false

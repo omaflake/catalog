@@ -1,18 +1,29 @@
-# Recipe macos/minimal – how a VM from it runs; what is inside it is default.nix next to this file.
-# Fields: see CONTRIBUTING.md at the root of this repository.
-# macOS: nix-darwin on top of the macOS base (omaf macos install)
+# Recipe macos/minimal – what is in it (modules), how it looks and which keys it uses, how a VM from it runs.
+# A recipe is data only. Fields: see CONTRIBUTING.md at the root of this repository.
 
-"$schema" = "https://omaflake.dev/schema/recipe/v1.json"
-systems = ["aarch64-darwin"] # what it can be built for: aarch64-linux, x86_64-linux | aarch64-darwin
+"$schema" = "https://omaflake.dev/schema/recipe/v2.json"
 author = "omaflake"
 license = "MIT"
-display = "window"
 description = "macOS with Nix, terminal tools, a minimal Dock and the look's appearance (light or dark, accent, icons, wallpaper)."
 description_de = "macOS mit Nix, Terminal-Werkzeugen, schlichtem Dock und dem Erscheinungsbild des Looks (hell oder dunkel, Akzent, Symbole, Hintergrund)."
 tags = ["nix", "terminal"]
+platform = "macos"
+systems = ["aarch64-darwin"]
+
+modules = [
+  "omaflake/desktop",
+  "omaflake/shell",
+]
+look = "omaflake/omaflake"          # suggested; the build may choose another installed look
+keymaps = ["omaflake/default"]
+
+[requirements]                     # the least a VM from it needs; a smaller profile gets a warning
 cpus = 4
 memory_gb = 8
 disk_gb = 60
+
+[vm]                               # how a VM from it runs
+display = "window"
 network = "shared"
 share = true
 ephemeral = false

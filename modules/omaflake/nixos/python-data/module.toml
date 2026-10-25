@@ -1,0 +1,10 @@
+# Module nixos/python-data – Python for data. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Python for data"
+description = "Python with numpy, pandas, matplotlib and JupyterLab."
+description_de = "Python mit numpy, pandas, matplotlib und JupyterLab."
+tags = ["python", "jupyter"]

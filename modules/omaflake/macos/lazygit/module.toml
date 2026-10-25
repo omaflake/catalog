@@ -1,0 +1,10 @@
+# Module macos/lazygit – lazygit. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "lazygit"
+description = "lazygit, a terminal UI for git."
+description_de = "lazygit, eine Terminal-Oberfläche für git."
+tags = ["terminal"]

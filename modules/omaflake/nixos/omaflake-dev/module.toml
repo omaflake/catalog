@@ -1,0 +1,11 @@
+# Module nixos/omaflake-dev – omaflake development. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "omaflake development"
+description = "For developing omaflake: omaflake itself (the Linux app, omaf, omaf ui), the omaflake Test app (camera, sound, microphone), debug tools and omaflake's status in Waybar."
+description_de = "Zum Entwickeln von omaflake: omaflake selbst (die Linux-App, omaf, omaf ui), die App omaflake Test (Kamera, Ton, Mikrofon), Debug-Werkzeuge und der Status von omaflake in Waybar."
+tags = ["development", "test"]
+enhances = ["omaflake/hyprland"]

@@ -1,0 +1,50 @@
+# Module nixos/neovim – the editor Neovim, preconfigured. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Neovim"
+description = "Neovim, preconfigured: Telescope, Neo-tree, Bufferline, Lualine, Treesitter, Gitsigns, Which-key; the default editor ($EDITOR)."
+description_de = "Neovim, vorkonfiguriert: Telescope, Neo-tree, Bufferline, Lualine, Treesitter, Gitsigns, Which-key; der Standard-Editor ($EDITOR)."
+tags = ["neovim"]
+provides = ["editor", "default-editor"]
+runs_in = ["terminal", "multiplexer"]
+# An editor's keys are its own: the key rule (Super or Ctrl first) does not apply
+own_keys = true
+
+[actions.find-files]
+title = "Find files"
+key = "Space f f"
+
+[actions.find-text]
+title = "Find text"
+key = "Space f g"
+
+[actions.buffers]
+title = "Buffers"
+key = "Space f b"
+
+[actions.help]
+title = "Help"
+key = "Space f h"
+
+[actions.file-tree]
+title = "File tree"
+key = "Space e"
+
+[actions.next-buffer]
+title = "Next buffer"
+key = "Shift+l"
+
+[actions.previous-buffer]
+title = "Previous buffer"
+key = "Shift+h"
+
+[actions.save]
+title = "Save"
+key = "Space w"
+
+[actions.close]
+title = "Close"
+key = "Space q"

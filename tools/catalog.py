@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Check every recipe and look in this repository and write catalog.json – the one file omaflake reads to browse it.
+"""Check every recipe, module, key binding set and look in this repository and write catalog.json – the one file
+omaflake reads to browse it.
 
   python3 tools/catalog.py           # check, then write catalog.json
   python3 tools/catalog.py --check   # check, and fail if catalog.json is not up to date (CI)
 
 Needs Python 3.11 or newer (tomllib) and nothing else, so forks and own catalogs can run it anywhere. Without a
 recent Python: `nix run nixpkgs#python3 -- tools/catalog.py`. Errors fail the run; warnings are for the reviewers.
-The output has no timestamps or commit hashes, so it only changes when a recipe changes.
+The output has no timestamps or commit hashes, so it only changes when something in here changes.
 """
 
 import hashlib
@@ -18,32 +19,40 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 RECIPES = ROOT / "recipes"
+MODULES = ROOT / "modules"
+KEYMAPS = ROOT / "keymaps"
 LOOKS = ROOT / "looks"
 CATALOG = ROOT / "catalog.json"
 # The JSON Schemas (omaflake/omaflake docs/schema/, published on omaflake.dev): what this catalog is, and what each
-# recipe.toml names in "$schema" – as omaflake's image flake reads it
-SCHEMA = "https://omaflake.dev/schema/catalog/v3.json"      # v2: systems per recipe; v3: looks
-RECIPE_SCHEMA = "https://omaflake.dev/schema/recipe/v1.json"
+# file names in "$schema" – as omaflake's image flake reads it
+SCHEMA = "https://omaflake.dev/schema/catalog/v4.json"      # v2: systems; v3: looks; v4: modules, key bindings, recipe v2
+RECIPE_SCHEMA = "https://omaflake.dev/schema/recipe/v2.json"
+MODULE_SCHEMA = "https://omaflake.dev/schema/module/v1.json"
+KEYMAP_SCHEMA = "https://omaflake.dev/schema/keymap/v1.json"
 LOOK_SCHEMA = "https://omaflake.dev/schema/look/v1.json"
 
-KINDS = ("nixos", "macos")
-# What a recipe of each kind can be built for (Nix system names); <system>.nix next to default.nix is the variant
+PLATFORMS = ("nixos", "macos")
+# What a recipe of each platform can be built for (Nix system names)
 SYSTEMS = {"nixos": ("aarch64-linux", "x86_64-linux"), "macos": ("aarch64-darwin",)}
 NAME = re.compile(r"[a-z0-9][a-z0-9-]*")
 TAG = re.compile(r"[a-z0-9][a-z0-9+.-]*")
-REF = re.compile(r"([a-z0-9][a-z0-9-]*)/(nixos|macos)/([a-z0-9][a-z0-9-]*)")
+# A reference to a module, look or key binding set: <author>/<name> (a module's platform is the recipe's)
+REF = re.compile(r"([a-z0-9][a-z0-9-]*)/([a-z0-9][a-z0-9-]*)")
+VERSION = re.compile(r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)")
 
-# recipe.toml: what the catalog lists about a recipe; everything else is how a VM from it runs (its defaults)
-META = {"$schema", "author", "license", "description", "tags", "lab", "requires", "homepage", "systems"}
-REQUIRED = ("$schema", "author", "license", "description", "tags", "systems", "cpus", "memory_gb", "disk_gb", "network", "share",
-            "ephemeral")
-CHOICES = {"network": ("shared", "isolated", "none"), "display": ("none", "window", "gpu")}
-BOOLS = ("share", "ephemeral", "lab", "audio", "microphone", "clipboard", "camera")
-COUNTS = ("cpus", "memory_gb", "disk_gb")
+# recipe.toml (v2): data only – what is in it, how it looks, which keys, what a VM needs and how it runs
+RECIPE_KEYS = {"$schema", "author", "license", "description", "tags", "lab", "homepage", "platform", "systems",
+               "modules", "look", "keymaps", "requirements", "vm", "locales"}
+REQUIRED = ("$schema", "author", "license", "description", "tags", "platform", "systems", "modules", "requirements", "vm")
+REQUIREMENTS = ("cpus", "memory_gb", "disk_gb")
+VM_CHOICES = {"network": ("shared", "isolated", "none"), "display": ("none", "window", "gpu")}
+VM_BOOLS = ("share", "ephemeral", "audio", "microphone", "clipboard", "camera")
+VM_REQUIRED = ("network", "share", "ephemeral")
+LANGUAGE = re.compile(r"[a-z]{2,3}")
 
 MAX_FILE = 1024 * 1024           # per file
-MAX_RECIPE = 5 * 1024 * 1024     # per recipe folder
-# Files a recipe never contains: its own flake (a recipe is a module on omaflake's flake), keys, secrets
+MAX_FOLDER = 5 * 1024 * 1024     # per module, recipe or look folder
+# Files a module never contains: its own flake (a module is a module on omaflake's flake), keys, secrets
 FORBIDDEN = re.compile(r"(^|/)(flake\.nix|flake\.lock|\.env|id_[a-z0-9]+|.*\.(pem|key|p12))$|(^|/)local/")
 # Worth a reviewer's look, not an error
 LINT = [
@@ -67,70 +76,354 @@ def load_toml(path: Path, errors: list[str]) -> dict:
         return {}
 
 
-def check_recipe(folder: Path, data: dict, tags: set[str], licenses: list[str], errors: list[str],
-                 warnings: list[str]) -> None:
+def version_of(text) -> tuple[int, ...] | None:
+    m = VERSION.fullmatch(text) if isinstance(text, str) else None
+    return tuple(int(x) for x in m.groups()) if m else None
+
+
+def reference(value, what: str, where, errors: list[str]) -> dict | None:
+    """A reference as written – "author/name" or { id, version | min | max } – as {id, version?, min?, max?}"""
+    ref = {"id": value} if isinstance(value, str) else dict(value) if isinstance(value, dict) else None
+    if ref is None or not isinstance(ref.get("id"), str) or not REF.fullmatch(ref["id"]):
+        errors.append(f"{where}: {what} {value!r} – write \"<author>/<name>\" or {{ id = \"<author>/<name>\", min = \"1.0.0\" }}")
+        return None
+    extra = set(ref) - {"id", "version", "min", "max"}
+    if extra:
+        errors.append(f"{where}: {what} {ref['id']} has no {', '.join(sorted(extra))} (id, version, min, max)")
+    if "version" in ref and ("min" in ref or "max" in ref):
+        errors.append(f"{where}: {what} {ref['id']}: an exact version or a minimum and/or maximum, not both")
+    for k in ("version", "min", "max"):
+        if k in ref and version_of(ref[k]) is None:
+            errors.append(f"{where}: {what} {ref['id']}: {k} is a version like \"1.2.0\"")
+    if "min" in ref and "max" in ref and version_of(ref["min"]) and version_of(ref["max"]) \
+            and version_of(ref["min"]) > version_of(ref["max"]):
+        errors.append(f"{where}: {what} {ref['id']}: min is above max")
+    return ref
+
+
+def satisfies(version: str, ref: dict) -> bool:
+    v = version_of(version)
+    if v is None:
+        return False
+    if "version" in ref:
+        return v == version_of(ref["version"])
+    return (("min" not in ref or v >= version_of(ref["min"])) and ("max" not in ref or v <= version_of(ref["max"])))
+
+
+def common(where, data: dict, schema: str, tags: set[str] | None, licenses: list[str], errors: list[str],
+           author: str, what: str) -> None:
+    """What every module, key binding set and look has: $schema, author, license, title/description, tags"""
+    if data.get("$schema") != schema:
+        errors.append(f"{where}: {what} needs \"$schema\" = \"{schema}\"")
+    if data.get("author") != author:
+        errors.append(f"{where}: author = \"{data.get('author')}\" in {what}, but the folder says {author}")
+    if licenses and data.get("license") not in licenses:
+        errors.append(f"{where}: license \"{data.get('license')}\" is not one of source.toml's licenses")
+    if not isinstance(data.get("description", ""), str) or not data.get("description", "").strip():
+        errors.append(f"{where}: description is a sentence in English")
+    if tags is not None:
+        given = data.get("tags", [])
+        if not isinstance(given, list):
+            errors.append(f"{where}: tags is a list")
+            given = []
+        for tag in given:
+            if not isinstance(tag, str) or not TAG.fullmatch(tag):
+                errors.append(f"{where}: tag {tag!r} – lowercase letters, digits and -")
+            elif tag not in tags:
+                errors.append(f"{where}: tag \"{tag}\" is not in tags.toml – add it there in the same pull request")
+
+
+# ---------- Keys (module.toml's actions, keymap.toml) ----------
+# A key is a chord – modifiers and a key joined by "+" ("Super+Shift+Return", "Ctrl+g") – or, for editors, a sequence
+# of chords separated by spaces ("Space f f"). Digit and Arrow stand for 1–9 and the four arrows.
+MODIFIERS = ("Super", "Ctrl", "Alt", "Shift")
+NAMED = {"Return", "Space", "Escape", "Tab", "Backspace", "Left", "Right", "Up", "Down", "Digit", "Arrow"} \
+    | {f"F{i}" for i in range(1, 13)}
+SINGLE = re.compile(r"[a-z0-9`\-=\[\];',./\\]")
+
+
+def parse_key(key) -> list[tuple[frozenset, str]] | None:
+    if not isinstance(key, str) or not key.strip():
+        return None
+    out = []
+    for chord in key.split():
+        parts = chord.split("+")
+        mods, name = parts[:-1], parts[-1]
+        if any(m not in MODIFIERS for m in mods) or len(set(mods)) != len(mods):
+            return None
+        if name not in NAMED and not SINGLE.fullmatch(name):
+            return None
+        out.append((frozenset(mods), name))
+    return out
+
+
+def expand(seq: list[tuple[frozenset, str]]) -> list[tuple]:
+    """Every concrete sequence a key stands for (Digit → 1–9, Arrow → the arrows)"""
+    result = [()]
+    for mods, name in seq:
+        names = [str(i) for i in range(1, 10)] if name == "Digit" else ["Left", "Right", "Up", "Down"] if name == "Arrow" else [name]
+        result = [r + ((mods, n),) for r in result for n in names]
+    return result
+
+
+def check_actions(where, actions, own_keys: bool, errors: list[str]) -> None:
+    if not isinstance(actions, dict):
+        errors.append(f"{where}: [actions.<name>] tables")
+        return
+    for name, a in actions.items():
+        if not NAME.fullmatch(name) or not isinstance(a, dict):
+            errors.append(f"{where}: action {name!r} – lowercase letters, digits and -, a table")
+            continue
+        extra = set(a) - {"title", "key", "mode", "desktop", "context"}
+        if extra:
+            errors.append(f"{where}: action {name} has no {', '.join(sorted(extra))}")
+        if not isinstance(a.get("title"), str) or not a["title"].strip():
+            errors.append(f"{where}: action {name} needs a title")
+        if parse_key(a.get("key")) is None:
+            errors.append(f"{where}: action {name}: key {a.get('key')!r} – e.g. \"Super+Shift+Return\", \"Ctrl+g\", \"Space f f\"")
+        if "mode" in a and (not isinstance(a["mode"], str) or not NAME.fullmatch(a["mode"])):
+            errors.append(f"{where}: action {name}: mode is a name")
+        if "desktop" in a and not isinstance(a["desktop"], bool):
+            errors.append(f"{where}: action {name}: desktop is true or false")
+        if "context" in a and (not isinstance(a["context"], str) or not REF.fullmatch(a["context"])):
+            errors.append(f"{where}: action {name}: context is a module, \"<author>/<name>\"")
+
+
+def overlaps(bindings: list[dict], modules: dict[str, dict]) -> list[str]:
+    """Key bindings of one recipe that can be active at once and collide (the same key, or one a prefix of the other).
+    Active at once: the same context and mode; a desktop-wide one with any binding without a mode; a program's binding
+    without a mode with one of a program that runs inside it (`runs_in` names a capability the outer one provides)."""
+    def provides(ref):
+        return set(modules.get(ref, {}).get("provides", []))
+
+    def runs_in(ref):
+        return set(modules.get(ref, {}).get("runs_in", []))
+
+    def together(a, b) -> bool:
+        if a["mode"] or b["mode"]:
+            return a["context"] == b["context"] and a["mode"] == b["mode"]
+        if a["context"] == b["context"] or "desktop" in (a["context"], b["context"]):
+            return True
+        return bool(provides(a["context"]) & runs_in(b["context"])) or bool(provides(b["context"]) & runs_in(a["context"]))
+
+    found = []
+    for i, a in enumerate(bindings):
+        for b in bindings[i + 1:]:
+            if not together(a, b):
+                continue
+            hit = next(((x, y) for x in a["keys"] for y in b["keys"]
+                        if x[:len(y)] == y or y[:len(x)] == x), None)
+            if hit:
+                found.append(f"{a['module']} {a['action']} ({a['key']}) and {b['module']} {b['action']} ({b['key']})")
+    return found
+
+
+def key_rule(binding: dict, modules: dict[str, dict]) -> str | None:
+    """omaflake's key rule: without a mode a key starts with Super or Ctrl – except an editor's own keys"""
+    if binding["mode"] or modules.get(binding["context"], {}).get("own_keys"):
+        return None
+    seq = parse_key(binding["key"]) or []
+    if len(seq) != 1 or not ({"Super", "Ctrl"} & seq[0][0]):
+        return f"{binding['module']} {binding['action']} ({binding['key']}): without a mode a key starts with Super or Ctrl"
+    return None
+
+
+def bindings_of(platform: str, refs: list[str], keymaps: list[dict], modules: dict[str, dict]) -> list[dict]:
+    """A recipe's key bindings: each module's defaults, then its key binding sets in order (a later one wins)"""
+    out = []
+    for ref in refs:
+        m = modules.get(f"{platform}:{ref}")
+        if not m:
+            continue
+        for action, a in m.get("actions", {}).items():
+            key = a.get("key")
+            for km in keymaps:
+                key = km.get("keys", {}).get(ref, {}).get(action, key)
+            seq = parse_key(key)
+            if seq is None:
+                continue
+            context = "desktop" if a.get("desktop") or m.get("desktop") else a.get("context", ref)
+            out.append({"module": ref, "action": action, "key": key, "keys": expand(seq), "mode": a.get("mode"),
+                        "context": context})
+    return out
+
+
+def check_module(folder: Path, data: dict, tags: set[str], licenses: list[str], capabilities: dict,
+                 errors: list[str]) -> None:
     where = folder.relative_to(ROOT)
-    author, kind, name = folder.relative_to(RECIPES).parts
+    author, platform, name = folder.relative_to(MODULES).parts
     if not NAME.fullmatch(author) or not NAME.fullmatch(name):
         errors.append(f"{where}: author and name use lowercase letters, digits and -")
-    if kind not in KINDS:
-        errors.append(f"{where}: the kind folder is nixos or macos, not {kind}")
+    if platform not in PLATFORMS:
+        errors.append(f"{where}: the platform folder is nixos or macos, not {platform}")
+    common(where, data, MODULE_SCHEMA, tags, licenses, errors, author, "module.toml")
+    extra = set(data) - {"$schema", "version", "author", "license", "title", "description", "tags", "homepage",
+                         "provides", "needs", "enhances", "runs_in", "desktop", "own_keys", "unfree", "actions"}
+    for key in sorted(extra):
+        if not key.startswith("description_"):
+            errors.append(f"{where}: module.toml has no {key}")
+    if version_of(data.get("version")) is None:
+        errors.append(f"{where}: version is a version like \"1.0.0\" – raise it with every change")
+    if not isinstance(data.get("title"), str) or not data.get("title", "").strip():
+        errors.append(f"{where}: title is a short name")
+    for key in ("provides", "needs", "runs_in"):
+        for c in data.get(key, []):
+            if c not in capabilities:
+                errors.append(f"{where}: {key} {c!r} is not in capabilities.toml")
+    for ref in data.get("enhances", []):
+        if not isinstance(ref, str) or not REF.fullmatch(ref):
+            errors.append(f"{where}: enhances {ref!r} – write <author>/<name>")
+    for key in ("desktop", "own_keys", "unfree"):
+        if key in data and not isinstance(data[key], bool):
+            errors.append(f"{where}: {key} is true or false")
+    check_actions(where, data.get("actions", {}), data.get("own_keys", False), errors)
+    if not (folder / "default.nix").is_file():
+        errors.append(f"{where}: default.nix is missing")
+
+
+def check_keymap(folder: Path, data: dict, licenses: list[str], modules: dict[str, dict], errors: list[str],
+                 warnings: list[str]) -> None:
+    where = folder.relative_to(ROOT)
+    author, name = folder.relative_to(KEYMAPS).parts
+    if not NAME.fullmatch(author) or not NAME.fullmatch(name):
+        errors.append(f"{where}: author and name use lowercase letters, digits and -")
+    common(where, data, KEYMAP_SCHEMA, None, licenses, errors, author, "keymap.toml")
+    if version_of(data.get("version")) is None:
+        errors.append(f"{where}: version is a version like \"1.0.0\" – raise it with every change")
+    for ref, keys in data.get("keys", {}).items():
+        if not REF.fullmatch(ref) or not isinstance(keys, dict):
+            errors.append(f"{where}: [keys.\"<author>/<name>\"] tables, not {ref!r}")
+            continue
+        here = [m for k, m in modules.items() if k.split(":", 1)[1] == ref]
+        if not here:
+            warnings.append(f"{where}: {ref} is not a module of this catalog – its actions are not checked")
+        for action, key in keys.items():
+            if parse_key(key) is None:
+                errors.append(f"{where}: {ref} {action}: key {key!r}")
+            elif here and not any(action in m.get("actions", {}) for m in here):
+                errors.append(f"{where}: {ref} has no action {action}")
+
+
+def check_recipe(folder: Path, data: dict, tags: set[str], licenses: list[str], catalog: dict, errors: list[str],
+                 warnings: list[str]) -> None:
+    where = folder.relative_to(ROOT)
+    author, platform, name = folder.relative_to(RECIPES).parts
+    if not NAME.fullmatch(author) or not NAME.fullmatch(name):
+        errors.append(f"{where}: author and name use lowercase letters, digits and -")
+    if platform not in PLATFORMS:
+        errors.append(f"{where}: the platform folder is nixos or macos, not {platform}")
     if data.get("author") != author:
         errors.append(f"{where}: author = \"{data.get('author')}\" in recipe.toml, but the folder says {author}")
     for key in REQUIRED:
         if key not in data:
             errors.append(f"{where}: recipe.toml needs {key}")
+    for key in data:
+        if key not in RECIPE_KEYS and not key.startswith("description_"):
+            errors.append(f"{where}: recipe.toml has no {key} (a VM's values go in [requirements] and [vm])")
     if "$schema" in data and data["$schema"] != RECIPE_SCHEMA:
         errors.append(f"{where}: \"$schema\" = {data['$schema']!r} – recipe.toml names \"{RECIPE_SCHEMA}\"")
-    allowed = SYSTEMS.get(kind, ())
+    if data.get("platform") != platform:
+        errors.append(f"{where}: platform = {data.get('platform')!r}, but the folder says {platform}")
+    allowed = SYSTEMS.get(platform, ())
     systems = data.get("systems", [])
     if not isinstance(systems, list) or not systems or any(s not in allowed for s in systems):
         errors.append(f"{where}: systems lists some of {', '.join(allowed)}")
-        systems = []
-    for variant in sorted(folder.glob("*-*.nix")):
-        if variant.stem in allowed and variant.stem not in systems:
-            errors.append(f"{where}/{variant.name}: a variant for {variant.stem}, which systems does not list")
-    for key, choices in CHOICES.items():
-        if key in data and data[key] not in choices:
-            errors.append(f"{where}: {key} is one of {', '.join(choices)}")
-    if kind == "macos" and data.get("network") == "isolated":
+    req = data.get("requirements", {})
+    for key in REQUIREMENTS:
+        v = req.get(key)
+        if not isinstance(v, int) or isinstance(v, bool) or v < 1:
+            errors.append(f"{where}: requirements.{key} is a whole number of at least 1")
+    for key in set(req) - set(REQUIREMENTS):
+        errors.append(f"{where}: requirements has no {key}")
+    vm = data.get("vm", {})
+    for key in VM_REQUIRED:
+        if key not in vm:
+            errors.append(f"{where}: vm.{key} is needed")
+    for key, choices in VM_CHOICES.items():
+        if key in vm and vm[key] not in choices:
+            errors.append(f"{where}: vm.{key} is one of {', '.join(choices)}")
+    for key in VM_BOOLS:
+        if key in vm and not isinstance(vm[key], bool):
+            errors.append(f"{where}: vm.{key} is true or false")
+    for key in set(vm) - set(VM_CHOICES) - set(VM_BOOLS):
+        errors.append(f"{where}: vm has no {key}")
+    if platform == "macos" and vm.get("network") == "isolated":
         errors.append(f"{where}: network = \"isolated\" exists for NixOS only")
-    for key in BOOLS:
-        if key in data and not isinstance(data[key], bool):
-            errors.append(f"{where}: {key} is true or false")
-    for key in COUNTS:
-        if key in data and (not isinstance(data[key], int) or isinstance(data[key], bool) or data[key] < 1):
-            errors.append(f"{where}: {key} is a whole number of at least 1")
-    if not isinstance(data.get("description", ""), str) or not data.get("description", "x").strip():
-        errors.append(f"{where}: description is a sentence in English")
-    if licenses and data.get("license") not in licenses:
-        errors.append(f"{where}: license \"{data.get('license')}\" is not one of source.toml's licenses")
-    recipe_tags = data.get("tags", [])
-    if not isinstance(recipe_tags, list) or not recipe_tags:
-        errors.append(f"{where}: tags is a list of at least one word")
-        recipe_tags = []
-    for tag in recipe_tags:
-        if not isinstance(tag, str) or not TAG.fullmatch(tag):
-            errors.append(f"{where}: tag {tag!r} – lowercase letters, digits and -")
-        elif tag not in tags:
-            errors.append(f"{where}: tag \"{tag}\" is not in tags.toml – add it there in the same pull request")
-    for ref in data.get("requires", []):
-        m = REF.fullmatch(ref) if isinstance(ref, str) else None
-        if not m:
-            errors.append(f"{where}: requires {ref!r} – write <author>/<kind>/<name>")
-        elif m.group(2) != kind:
-            errors.append(f"{where}: requires {ref} – a recipe can only build on one of its own kind")
-        elif not (RECIPES / ref / "recipe.toml").is_file():
-            errors.append(f"{where}: requires {ref}, which is not in this repository")
-    if not (folder / "default.nix").is_file():
-        errors.append(f"{where}: default.nix is missing")
+    if "lab" in data and not isinstance(data["lab"], bool):
+        errors.append(f"{where}: lab is true or false")
+    loc = data.get("locales", {})
+    for key in set(loc) - {"rtl", "languages"}:
+        errors.append(f"{where}: locales has no {key} (rtl, languages)")
+    if "rtl" in loc and not isinstance(loc["rtl"], bool):
+        errors.append(f"{where}: locales.rtl is true or false")
+    if "languages" in loc and (not isinstance(loc["languages"], list)
+                               or not all(isinstance(x, str) and LANGUAGE.fullmatch(x) for x in loc["languages"])):
+        errors.append(f"{where}: locales.languages lists language codes, e.g. [\"en\", \"de\"]")
+    common(where, {**data, "$schema": MODULE_SCHEMA}, MODULE_SCHEMA, tags, licenses, errors, author, "recipe.toml")
+
+    # What it references: modules of its platform, a look, key binding sets – in this catalog, or (a warning) elsewhere
+    modules = catalog["modules"]
+    refs = []
+    for value in data.get("modules", []) if isinstance(data.get("modules"), list) else []:
+        ref = reference(value, "module", where, errors)
+        if not ref:
+            continue
+        refs.append(ref["id"])
+        m = modules.get(f"{platform}:{ref['id']}")
+        if m is None:
+            warnings.append(f"{where}: module {ref['id']} ({platform}) is not in this catalog – the user needs a source that has it")
+        elif not satisfies(m["version"], ref):
+            errors.append(f"{where}: module {ref['id']} is {m['version']} here, which the recipe's version does not allow")
+    if len(set(refs)) != len(refs):
+        errors.append(f"{where}: a module is listed twice")
+    if not refs:
+        errors.append(f"{where}: modules lists at least one module")
+    if "look" in data:
+        ref = reference(data["look"], "look", where, errors)
+        if ref and ref["id"] not in catalog["looks"]:
+            warnings.append(f"{where}: look {ref['id']} is not in this catalog")
+        elif ref and not satisfies(catalog["looks"][ref["id"]], ref):
+            errors.append(f"{where}: look {ref['id']} is {catalog['looks'][ref['id']]} here, which the recipe does not allow")
+    keymaps = []
+    for value in data.get("keymaps", []):
+        ref = reference(value, "key bindings", where, errors)
+        if not ref:
+            continue
+        km = catalog["keymaps"].get(ref["id"])
+        if km is None:
+            warnings.append(f"{where}: key bindings {ref['id']} are not in this catalog")
+        else:
+            keymaps.append(km)
+            if not satisfies(km["version"], ref):
+                errors.append(f"{where}: key bindings {ref['id']} are {km['version']} here, which the recipe does not allow")
+
+    # Capabilities: what a module needs, exclusive ones twice (warnings – a recipe stays buildable)
+    present = [modules[f"{platform}:{r}"] for r in refs if f"{platform}:{r}" in modules]
+    provided = [c for m in present for c in m.get("provides", [])]
+    for m in present:
+        for c in m.get("needs", []):
+            if c not in provided:
+                warnings.append(f"{where}: {m['ref']} needs a {c} – no module of the recipe provides one")
+    for c, info in catalog["capabilities"].items():
+        if info.get("exclusive") and provided.count(c) > 1:
+            who = [m["ref"] for m in present if c in m.get("provides", [])]
+            warnings.append(f"{where}: {' and '.join(who)} both provide {c} – incompatible")
+    # Keys: overlaps and the key rule
+    bindings = bindings_of(platform, refs, keymaps, modules)
+    by_ref = {m["ref"]: m for m in present}
+    for o in overlaps(bindings, by_ref):
+        errors.append(f"{where}: keys overlap – {o}")
+    for b in bindings:
+        problem = key_rule(b, by_ref)
+        if problem:
+            errors.append(f"{where}: {problem}")
 
 
 # look.toml (schema look/v1): a look is data – colours and a few choices; omaflake's image flake turns it into each
 # program's configuration, so a look runs no code
 COLOR = re.compile(r"#[0-9a-fA-F]{6}")
-LOOK_META = {"$schema", "author", "license", "title", "description", "tags", "homepage", "appearance", "plain"}
-LOOK_REQUIRED = ("$schema", "author", "license", "title", "description", "tags")
+LOOK_META = {"$schema", "version", "author", "license", "title", "description", "tags", "homepage", "appearance", "plain"}
+LOOK_REQUIRED = ("$schema", "version", "author", "license", "title", "description", "tags")
 # A look that sets colours (not plain = true, Vanilla) needs these too
 LOOK_COLORED = ("appearance", "colors", "terminal")
 LOOK_COLORS = ("background", "surface", "selection", "text", "subtext", "muted", "accent", "urgent")
@@ -164,6 +457,8 @@ def check_look(folder: Path, data: dict, tags: set[str], licenses: list[str], er
     for key in LOOK_REQUIRED + (() if plain else LOOK_COLORED):
         if key not in data:
             errors.append(f"{where}: look.toml needs {key}")
+    if version_of(data.get("version")) is None:
+        errors.append(f"{where}: version is a version like \"1.0.0\" – raise it with every change")
     if plain:
         for key in sorted(LOOK_TABLES & set(data)):
             errors.append(f"{where}: a plain look sets no colours – no [{key}]")
@@ -254,7 +549,7 @@ def check_look(folder: Path, data: dict, tags: set[str], licenses: list[str], er
                 errors.append(f"{where}: {editor} with theme {theme} takes {choices}")
 
 
-def recipe_files(folder: Path, errors: list[str], warnings: list[str]) -> list[dict]:
+def folder_files(folder: Path, errors: list[str], warnings: list[str]) -> list[dict]:
     where = folder.relative_to(ROOT)
     files, total = [], 0
     for path in sorted(folder.rglob("*")):
@@ -265,7 +560,7 @@ def recipe_files(folder: Path, errors: list[str], warnings: list[str]) -> list[d
         if path.is_dir() or path.name == ".DS_Store":
             continue
         if FORBIDDEN.search(rel):
-            errors.append(f"{where}/{rel}: does not belong in a recipe (own flake, keys, secrets, local/)")
+            errors.append(f"{where}/{rel}: does not belong here (own flake, keys, secrets, local/)")
         data = path.read_bytes()
         total += len(data)
         if len(data) > MAX_FILE:
@@ -277,9 +572,18 @@ def recipe_files(folder: Path, errors: list[str], warnings: list[str]) -> list[d
                     line = text.count("\n", 0, m.start()) + 1
                     warnings.append(f"{where}/{rel}:{line}: {why}")
         files.append({"path": rel, "size": len(data), "sha256": sha256(data)})
-    if total > MAX_RECIPE:
-        errors.append(f"{where}: {total} bytes in all – at most {MAX_RECIPE} per recipe")
+    if total > MAX_FOLDER:
+        errors.append(f"{where}: {total} bytes in all – at most {MAX_FOLDER} per folder")
     return files
+
+
+def content_hash(files: list[dict]) -> str:
+    """Changes whenever any file changes: how omaflake sees that what it installed has an update"""
+    return sha256("".join(f"{f['path']}\0{f['sha256']}\n" for f in files).encode())
+
+
+def descriptions_of(data: dict) -> dict:
+    return {k.removeprefix("description_"): v for k, v in data.items() if k.startswith("description_")}
 
 
 def build() -> tuple[dict, list[str], list[str]]:
@@ -292,38 +596,81 @@ def build() -> tuple[dict, list[str], list[str]]:
     tags = set(all_tags.get("tags", {}).keys())
     look_tags = set(all_tags.get("looks", {}).keys())
     licenses = source.get("licenses", [])
+    capabilities = load_toml(ROOT / "capabilities.toml", errors).get("capabilities", {})
+    for c, info in capabilities.items():
+        if not NAME.fullmatch(c) or not isinstance(info.get("exclusive"), bool) or not info.get("description"):
+            errors.append(f"capabilities.toml: {c} needs exclusive (true or false) and a description")
 
-    recipes = []
-    for toml in sorted(RECIPES.rglob("recipe.toml")):
+    modules, module_rows = {}, []
+    for toml in sorted(MODULES.rglob("module.toml")) if MODULES.is_dir() else []:
         folder = toml.parent
-        if len(folder.relative_to(RECIPES).parts) != 3:
-            errors.append(f"{toml.relative_to(ROOT)}: recipes live in recipes/<author>/<kind>/<name>/")
+        if len(folder.relative_to(MODULES).parts) != 3:
+            errors.append(f"{toml.relative_to(ROOT)}: modules live in modules/<author>/<platform>/<name>/")
             continue
         data = load_toml(toml, errors)
-        check_recipe(folder, data, tags, licenses, errors, warnings)
-        files = recipe_files(folder, errors, warnings)
-        author, kind, name = folder.relative_to(RECIPES).parts
-        descriptions = {k.removeprefix("description_"): v for k, v in data.items() if k.startswith("description_")}
-        recipes.append({
-            "id": f"{author}.{kind}.{name}",
+        check_module(folder, data, tags, licenses, capabilities, errors)
+        files = folder_files(folder, errors, warnings)
+        author, platform, name = folder.relative_to(MODULES).parts
+        row = {
+            "id": f"{author}.{platform}.{name}",
+            "ref": f"{author}/{name}",
             "author": author,
-            "kind": kind,
+            "platform": platform,
             "name": name,
             "path": folder.relative_to(ROOT).as_posix(),
+            "version": data.get("version", ""),
+            "title": data.get("title", ""),
             "description": data.get("description", ""),
-            "descriptions": descriptions,
+            "descriptions": descriptions_of(data),
             "tags": data.get("tags", []),
             "license": data.get("license", ""),
-            "lab": data.get("lab", False),
-            "systems": data.get("systems", []),
-            "requires": data.get("requires", []),
             "homepage": data.get("homepage", ""),
-            "defaults": {k: v for k, v in data.items() if k not in META and not k.startswith("description_")},
-            # Changes whenever any file of the recipe changes: how omaflake sees that an installed recipe has an update
-            "version": sha256("".join(f"{f['path']}\0{f['sha256']}\n" for f in files).encode()),
+            "provides": data.get("provides", []),
+            "needs": data.get("needs", []),
+            "enhances": data.get("enhances", []),
+            "runs_in": data.get("runs_in", []),
+            "desktop": data.get("desktop", False),
+            "own_keys": data.get("own_keys", False),
+            "unfree": data.get("unfree", False),
+            "actions": data.get("actions", {}),
+            "hash": content_hash(files),
             "files": files,
-        })
-    looks = []
+        }
+        modules[f"{platform}:{author}/{name}"] = row
+        module_rows.append(row)
+
+    keymaps, keymap_rows = {}, []
+    for toml in sorted(KEYMAPS.rglob("keymap.toml")) if KEYMAPS.is_dir() else []:
+        folder = toml.parent
+        if len(folder.relative_to(KEYMAPS).parts) != 2:
+            errors.append(f"{toml.relative_to(ROOT)}: key bindings live in keymaps/<author>/<name>/")
+            continue
+        data = load_toml(toml, errors)
+        check_keymap(folder, data, licenses, modules, errors, warnings)
+        files = folder_files(folder, errors, warnings)
+        for f in files:
+            if f["path"] != "keymap.toml":
+                errors.append(f"{folder.relative_to(ROOT)}/{f['path']}: key bindings are keymap.toml only")
+        author, name = folder.relative_to(KEYMAPS).parts
+        row = {
+            "id": f"{author}.keymap.{name}",
+            "ref": f"{author}/{name}",
+            "author": author,
+            "name": name,
+            "path": folder.relative_to(ROOT).as_posix(),
+            "version": data.get("version", ""),
+            "title": data.get("title", ""),
+            "description": data.get("description", ""),
+            "descriptions": descriptions_of(data),
+            "license": data.get("license", ""),
+            "keys": data.get("keys", {}),
+            "hash": content_hash(files),
+            "files": files,
+        }
+        keymaps[f"{author}/{name}"] = row
+        keymap_rows.append(row)
+
+    looks, look_rows = {}, []
     for toml in sorted(LOOKS.rglob("look.toml")) if LOOKS.is_dir() else []:
         folder = toml.parent
         if len(folder.relative_to(LOOKS).parts) != 2:
@@ -331,21 +678,23 @@ def build() -> tuple[dict, list[str], list[str]]:
             continue
         data = load_toml(toml, errors)
         check_look(folder, data, look_tags, licenses, errors)
-        files = recipe_files(folder, errors, warnings)
+        files = folder_files(folder, errors, warnings)
         for f in files:
             if f["path"] not in LOOK_FILES:
                 errors.append(f"{folder.relative_to(ROOT)}/{f['path']}: a look has look.toml and maybe preview.png only")
         author, name = folder.relative_to(LOOKS).parts
-        descriptions = {k.removeprefix("description_"): v for k, v in data.items() if k.startswith("description_")}
         c, t = data.get("colors", {}), data.get("terminal", {})
-        looks.append({
+        looks[f"{author}/{name}"] = data.get("version", "")
+        look_rows.append({
             "id": f"{author}.look.{name}",
+            "ref": f"{author}/{name}",
             "author": author,
             "name": name,
             "path": folder.relative_to(ROOT).as_posix(),
+            "version": data.get("version", ""),
             "title": data.get("title", ""),
             "description": data.get("description", ""),
-            "descriptions": descriptions,
+            "descriptions": descriptions_of(data),
             "tags": data.get("tags", []),
             "license": data.get("license", ""),
             "appearance": data.get("appearance"),   # null for a plain look
@@ -355,16 +704,60 @@ def build() -> tuple[dict, list[str], list[str]]:
             "swatches": None if data.get("plain") else {"background": c.get("background", ""), "surface": c.get("surface", ""),
                          "text": c.get("text", ""), "accent": c.get("accent", ""), "urgent": c.get("urgent", ""),
                          "terminal": t.get("normal", []) + t.get("bright", [])},
-            "version": sha256("".join(f"{f['path']}\0{f['sha256']}\n" for f in files).encode()),
+            "hash": content_hash(files),
+            "files": files,
+        })
+
+    context = {"modules": modules, "keymaps": keymaps, "looks": looks, "capabilities": capabilities}
+    recipes = []
+    for toml in sorted(RECIPES.rglob("recipe.toml")):
+        folder = toml.parent
+        if len(folder.relative_to(RECIPES).parts) != 3:
+            errors.append(f"{toml.relative_to(ROOT)}: recipes live in recipes/<author>/<platform>/<name>/")
+            continue
+        data = load_toml(toml, errors)
+        check_recipe(folder, data, tags, licenses, context, errors, warnings)
+        files = folder_files(folder, errors, warnings)
+        for f in files:
+            if f["path"] != "recipe.toml":
+                errors.append(f"{folder.relative_to(ROOT)}/{f['path']}: a recipe is recipe.toml only – Nix goes in a module")
+        author, platform, name = folder.relative_to(RECIPES).parts
+        recipes.append({
+            "id": f"{author}.{platform}.{name}",
+            "author": author,
+            "kind": platform,
+            "name": name,
+            "path": folder.relative_to(ROOT).as_posix(),
+            "description": data.get("description", ""),
+            "descriptions": descriptions_of(data),
+            "tags": data.get("tags", []),
+            "license": data.get("license", ""),
+            "lab": data.get("lab", False),
+            "systems": data.get("systems", []),
+            "homepage": data.get("homepage", ""),
+            "modules": [m if isinstance(m, dict) else {"id": m} for m in data.get("modules", [])],
+            "look": (data["look"] if isinstance(data["look"], dict) else {"id": data["look"]}) if "look" in data else None,
+            "keymaps": [k if isinstance(k, dict) else {"id": k} for k in data.get("keymaps", [])],
+            "requirements": data.get("requirements", {}),
+            "vm": data.get("vm", {}),
+            "locales": data.get("locales", {}),
+            "version": content_hash(files),
             "files": files,
         })
     catalog = {
         "$schema": SCHEMA,
         "source": {k: source.get(k, "") for k in ("name", "description", "homepage")},
+        "capabilities": capabilities,
         "recipes": recipes,
-        "looks": looks,
+        "modules": module_rows,
+        "keymaps": keymap_rows,
+        "looks": look_rows,
     }
     return catalog, errors, warnings
+
+
+def counts(catalog: dict) -> str:
+    return ", ".join(f"{len(catalog[k])} {k}" for k in ("recipes", "modules", "keymaps", "looks"))
 
 
 def main() -> int:
@@ -381,10 +774,10 @@ def main() -> int:
         if not CATALOG.is_file() or CATALOG.read_text(encoding="utf-8") != text:
             print("error: catalog.json is not up to date – run python3 tools/catalog.py and commit it")
             return 1
-        print(f"ok: {len(catalog['recipes'])} recipes, {len(catalog['looks'])} looks, catalog.json up to date")
+        print(f"ok: {counts(catalog)}, catalog.json up to date")
     else:
         CATALOG.write_text(text, encoding="utf-8")
-        print(f"ok: {len(catalog['recipes'])} recipes, {len(catalog['looks'])} looks written to catalog.json")
+        print(f"ok: {counts(catalog)} written to catalog.json")
     return 0
 
 

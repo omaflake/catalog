@@ -1,0 +1,71 @@
+# Module nixos/hyprland – the desktop: Hyprland with Waybar, Fuzzel and Mako. What it does is default.nix next to
+# this file. Fields: see CONTRIBUTING.md at the root of this repository.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Hyprland"
+description = "The Hyprland desktop with Waybar, the Fuzzel launcher, Mako notifications, PipeWire audio and the window following the VM's size."
+description_de = "Der Hyprland-Desktop mit Waybar, dem Starter Fuzzel, Mako-Benachrichtigungen, PipeWire-Audio und einem Fenster, das der Größe der VM folgt."
+tags = ["desktop", "hyprland"]
+provides = ["desktop"]
+needs = ["terminal"]
+# Its keys work everywhere on the desktop
+desktop = true
+
+[actions.terminal]
+title = "Open a terminal"
+key = "Super+Return"
+
+[actions.launcher]
+title = "Open the launcher"
+key = "Super+d"
+
+[actions.close]
+title = "Close the window"
+key = "Super+q"
+
+[actions.exit]
+title = "Log out"
+key = "Super+Shift+e"
+
+[actions.fullscreen]
+title = "Full screen"
+key = "Super+f"
+
+[actions.float]
+title = "Float the window"
+key = "Super+v"
+
+[actions.pseudo]
+title = "Pseudo-tile the window"
+key = "Super+p"
+
+[actions.split]
+title = "Turn the split"
+key = "Super+j"
+
+[actions.focus]
+title = "Focus the window that way"
+key = "Super+Arrow"
+
+[actions.move]
+title = "Move the window that way"
+key = "Super+Shift+Arrow"
+
+[actions.screenshot]
+title = "Screenshot of an area to the clipboard"
+key = "Super+Shift+s"
+
+[actions.resize]
+title = "Resize mode (arrows or h j k l; Escape or Return leaves it)"
+key = "Super+r"
+
+[actions.workspace]
+title = "Go to workspace 1–9"
+key = "Super+Digit"
+
+[actions.to-workspace]
+title = "Move the window to workspace 1–9"
+key = "Super+Shift+Digit"

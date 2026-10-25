@@ -1,0 +1,32 @@
+# The capabilities modules may provide and need (modules/<author>/<platform>/<name>/module.toml: provides, needs,
+# runs_in) – a short, fixed list, so that "needs a PDF viewer" means the same in every module (omaflake plan B141).
+# Each says what a module that provides it promises. Exclusive: a recipe with two modules providing it gets a warning
+# ("incompatible"). A new capability goes in here, in the same pull request as the module that uses it – rarely.
+
+[capabilities.desktop]
+exclusive = true
+description = "the graphical desktop: starts after login, opens a terminal and binds the desktop-wide keys of every module (launchers)"
+
+[capabilities.terminal]
+exclusive = false
+description = "a terminal program; one of them is what the desktop's terminal key opens"
+
+[capabilities.multiplexer]
+exclusive = false
+description = "panes, tabs and sessions inside a terminal"
+
+[capabilities.shell]
+exclusive = true
+description = "the user's interactive shell configuration"
+
+[capabilities.editor]
+exclusive = false
+description = "a text editor"
+
+[capabilities.default-editor]
+exclusive = true
+description = "the editor $EDITOR opens"
+
+[capabilities.pdf-viewer]
+exclusive = false
+description = "shows PDFs and reloads a PDF when it changes; the default for application/pdf"

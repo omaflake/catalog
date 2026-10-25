@@ -1,5 +1,5 @@
-# Recipe: lab (macOS) – omaflake's development recipe for macOS guests, like nixos/lab: everything of minimal,
-# plus the "omaflake Test" app (sound, microphone, clipboard status; in the Dock and via Spotlight) and debug tools.
+# Module: omaflake-dev (macOS) – for developing omaflake on macOS guests: the "omaflake Test" app (sound, microphone,
+# clipboard status; in the Dock and via Spotlight) and debug tools.
 { lib, pkgs, ... }:
 
 let
@@ -30,10 +30,6 @@ let
   '';
 in
 {
-  imports = [ ../minimal ];
-
-  networking.hostName = lib.mkForce "lab";
-
   environment.systemPackages = [ omaflakeTest ] ++ (with pkgs; [ ffmpeg python3 file lsof ]);
 
   system.defaults.dock.persistent-apps = lib.mkAfter [ "/Applications/Nix Apps/omaflake Test.app" ];

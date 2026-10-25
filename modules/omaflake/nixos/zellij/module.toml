@@ -1,0 +1,33 @@
+# Module nixos/zellij – the terminal multiplexer. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Zellij"
+description = "The Zellij multiplexer with keys that leave the editor's alone: locked until Ctrl+g. Its session \"main\" opens in a window of its own (Super+Shift+Return) or with zj."
+description_de = "Der Multiplexer Zellij mit Tasten, die die des Editors in Ruhe lassen: gesperrt bis Strg+G. Seine Sitzung „main“ öffnet sich in einem eigenen Fenster (Super+Umschalt+Return) oder mit zj."
+tags = ["zellij", "terminal"]
+provides = ["multiplexer"]
+needs = ["terminal"]
+enhances = ["omaflake/hyprland"]
+runs_in = ["terminal"]
+
+[actions.unlock]
+title = "Unlock Zellij's keys (then p pane, t tab, r resize, m move, s scroll, o session)"
+key = "Ctrl+g"
+
+[actions.lock]
+title = "Lock Zellij's keys again"
+key = "Ctrl+g"
+mode = "normal"
+
+[actions.quit]
+title = "Quit Zellij"
+key = "Ctrl+q"
+mode = "normal"
+
+[actions.session]
+title = "A terminal window in the Zellij session \"main\""
+key = "Super+Shift+Return"
+desktop = true

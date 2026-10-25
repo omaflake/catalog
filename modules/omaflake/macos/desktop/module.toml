@@ -1,0 +1,11 @@
+# Module macos/desktop – macOS desktop. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "macOS desktop"
+description = "A minimal Dock, Finder opening Downloads, the look's appearance (light or dark, accent, icons, folders, wallpaper), no desktop widgets, a quiet menu bar and a private-by-default Safari."
+description_de = "Ein schlichtes Dock, Finder öffnet Downloads, das Erscheinungsbild des Looks (hell oder dunkel, Akzent, Symbole, Ordner, Hintergrund), keine Widgets, eine ruhige Menüleiste und ein standardmäßig privates Safari."
+tags = ["desktop"]
+provides = ["desktop"]

@@ -1,0 +1,11 @@
+# Module macos/latex – LaTeX. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "LaTeX"
+description = "TeX Live (full) and texlab. With Neovim: vimtex (the PDF in Preview); with VS Code: LaTeX Workshop, building on save."
+description_de = "TeX Live (komplett) und texlab. Mit Neovim: vimtex (das PDF in Vorschau); mit VS Code: LaTeX Workshop, baut beim Speichern."
+tags = ["latex"]
+enhances = ["omaflake/neovim", "omaflake/vscode"]

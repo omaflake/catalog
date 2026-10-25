@@ -1,4 +1,4 @@
-# The tags recipes ([tags]) and looks ([looks]) may use – one list, so the Recipes tab can search by them and "tex" and "latex" do not drift apart.
+# The tags recipes and modules ([tags]) and looks ([looks]) may use – one list, so the Recipes tab can search by them and "tex" and "latex" do not drift apart.
 # A new tag goes in here, in the same pull request as the recipe that uses it. Lowercase; English.
 
 [tags]
@@ -12,6 +12,7 @@ latex = "LaTeX / TeX Live"
 neovim = "Neovim"
 nix = "Nix tooling in the guest"
 pandoc = "pandoc document conversion"
+pdf = "viewing PDFs"
 python = "Python"
 terminal = "terminal tools"
 test = "testing omaflake itself"

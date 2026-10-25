@@ -1,0 +1,13 @@
+# Module macos/neovim – Neovim. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Neovim"
+description = "Neovim with the look's colours; ~/.config/nvim/init.lua is written once and then yours."
+description_de = "Neovim in den Farben des Looks; ~/.config/nvim/init.lua wird einmal geschrieben und gehört dann dir."
+tags = ["neovim"]
+provides = ["editor", "default-editor"]
+runs_in = ["terminal", "multiplexer"]
+own_keys = true

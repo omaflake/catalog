@@ -1,0 +1,18 @@
+# Module nixos/emacs – the editor Emacs, preconfigured. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Emacs"
+description = "Emacs (pure GTK, native on Wayland), preconfigured: Vertico, Consult, Corfu, Magit, Eglot and tree-sitter; the default editor ($EDITOR opens files in the running Emacs)."
+description_de = "Emacs (reines GTK, nativ unter Wayland), vorkonfiguriert: Vertico, Consult, Corfu, Magit, Eglot und Tree-sitter; der Standard-Editor ($EDITOR öffnet Dateien im laufenden Emacs)."
+tags = ["emacs"]
+provides = ["editor", "default-editor"]
+enhances = ["omaflake/hyprland"]
+own_keys = true
+
+[actions.open]
+title = "Open Emacs"
+key = "Super+e"
+desktop = true

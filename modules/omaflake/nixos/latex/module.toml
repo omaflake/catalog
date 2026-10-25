@@ -1,0 +1,12 @@
+# Module nixos/latex – LaTeX. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "LaTeX"
+description = "TeX Live (full) and the texlab language server. With Neovim: vimtex compiles on every save; with zathura: SyncTeX jumps between text and PDF (Ctrl+click)."
+description_de = "TeX Live (komplett) und der Sprachserver texlab. Mit Neovim: vimtex kompiliert bei jedem Speichern; mit zathura: SyncTeX springt zwischen Text und PDF (Strg+Klick)."
+tags = ["latex"]
+needs = ["pdf-viewer"]
+enhances = ["omaflake/neovim", "omaflake/zathura"]

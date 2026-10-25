@@ -1,0 +1,10 @@
+# Module macos/shell – Terminal tools. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v1.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Terminal tools"
+description = "git, Neovim, ripgrep, fd, jq and htop."
+description_de = "git, Neovim, ripgrep, fd, jq und htop."
+tags = ["terminal", "nix"]

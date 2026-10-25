@@ -1,9 +1,39 @@
 {
-  "$schema": "https://omaflake.dev/schema/catalog/v3.json",
+  "$schema": "https://omaflake.dev/schema/catalog/v4.json",
   "source": {
     "name": "omaflake",
     "description": "The official omaflake recipes and looks, reviewed by the omaflake core team.",
     "homepage": "https://github.com/omaflake/catalog"
+  },
+  "capabilities": {
+    "desktop": {
+      "exclusive": true,
+      "description": "the graphical desktop: starts after login, opens a terminal and binds the desktop-wide keys of every module (launchers)"
+    },
+    "terminal": {
+      "exclusive": false,
+      "description": "a terminal program; one of them is what the desktop's terminal key opens"
+    },
+    "multiplexer": {
+      "exclusive": false,
+      "description": "panes, tabs and sessions inside a terminal"
+    },
+    "shell": {
+      "exclusive": true,
+      "description": "the user's interactive shell configuration"
+    },
+    "editor": {
+      "exclusive": false,
+      "description": "a text editor"
+    },
+    "default-editor": {
+      "exclusive": true,
+      "description": "the editor $EDITOR opens"
+    },
+    "pdf-viewer": {
+      "exclusive": false,
+      "description": "shows PDFs and reloads a PDF when it changes; the default for application/pdf"
+    }
   },
   "recipes": [
     {
@@ -25,41 +55,45 @@
       "systems": [
         "aarch64-darwin"
       ],
-      "requires": [
-        "omaflake/macos/minimal"
-      ],
       "homepage": "",
-      "defaults": {
-        "display": "window",
+      "modules": [
+        {
+          "id": "omaflake/desktop"
+        },
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/omaflake-dev"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
         "cpus": 4,
         "memory_gb": 8,
-        "disk_gb": 60,
+        "disk_gb": 60
+      },
+      "vm": {
+        "display": "window",
         "network": "shared",
         "share": true,
         "ephemeral": true,
         "microphone": true
       },
-      "version": "6aab037ac5b75ca4156305cdf7b69e3e332d7be54c52e8c578d2bbd77a15001b",
+      "locales": {},
+      "version": "246bfe45d839d845c6282c17e827f68c698a4ca7e1209f113131b88cdb577325",
       "files": [
         {
-          "path": "default.nix",
-          "size": 2042,
-          "sha256": "22f99a02894d3aa6db8df745e3a1ef9ff2042bf1238f0cb9aca78fc0d98109c1"
-        },
-        {
-          "path": "omaflake-test.icns",
-          "size": 347346,
-          "sha256": "9a148585e14904d699a6f79516b3c7bcd6842857355b7227b9736350e5e4c8e7"
-        },
-        {
-          "path": "omaflake-test.sh",
-          "size": 2578,
-          "sha256": "0dfccd7a6e713faaf069566a5df8939c0fe212e052e6c73be2a5abe803e2cd56"
-        },
-        {
           "path": "recipe.toml",
-          "size": 1075,
-          "sha256": "1a7023f5d051bdda5030cdc3c5592d83c26e8e3097c4749be318766195844bc5"
+          "size": 1246,
+          "sha256": "28dce6a5e256e07c21821e896f5a8f92dcd2747ed45b355f2fe1f0fdbef02c27"
         }
       ]
     },
@@ -82,43 +116,41 @@
       "systems": [
         "aarch64-darwin"
       ],
-      "requires": [],
       "homepage": "",
-      "defaults": {
-        "display": "window",
+      "modules": [
+        {
+          "id": "omaflake/desktop"
+        },
+        {
+          "id": "omaflake/shell"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
         "cpus": 4,
         "memory_gb": 8,
-        "disk_gb": 60,
+        "disk_gb": 60
+      },
+      "vm": {
+        "display": "window",
         "network": "shared",
         "share": true,
         "ephemeral": false
       },
-      "version": "30267b3424111fc9699f8441aac4501d984c6a4deccb48f46bae41b2949848a1",
+      "locales": {},
+      "version": "ed2bc0d007e251d7f3c87769adb30da5cf45cb3c444b9fd85b9a1c7adcf7d63b",
       "files": [
         {
-          "path": "assets/safari-bookmarks-seed.plist",
-          "size": 1219,
-          "sha256": "af7e561ecf841ea6f72086db8f24f1e99b7c5e01006ccca95f57d388f90f0cf5"
-        },
-        {
-          "path": "assets/wallpaper-black.plist",
-          "size": 1973,
-          "sha256": "53c05f86f2410796c06b1dc1c2bcc9fbaf10922b7fc6305529164ac8f670df7f"
-        },
-        {
-          "path": "assets/widgets-empty-placement.plist",
-          "size": 282,
-          "sha256": "61aea308236d97653daa83c04c0ca955b6babddbc8ddc9ea07837332bdbb2ca7"
-        },
-        {
-          "path": "default.nix",
-          "size": 7216,
-          "sha256": "b909d63fdaf2649a069d0d7a9d27b9db118b74da319850f78c825ec9becc1aa2"
-        },
-        {
           "path": "recipe.toml",
-          "size": 846,
-          "sha256": "63bd07d1eb588c2d5c1f4914549f8f27bf29b0dc2be374cffbceeaf125e83944"
+          "size": 1101,
+          "sha256": "968657c77ab3d1bbfe3a848800a4531d0b380631caff26d676c728e4e5102a29"
         }
       ]
     },
@@ -146,35 +178,68 @@
       "systems": [
         "aarch64-darwin"
       ],
-      "requires": [
-        "omaflake/macos/minimal"
-      ],
       "homepage": "",
-      "defaults": {
-        "display": "window",
+      "modules": [
+        {
+          "id": "omaflake/desktop"
+        },
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/wezterm"
+        },
+        {
+          "id": "omaflake/zellij"
+        },
+        {
+          "id": "omaflake/neovim"
+        },
+        {
+          "id": "omaflake/latex"
+        },
+        {
+          "id": "omaflake/typst"
+        },
+        {
+          "id": "omaflake/vscode"
+        },
+        {
+          "id": "omaflake/pandoc"
+        },
+        {
+          "id": "omaflake/lazygit"
+        },
+        {
+          "id": "omaflake/homebrew"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
         "cpus": 4,
         "memory_gb": 8,
-        "disk_gb": 80,
+        "disk_gb": 80
+      },
+      "vm": {
+        "display": "window",
         "network": "shared",
         "share": true,
         "ephemeral": false
       },
-      "version": "50e57f23509dd030b577e916dfd494870384c82b448dc3c49e1a387bae871afe",
+      "locales": {},
+      "version": "fdf90719efb4339c6856bf2ad72fb970d25796f0482716b58f96f5214c93e327",
       "files": [
         {
-          "path": "default.nix",
-          "size": 4711,
-          "sha256": "114ea7aa063dc1af8f14cedf8dc5ca3765f0a62de2fc97cf2d75488d86a1951f"
-        },
-        {
           "path": "recipe.toml",
-          "size": 976,
-          "sha256": "9cf9c9a952c35897d775b854f2311baf42793dfcb7c68fefe2ceba0f85d8ef58"
-        },
-        {
-          "path": "wezterm.lua",
-          "size": 1668,
-          "sha256": "f77ff3663f2ec8bd2cef5914788a161aa7a14cc0d356de31a94c1ba04495b368"
+          "size": 1408,
+          "sha256": "b73a0d73e8f93e53be7d716a54958bb2b826e7db9e929aa9b95c122393ba3326"
         }
       ]
     },
@@ -199,28 +264,47 @@
         "aarch64-linux",
         "x86_64-linux"
       ],
-      "requires": [],
       "homepage": "",
-      "defaults": {
-        "display": "gpu",
+      "modules": [
+        {
+          "id": "omaflake/hyprland"
+        },
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/wezterm"
+        },
+        {
+          "id": "omaflake/emacs"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
         "cpus": 4,
         "memory_gb": 4,
-        "disk_gb": 40,
+        "disk_gb": 40
+      },
+      "vm": {
+        "display": "gpu",
         "network": "shared",
         "share": true,
         "ephemeral": false
       },
-      "version": "039e260ee8f08f340688a3d9929c1b86b6ba9fd2e9d69b986cb57d8c2be6c7e9",
+      "locales": {},
+      "version": "4f5e197188e6ed25f07801ed3a4d7bcd87ab3d436a2295eb5e92eaca8f7d9bc4",
       "files": [
         {
-          "path": "default.nix",
-          "size": 468,
-          "sha256": "beb765312995d76d973cee0ad257758d3446efba4d3a4f7c156766e4615a3e66"
-        },
-        {
           "path": "recipe.toml",
-          "size": 841,
-          "sha256": "ae1a9c49ad7a202aa2c657eac1d08127db7f10e821d7ece240851da867100cec"
+          "size": 1205,
+          "sha256": "c3d7eda956975260a342200df82437b885619d538d2aa7b7595d298ff5d4835a"
         }
       ]
     },
@@ -244,35 +328,55 @@
         "aarch64-linux",
         "x86_64-linux"
       ],
-      "requires": [],
       "homepage": "",
-      "defaults": {
-        "display": "gpu",
+      "modules": [
+        {
+          "id": "omaflake/hyprland"
+        },
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/wezterm"
+        },
+        {
+          "id": "omaflake/zellij"
+        },
+        {
+          "id": "omaflake/neovim"
+        },
+        {
+          "id": "omaflake/omaflake-dev"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
         "cpus": 4,
         "memory_gb": 8,
-        "disk_gb": 60,
+        "disk_gb": 60
+      },
+      "vm": {
+        "display": "gpu",
         "network": "shared",
         "share": true,
         "ephemeral": true,
-        "camera": true,
-        "microphone": true
+        "microphone": true,
+        "camera": true
       },
-      "version": "6c9e7030d1cb7c3a5f995d2c658243dd3a7986c014b10a78ad1a6c58ad6d5c67",
+      "locales": {},
+      "version": "39fb834e0861bc0c484fb93953c488a294b5f64236d32c143deb93a3da9cf665",
       "files": [
         {
-          "path": "default.nix",
-          "size": 3612,
-          "sha256": "2a30ef9c61fee68410165e443fbe9704cc27a2982494ae4442bf37a5a2e0ed05"
-        },
-        {
-          "path": "omaflake-test.py",
-          "size": 7962,
-          "sha256": "c3ecdf4bf6ab3c0d189557a20d719b4282032fa3264bbeab7fcdf08593cdd030"
-        },
-        {
           "path": "recipe.toml",
-          "size": 1170,
-          "sha256": "0a4d3ebef7650c817d0be5c572a4a0c3d650f4259367c4bc9c7a8acd0537673d"
+          "size": 1476,
+          "sha256": "d767578fab8e17ddca62047cf7ff20ca1933ea591ec82a0da6de4303f6bb1a02"
         }
       ]
     },
@@ -298,28 +402,50 @@
         "aarch64-linux",
         "x86_64-linux"
       ],
-      "requires": [],
       "homepage": "",
-      "defaults": {
-        "display": "gpu",
+      "modules": [
+        {
+          "id": "omaflake/hyprland"
+        },
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/wezterm"
+        },
+        {
+          "id": "omaflake/zellij"
+        },
+        {
+          "id": "omaflake/neovim"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
         "cpus": 4,
         "memory_gb": 4,
-        "disk_gb": 40,
+        "disk_gb": 40
+      },
+      "vm": {
+        "display": "gpu",
         "network": "shared",
         "share": true,
         "ephemeral": false
       },
-      "version": "30640361335dfa81d4a6da0f0915d94792103030e50d25ae12d40a031d842355",
+      "locales": {},
+      "version": "b8fe3a39c7fb5055dd6d0dda89a42a38546e04fd2e87d0a581a85045271cae59",
       "files": [
         {
-          "path": "default.nix",
-          "size": 184,
-          "sha256": "9f97c08df7d479662c2dde6b63602acebf4a917eb3bc9c71978681cc1df4f6e3"
-        },
-        {
           "path": "recipe.toml",
-          "size": 991,
-          "sha256": "56520122b197ac47fe6a23f34171290a48165ef5ade405ec43f4f26f8cd9b5a1"
+          "size": 1168,
+          "sha256": "8eb3edb612284a44ff1ff86691f60c27a3857f695b98365279322261e625eece"
         }
       ]
     },
@@ -347,28 +473,1339 @@
         "aarch64-linux",
         "x86_64-linux"
       ],
-      "requires": [],
       "homepage": "",
-      "defaults": {
-        "display": "gpu",
+      "modules": [
+        {
+          "id": "omaflake/hyprland"
+        },
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/wezterm"
+        },
+        {
+          "id": "omaflake/zellij"
+        },
+        {
+          "id": "omaflake/neovim"
+        },
+        {
+          "id": "omaflake/zathura"
+        },
+        {
+          "id": "omaflake/latex"
+        },
+        {
+          "id": "omaflake/typst"
+        },
+        {
+          "id": "omaflake/python-data"
+        },
+        {
+          "id": "omaflake/pandoc"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
         "cpus": 6,
         "memory_gb": 12,
-        "disk_gb": 60,
+        "disk_gb": 60
+      },
+      "vm": {
+        "display": "gpu",
         "network": "shared",
         "share": true,
         "ephemeral": false
       },
-      "version": "1c8fd930ad22d56b5b2c0fec7812fbf441bacc0ed97384068f595d456cb3ff45",
+      "locales": {},
+      "version": "66ee7c0fc95110062c49f0b8b3c0ca1bb7eaaa5dfe38396c52fdc2def25b589f",
+      "files": [
+        {
+          "path": "recipe.toml",
+          "size": 1329,
+          "sha256": "61571bebc525ee1d008533c6e04c70fcd3884208a1b2b7be062da522555a8504"
+        }
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "id": "omaflake.macos.desktop",
+      "ref": "omaflake/desktop",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "desktop",
+      "path": "modules/omaflake/macos/desktop",
+      "version": "1.0.0",
+      "title": "macOS desktop",
+      "description": "A minimal Dock, Finder opening Downloads, the look's appearance (light or dark, accent, icons, folders, wallpaper), no desktop widgets, a quiet menu bar and a private-by-default Safari.",
+      "descriptions": {
+        "de": "Ein schlichtes Dock, Finder öffnet Downloads, das Erscheinungsbild des Looks (hell oder dunkel, Akzent, Symbole, Ordner, Hintergrund), keine Widgets, eine ruhige Menüleiste und ein standardmäßig privates Safari."
+      },
+      "tags": [
+        "desktop"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "desktop"
+      ],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "173ffcf813d5e41fa1880632c2e7a35db49ac2401be1b09c4c450297744c43da",
+      "files": [
+        {
+          "path": "assets/safari-bookmarks-seed.plist",
+          "size": 1219,
+          "sha256": "af7e561ecf841ea6f72086db8f24f1e99b7c5e01006ccca95f57d388f90f0cf5"
+        },
+        {
+          "path": "assets/wallpaper-black.plist",
+          "size": 1973,
+          "sha256": "53c05f86f2410796c06b1dc1c2bcc9fbaf10922b7fc6305529164ac8f670df7f"
+        },
+        {
+          "path": "assets/widgets-empty-placement.plist",
+          "size": 282,
+          "sha256": "61aea308236d97653daa83c04c0ca955b6babddbc8ddc9ea07837332bdbb2ca7"
+        },
+        {
+          "path": "default.nix",
+          "size": 7117,
+          "sha256": "48aff89e7135efc23850870c56132d1750c628d1d2ed72e01d2e66c7a1249f91"
+        },
+        {
+          "path": "module.toml",
+          "size": 704,
+          "sha256": "56923d749ef28d3786315cace05311fc94188fa96f0cb7bc8388bd0c8a3e7b1d"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.homebrew",
+      "ref": "omaflake/homebrew",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "homebrew",
+      "path": "modules/omaflake/macos/homebrew",
+      "version": "1.0.0",
+      "title": "Homebrew",
+      "description": "Homebrew, installed declaratively (nix-homebrew), for what Nix does not have; taps stay changeable.",
+      "descriptions": {
+        "de": "Homebrew, deklarativ installiert (nix-homebrew), für das, was Nix nicht hat; Taps bleiben änderbar."
+      },
+      "tags": [
+        "homebrew"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "d2f1a6486018fd8a7c43b3aa0e6706c68bd9d2f9b43c85335b17d346b7eb4bee",
       "files": [
         {
           "path": "default.nix",
-          "size": 4169,
-          "sha256": "f0c68cecbf91d70679f6ca1785c1e82679c2ab8d3631ce85d5e79850da4aa56b"
+          "size": 402,
+          "sha256": "a9bd22006ee1f7dd71942f6c13bd37a6ad7bb56503b90281acfbda3c2d68a16a"
         },
         {
-          "path": "recipe.toml",
-          "size": 834,
-          "sha256": "5d1250c6e0e8773021586a839967dbb63c4f59ee7ffb2f2cb39581e4674a8285"
+          "path": "module.toml",
+          "size": 473,
+          "sha256": "53b292c9b5e2d27457cee73666d78e024d95488b1a63964c10aa208137fc7c0b"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.latex",
+      "ref": "omaflake/latex",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "latex",
+      "path": "modules/omaflake/macos/latex",
+      "version": "1.0.0",
+      "title": "LaTeX",
+      "description": "TeX Live (full) and texlab. With Neovim: vimtex (the PDF in Preview); with VS Code: LaTeX Workshop, building on save.",
+      "descriptions": {
+        "de": "TeX Live (komplett) und texlab. Mit Neovim: vimtex (das PDF in Vorschau); mit VS Code: LaTeX Workshop, baut beim Speichern."
+      },
+      "tags": [
+        "latex"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [
+        "omaflake/neovim",
+        "omaflake/vscode"
+      ],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "1246649bd4949693c61e22edf5a0772c274da40fb778ae8bb37a6a0f0249c947",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1403,
+          "sha256": "c04656cc37c73cc419eda06380c1cf402628da8632592cfd5fd429c611d65533"
+        },
+        {
+          "path": "module.toml",
+          "size": 551,
+          "sha256": "53f23296202479726a8b6bfffa0a8ab1cb68784a386241da27eca31261b8f11a"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.lazygit",
+      "ref": "omaflake/lazygit",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "lazygit",
+      "path": "modules/omaflake/macos/lazygit",
+      "version": "1.0.0",
+      "title": "lazygit",
+      "description": "lazygit, a terminal UI for git.",
+      "descriptions": {
+        "de": "lazygit, eine Terminal-Oberfläche für git."
+      },
+      "tags": [
+        "terminal"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "917a3b88776c723767539835dc8c17e319bd567b2a4266a51fdeb453167c0f1e",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 95,
+          "sha256": "9a594c187975319d764a7acd19e7759a567157b3775ad292680129aa18ad0c7d"
+        },
+        {
+          "path": "module.toml",
+          "size": 345,
+          "sha256": "fa4f9180441d367a97e1dab308f537dc67cc075a56b709704bbda0e1bd8c04b4"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.neovim",
+      "ref": "omaflake/neovim",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "neovim",
+      "path": "modules/omaflake/macos/neovim",
+      "version": "1.0.0",
+      "title": "Neovim",
+      "description": "Neovim with the look's colours; ~/.config/nvim/init.lua is written once and then yours.",
+      "descriptions": {
+        "de": "Neovim in den Farben des Looks; ~/.config/nvim/init.lua wird einmal geschrieben und gehört dann dir."
+      },
+      "tags": [
+        "neovim"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "editor",
+        "default-editor"
+      ],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [
+        "terminal",
+        "multiplexer"
+      ],
+      "desktop": false,
+      "own_keys": true,
+      "unfree": false,
+      "actions": {},
+      "hash": "b105fd3d1644516fe4f1da5323774bbd4ded27537ea0e4424254db0a4c1a8682",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 955,
+          "sha256": "ca0ce623be6295fb821d6c05ba734b8ec63bbbd8a9ff9e52157dbf15ed422c68"
+        },
+        {
+          "path": "module.toml",
+          "size": 547,
+          "sha256": "10cdc1796aae8de9f14556bbb03a536061afe4562dc1f826e5977299c623e41c"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.omaflake-dev",
+      "ref": "omaflake/omaflake-dev",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "omaflake-dev",
+      "path": "modules/omaflake/macos/omaflake-dev",
+      "version": "1.0.0",
+      "title": "omaflake development",
+      "description": "For developing omaflake on macOS: the omaflake Test app (sound, microphone, clipboard status; in the Dock) and tools.",
+      "descriptions": {
+        "de": "Zum Entwickeln von omaflake unter macOS: die App omaflake Test (Ton, Mikrofon, Zwischenablage; im Dock) und Werkzeuge."
+      },
+      "tags": [
+        "development",
+        "test"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "104b908d4078e4afe4fa02cd8db69cf6a6369c53f528b672c734590917872cc1",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1927,
+          "sha256": "c93c63bc1b41aafe15f546e32b4da6a1945b3f33392f0b7e4f73b5aefe09e8da"
+        },
+        {
+          "path": "module.toml",
+          "size": 547,
+          "sha256": "e8b8c881792173caf81171916f5e571b6e590e65bab7973a9df73deb8b75fd88"
+        },
+        {
+          "path": "omaflake-test.icns",
+          "size": 347346,
+          "sha256": "9a148585e14904d699a6f79516b3c7bcd6842857355b7227b9736350e5e4c8e7"
+        },
+        {
+          "path": "omaflake-test.sh",
+          "size": 2578,
+          "sha256": "0dfccd7a6e713faaf069566a5df8939c0fe212e052e6c73be2a5abe803e2cd56"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.pandoc",
+      "ref": "omaflake/pandoc",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "pandoc",
+      "path": "modules/omaflake/macos/pandoc",
+      "version": "1.0.0",
+      "title": "pandoc",
+      "description": "pandoc, to convert between document formats.",
+      "descriptions": {
+        "de": "pandoc, zum Umwandeln zwischen Dokumentformaten."
+      },
+      "tags": [
+        "pandoc"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "80329b09d5a07e61401c6b9933abbf533c6dcfaa1b7966bca8d6b65cb017463b",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 93,
+          "sha256": "24461ae66fabe8739f6b2053fe632135a433b7f503b6d53b81910b0de7f60185"
+        },
+        {
+          "path": "module.toml",
+          "size": 357,
+          "sha256": "c16934dc49c0d9d901a322d0c433507fdacee9e56f04be3a59df393c2c15e496"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.shell",
+      "ref": "omaflake/shell",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "shell",
+      "path": "modules/omaflake/macos/shell",
+      "version": "1.0.0",
+      "title": "Terminal tools",
+      "description": "git, Neovim, ripgrep, fd, jq and htop.",
+      "descriptions": {
+        "de": "git, Neovim, ripgrep, fd, jq und htop."
+      },
+      "tags": [
+        "terminal",
+        "nix"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "b145713900a6aa18e83864c7ca493116cedd08b900a818c655b89530ac35c963",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 149,
+          "sha256": "45d96d7a0a35270633b29f101e0ace4e977d08556fef4d9e196cf52f316522bc"
+        },
+        {
+          "path": "module.toml",
+          "size": 365,
+          "sha256": "1016093c98e003282999fedb8e01dd98cb12870df9696f791e45fa67cc04729b"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.typst",
+      "ref": "omaflake/typst",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "typst",
+      "path": "modules/omaflake/macos/typst",
+      "version": "1.0.0",
+      "title": "Typst",
+      "description": "Typst and the tinymist language server; with VS Code its Tinymist extension.",
+      "descriptions": {
+        "de": "Typst und der Sprachserver tinymist; mit VS Code dessen Erweiterung Tinymist."
+      },
+      "tags": [
+        "typst"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [
+        "omaflake/vscode"
+      ],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "075800beacaf7322a11fd46fb1014f753673480bf1c97b1deea69268438ecb69",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 408,
+          "sha256": "94651d524d1dbf5bc2d66d7466b746906b56b712b2fc0cf01f52738aee495cd2"
+        },
+        {
+          "path": "module.toml",
+          "size": 445,
+          "sha256": "1d7e9bfe3c51dc87d4ad9ae8e37ef772ec0dd5332faf41a511ceddada5441ab6"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.vscode",
+      "ref": "omaflake/vscode",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "vscode",
+      "path": "modules/omaflake/macos/vscode",
+      "version": "1.0.0",
+      "title": "VS Code",
+      "description": "Visual Studio Code with LTeX+ (spelling and grammar), GitLens and the Nix IDE – LaTeX and Typst modules add theirs. VS Code is not free software.",
+      "descriptions": {
+        "de": "Visual Studio Code mit LTeX+ (Rechtschreibung und Grammatik), GitLens und Nix IDE – die Module LaTeX und Typst ergänzen ihre. VS Code ist keine freie Software."
+      },
+      "tags": [
+        "vscode"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "editor"
+      ],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": true,
+      "actions": {},
+      "hash": "b3430d8b3e6cead616020cbe200d2b39802f71e7714d140ea63fcc34d055e17b",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 2140,
+          "sha256": "47ac985b37829ebff2dce690a9d77973547f923dec4faf8956b9ca7d11c83e12"
+        },
+        {
+          "path": "module.toml",
+          "size": 612,
+          "sha256": "38be1cbcafb87c944ca3f339c56d6a3a271d5c68afef04b4094783454416379b"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.wezterm",
+      "ref": "omaflake/wezterm",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "wezterm",
+      "path": "modules/omaflake/macos/wezterm",
+      "version": "1.0.0",
+      "title": "WezTerm",
+      "description": "The WezTerm terminal with JetBrains Mono and the look's colours; with Zellij a key opens a window in its session.",
+      "descriptions": {
+        "de": "Das Terminal WezTerm mit JetBrains Mono und den Farben des Looks; mit Zellij öffnet eine Taste ein Fenster in seiner Sitzung."
+      },
+      "tags": [
+        "wezterm",
+        "terminal"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "terminal"
+      ],
+      "needs": [],
+      "enhances": [
+        "omaflake/zellij"
+      ],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "0a5b0345593048bc1839e6a4ce7422dca05d872c7763edb0b40db473ae04f861",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1039,
+          "sha256": "bbb41746d26a2ba34306c3dcb3f3f055ea657f064663794a2a05dc3831b3f725"
+        },
+        {
+          "path": "module.toml",
+          "size": 575,
+          "sha256": "ca846db4bcbeccf79b368a229ec674c692295b5d06835983caeba6bad2a606b4"
+        },
+        {
+          "path": "wezterm.lua",
+          "size": 1584,
+          "sha256": "a5908b644f527a3a818b8fd9617d691df8543cf9bb4ca3206b8a2140a6cf760c"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.zellij",
+      "ref": "omaflake/zellij",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "zellij",
+      "path": "modules/omaflake/macos/zellij",
+      "version": "1.0.0",
+      "title": "Zellij",
+      "description": "The Zellij multiplexer; its session \"main\" opens in a WezTerm window of its own (Cmd+Shift+Return) or with zj.",
+      "descriptions": {
+        "de": "Der Multiplexer Zellij; seine Sitzung „main“ öffnet sich in einem eigenen WezTerm-Fenster (Cmd+Umschalt+Return) oder mit zj."
+      },
+      "tags": [
+        "zellij",
+        "terminal"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "multiplexer"
+      ],
+      "needs": [
+        "terminal"
+      ],
+      "enhances": [],
+      "runs_in": [
+        "terminal"
+      ],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {
+        "session": {
+          "title": "A terminal window in the Zellij session \"main\"",
+          "key": "Super+Shift+Return",
+          "context": "omaflake/wezterm"
+        }
+      },
+      "hash": "9abfc4d3481910fdb232a616a4d671cac68c37cb4092167fec44b6ebab642d5a",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 282,
+          "sha256": "dd56fac3bf52406bd783ed3c8bc5eab4e10f18bba0a2935bfb88d246ded45548"
+        },
+        {
+          "path": "module.toml",
+          "size": 723,
+          "sha256": "539778efdcfc0efb0bf338f5f295bcca609a6c5d3b5f89865788b310f81e39da"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.emacs",
+      "ref": "omaflake/emacs",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "emacs",
+      "path": "modules/omaflake/nixos/emacs",
+      "version": "1.0.0",
+      "title": "Emacs",
+      "description": "Emacs (pure GTK, native on Wayland), preconfigured: Vertico, Consult, Corfu, Magit, Eglot and tree-sitter; the default editor ($EDITOR opens files in the running Emacs).",
+      "descriptions": {
+        "de": "Emacs (reines GTK, nativ unter Wayland), vorkonfiguriert: Vertico, Consult, Corfu, Magit, Eglot und Tree-sitter; der Standard-Editor ($EDITOR öffnet Dateien im laufenden Emacs)."
+      },
+      "tags": [
+        "emacs"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "editor",
+        "default-editor"
+      ],
+      "needs": [],
+      "enhances": [
+        "omaflake/hyprland"
+      ],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": true,
+      "unfree": false,
+      "actions": {
+        "open": {
+          "title": "Open Emacs",
+          "key": "Super+e",
+          "desktop": true
+        }
+      },
+      "hash": "a4545c765fdc494576ba2b69b0a3e7a7e786700aa40c99a5c95564dbc6878924",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 4943,
+          "sha256": "9d425fd1faa55303c7fadb821c86d4eaf20f4674d671ecf8b968bc77c116f10a"
+        },
+        {
+          "path": "module.toml",
+          "size": 791,
+          "sha256": "56288488aaa6510779bd8e90b6fcdce6fbf5e1189b9f990e108efe0bb41f9f09"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.hyprland",
+      "ref": "omaflake/hyprland",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "hyprland",
+      "path": "modules/omaflake/nixos/hyprland",
+      "version": "1.0.0",
+      "title": "Hyprland",
+      "description": "The Hyprland desktop with Waybar, the Fuzzel launcher, Mako notifications, PipeWire audio and the window following the VM's size.",
+      "descriptions": {
+        "de": "Der Hyprland-Desktop mit Waybar, dem Starter Fuzzel, Mako-Benachrichtigungen, PipeWire-Audio und einem Fenster, das der Größe der VM folgt."
+      },
+      "tags": [
+        "desktop",
+        "hyprland"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "desktop"
+      ],
+      "needs": [
+        "terminal"
+      ],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": true,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {
+        "terminal": {
+          "title": "Open a terminal",
+          "key": "Super+Return"
+        },
+        "launcher": {
+          "title": "Open the launcher",
+          "key": "Super+d"
+        },
+        "close": {
+          "title": "Close the window",
+          "key": "Super+q"
+        },
+        "exit": {
+          "title": "Log out",
+          "key": "Super+Shift+e"
+        },
+        "fullscreen": {
+          "title": "Full screen",
+          "key": "Super+f"
+        },
+        "float": {
+          "title": "Float the window",
+          "key": "Super+v"
+        },
+        "pseudo": {
+          "title": "Pseudo-tile the window",
+          "key": "Super+p"
+        },
+        "split": {
+          "title": "Turn the split",
+          "key": "Super+j"
+        },
+        "focus": {
+          "title": "Focus the window that way",
+          "key": "Super+Arrow"
+        },
+        "move": {
+          "title": "Move the window that way",
+          "key": "Super+Shift+Arrow"
+        },
+        "screenshot": {
+          "title": "Screenshot of an area to the clipboard",
+          "key": "Super+Shift+s"
+        },
+        "resize": {
+          "title": "Resize mode (arrows or h j k l; Escape or Return leaves it)",
+          "key": "Super+r"
+        },
+        "workspace": {
+          "title": "Go to workspace 1–9",
+          "key": "Super+Digit"
+        },
+        "to-workspace": {
+          "title": "Move the window to workspace 1–9",
+          "key": "Super+Shift+Digit"
+        }
+      },
+      "hash": "9f1d9770a67709a15d6d5530c3f5b712fd298afc6f0c0ae0b7b1273c8f9a693d",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 12933,
+          "sha256": "485a503fa80468d345c77dadf8f833f850f2d26097b627ab823d3b32c62145de"
+        },
+        {
+          "path": "module.toml",
+          "size": 1766,
+          "sha256": "2fa36b9309cbf8a99819c2d89d82fac847961cc0b3af04727ffd4405322c825b"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.latex",
+      "ref": "omaflake/latex",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "latex",
+      "path": "modules/omaflake/nixos/latex",
+      "version": "1.0.0",
+      "title": "LaTeX",
+      "description": "TeX Live (full) and the texlab language server. With Neovim: vimtex compiles on every save; with zathura: SyncTeX jumps between text and PDF (Ctrl+click).",
+      "descriptions": {
+        "de": "TeX Live (komplett) und der Sprachserver texlab. Mit Neovim: vimtex kompiliert bei jedem Speichern; mit zathura: SyncTeX springt zwischen Text und PDF (Strg+Klick)."
+      },
+      "tags": [
+        "latex"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [
+        "pdf-viewer"
+      ],
+      "enhances": [
+        "omaflake/neovim",
+        "omaflake/zathura"
+      ],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "c5b5dbb0b1487a804f8e5d4d94e6d68e4e1db154ff4066f06ddcf5614a2c2870",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1232,
+          "sha256": "49f898c6e0d3ae7c3cbec28806cbc578848c8dad71d83a2598ca260404450fa0"
+        },
+        {
+          "path": "module.toml",
+          "size": 653,
+          "sha256": "bb8ad954e9e0f003332bf8070ddc7748c243c6f16c504f92f8b44c1f6c47a5f6"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.neovim",
+      "ref": "omaflake/neovim",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "neovim",
+      "path": "modules/omaflake/nixos/neovim",
+      "version": "1.0.0",
+      "title": "Neovim",
+      "description": "Neovim, preconfigured: Telescope, Neo-tree, Bufferline, Lualine, Treesitter, Gitsigns, Which-key; the default editor ($EDITOR).",
+      "descriptions": {
+        "de": "Neovim, vorkonfiguriert: Telescope, Neo-tree, Bufferline, Lualine, Treesitter, Gitsigns, Which-key; der Standard-Editor ($EDITOR)."
+      },
+      "tags": [
+        "neovim"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "editor",
+        "default-editor"
+      ],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [
+        "terminal",
+        "multiplexer"
+      ],
+      "desktop": false,
+      "own_keys": true,
+      "unfree": false,
+      "actions": {
+        "find-files": {
+          "title": "Find files",
+          "key": "Space f f"
+        },
+        "find-text": {
+          "title": "Find text",
+          "key": "Space f g"
+        },
+        "buffers": {
+          "title": "Buffers",
+          "key": "Space f b"
+        },
+        "help": {
+          "title": "Help",
+          "key": "Space f h"
+        },
+        "file-tree": {
+          "title": "File tree",
+          "key": "Space e"
+        },
+        "next-buffer": {
+          "title": "Next buffer",
+          "key": "Shift+l"
+        },
+        "previous-buffer": {
+          "title": "Previous buffer",
+          "key": "Shift+h"
+        },
+        "save": {
+          "title": "Save",
+          "key": "Space w"
+        },
+        "close": {
+          "title": "Close",
+          "key": "Space q"
+        }
+      },
+      "hash": "906103d23c30fa6e763f8066214ab9573747a993ab21dca70588fd6f5b464553",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 5239,
+          "sha256": "b90389a686720cb565900f2f3d3c57bb0aea60938e214324e7e719cc964d2b8e"
+        },
+        {
+          "path": "module.toml",
+          "size": 1231,
+          "sha256": "b08ef84f62eedb908796d5b2f16164916fe21b1174f693309c007cf8179a0fcd"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.omaflake-dev",
+      "ref": "omaflake/omaflake-dev",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "omaflake-dev",
+      "path": "modules/omaflake/nixos/omaflake-dev",
+      "version": "1.0.0",
+      "title": "omaflake development",
+      "description": "For developing omaflake: omaflake itself (the Linux app, omaf, omaf ui), the omaflake Test app (camera, sound, microphone), debug tools and omaflake's status in Waybar.",
+      "descriptions": {
+        "de": "Zum Entwickeln von omaflake: omaflake selbst (die Linux-App, omaf, omaf ui), die App omaflake Test (Kamera, Ton, Mikrofon), Debug-Werkzeuge und der Status von omaflake in Waybar."
+      },
+      "tags": [
+        "development",
+        "test"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [
+        "omaflake/hyprland"
+      ],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "19c1b67211dbd9042a1badd46330cafb31cdac8f7be4a0f5c7b5fc18efa91dde",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 3384,
+          "sha256": "590f7e1f8db6e165efd77753588b081d8335616b7645d0c85077f9027c36a659"
+        },
+        {
+          "path": "module.toml",
+          "size": 691,
+          "sha256": "81dfdd8efb64b0b4fe1c7af62f60cc7765f8c9f6eb0b40c2d8595972090e8a60"
+        },
+        {
+          "path": "omaflake-test.py",
+          "size": 7962,
+          "sha256": "c3ecdf4bf6ab3c0d189557a20d719b4282032fa3264bbeab7fcdf08593cdd030"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.pandoc",
+      "ref": "omaflake/pandoc",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "pandoc",
+      "path": "modules/omaflake/nixos/pandoc",
+      "version": "1.0.0",
+      "title": "pandoc",
+      "description": "pandoc, to convert between document formats.",
+      "descriptions": {
+        "de": "pandoc, zum Umwandeln zwischen Dokumentformaten."
+      },
+      "tags": [
+        "pandoc"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "a4a526c0f7f290241be4edc04a0cf2bb275baa43072405bcf64173b2996667ed",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 85,
+          "sha256": "8a153a77951a6876fe579492ea95248dbd71661db143d3518dffa3e5377f066d"
+        },
+        {
+          "path": "module.toml",
+          "size": 357,
+          "sha256": "6617a4d1c4b7636a0e172c0ee8bd80769328d90dcc25143f96ed7ed262d62b01"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.python-data",
+      "ref": "omaflake/python-data",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "python-data",
+      "path": "modules/omaflake/nixos/python-data",
+      "version": "1.0.0",
+      "title": "Python for data",
+      "description": "Python with numpy, pandas, matplotlib and JupyterLab.",
+      "descriptions": {
+        "de": "Python mit numpy, pandas, matplotlib und JupyterLab."
+      },
+      "tags": [
+        "python",
+        "jupyter"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "77f62c2102504fdccc57c238e183f034548b9355b0edb85a8fd9abe35ac69238",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 229,
+          "sha256": "c62279bf5ec7a47c8babceb7d005acdadd2a2c027a79f59c3ddf477ef7fd54be"
+        },
+        {
+          "path": "module.toml",
+          "size": 404,
+          "sha256": "405e46e6f0c7b9d6ebec812e37a9c4314066de345a3e6cb1291cad3f9c7925d3"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.shell",
+      "ref": "omaflake/shell",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "shell",
+      "path": "modules/omaflake/nixos/shell",
+      "version": "1.0.0",
+      "title": "Shell",
+      "description": "Zsh with suggestions and highlighting, the Starship prompt, and ripgrep, fd, bat, eza, fzf, jq, btop and fastfetch.",
+      "descriptions": {
+        "de": "Zsh mit Vorschlägen und Hervorhebung, der Starship-Prompt sowie ripgrep, fd, bat, eza, fzf, jq, btop und fastfetch."
+      },
+      "tags": [
+        "terminal"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "shell"
+      ],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "35d6dbb98248fc740d961bc7c2a9ce70a6c9c7c55fe22b67e930250a8994fada",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1238,
+          "sha256": "495a174057fc3fbed3df1de23e8a48c3724442fc8722bb58d38cd8f97216821b"
+        },
+        {
+          "path": "module.toml",
+          "size": 546,
+          "sha256": "0996b7a982ace5e0addb1c18142da6cf4019a3100178b47bb1a9a274621bd956"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.typst",
+      "ref": "omaflake/typst",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "typst",
+      "path": "modules/omaflake/nixos/typst",
+      "version": "1.0.0",
+      "title": "Typst",
+      "description": "Typst and the tinymist language server. With Neovim: a live PDF beside the editor, compiled on every save.",
+      "descriptions": {
+        "de": "Typst und der Sprachserver tinymist. Mit Neovim: ein Live-PDF neben dem Editor, kompiliert bei jedem Speichern."
+      },
+      "tags": [
+        "typst"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [
+        "pdf-viewer"
+      ],
+      "enhances": [
+        "omaflake/neovim",
+        "omaflake/zathura"
+      ],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {
+        "preview": {
+          "title": "Typst: the PDF beside the editor, compiled on every save",
+          "key": "Space t p",
+          "context": "omaflake/neovim"
+        }
+      },
+      "hash": "676098d3855f4b11f780abadce5fd87afd3853c05a769247ed6a7630e52c8f25",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 2458,
+          "sha256": "fdbf9a0fe5b7f0467c00f32a41601c71887218eb1a8ec2c0ddc2605ca1b6b565"
+        },
+        {
+          "path": "module.toml",
+          "size": 684,
+          "sha256": "6f98bc65764db48c1f39842537f7ba5dfb5c9fddd50f642b6b09819309bd36e1"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.wezterm",
+      "ref": "omaflake/wezterm",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "wezterm",
+      "path": "modules/omaflake/nixos/wezterm",
+      "version": "1.0.0",
+      "title": "WezTerm",
+      "description": "The WezTerm terminal on the GPU, with JetBrains Mono and the look's colours.",
+      "descriptions": {
+        "de": "Das Terminal WezTerm auf der GPU, mit JetBrains Mono und den Farben des Looks."
+      },
+      "tags": [
+        "wezterm",
+        "terminal"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "terminal"
+      ],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "cb07a0b61be012cf22dc1d44c9dfa7daed3e2a03c4900f4b250ce779d7c8ca2d",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1061,
+          "sha256": "47e4982930a54fc7bc363a9364f17127c34d818b0b754408689f8a4e6ca3a21d"
+        },
+        {
+          "path": "module.toml",
+          "size": 464,
+          "sha256": "47894fa0e15481cc1d650cbea5bdb470811d65569e0e46c1b1fba83376d4801d"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.zathura",
+      "ref": "omaflake/zathura",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "zathura",
+      "path": "modules/omaflake/nixos/zathura",
+      "version": "1.0.0",
+      "title": "Zathura",
+      "description": "The zathura PDF viewer: reloads a PDF when it changes, copies to the clipboard, shows PDFs in the look's colours.",
+      "descriptions": {
+        "de": "Der PDF-Betrachter zathura: lädt ein PDF neu, wenn es sich ändert, kopiert in die Zwischenablage, zeigt PDFs in den Farben des Looks."
+      },
+      "tags": [
+        "pdf"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "pdf-viewer"
+      ],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {},
+      "hash": "12bf446501eb95e374c93d306c93b7293153862dcbd6d491da87747a3d446b95",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 933,
+          "sha256": "9ead13281f8f9b3b342c716e0693d588edbfb7bccaa43928fbc8092c2f185569"
+        },
+        {
+          "path": "module.toml",
+          "size": 544,
+          "sha256": "22a336dc04d3f3ff9cb1388bdfb5b0e051ec4005b9aa78b2f28b9f5fba17073b"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.zellij",
+      "ref": "omaflake/zellij",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "zellij",
+      "path": "modules/omaflake/nixos/zellij",
+      "version": "1.0.0",
+      "title": "Zellij",
+      "description": "The Zellij multiplexer with keys that leave the editor's alone: locked until Ctrl+g. Its session \"main\" opens in a window of its own (Super+Shift+Return) or with zj.",
+      "descriptions": {
+        "de": "Der Multiplexer Zellij mit Tasten, die die des Editors in Ruhe lassen: gesperrt bis Strg+G. Seine Sitzung „main“ öffnet sich in einem eigenen Fenster (Super+Umschalt+Return) oder mit zj."
+      },
+      "tags": [
+        "zellij",
+        "terminal"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [
+        "multiplexer"
+      ],
+      "needs": [
+        "terminal"
+      ],
+      "enhances": [
+        "omaflake/hyprland"
+      ],
+      "runs_in": [
+        "terminal"
+      ],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "actions": {
+        "unlock": {
+          "title": "Unlock Zellij's keys (then p pane, t tab, r resize, m move, s scroll, o session)",
+          "key": "Ctrl+g"
+        },
+        "lock": {
+          "title": "Lock Zellij's keys again",
+          "key": "Ctrl+g",
+          "mode": "normal"
+        },
+        "quit": {
+          "title": "Quit Zellij",
+          "key": "Ctrl+q",
+          "mode": "normal"
+        },
+        "session": {
+          "title": "A terminal window in the Zellij session \"main\"",
+          "key": "Super+Shift+Return",
+          "desktop": true
+        }
+      },
+      "hash": "6d0aafcda9cf45fc3617f1164a0a7ae85ce7e38978f8fd3e5d2a8249013a1e25",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1905,
+          "sha256": "33445b83708fbdbab8961a769a66992a77c80f83ec033ab23728777706ed0801"
+        },
+        {
+          "path": "module.toml",
+          "size": 1152,
+          "sha256": "ca6475ce1eb4c35a4bc4f2ffaf3c2a7b55dcb2e02b8397b28391fb63f4e5c65f"
+        },
+        {
+          "path": "unlock-first.kdl",
+          "size": 8355,
+          "sha256": "462f4d0dedce1cc2841fdeb1cde0e7a828dc4b376e3554b6d1b9992daa9ee63c"
+        }
+      ]
+    }
+  ],
+  "keymaps": [
+    {
+      "id": "omaflake.keymap.default",
+      "ref": "omaflake/default",
+      "author": "omaflake",
+      "name": "default",
+      "path": "keymaps/omaflake/default",
+      "version": "1.0.0",
+      "title": "omaflake",
+      "description": "omaflake's keys: Super or Ctrl first, plain keys only in modes; Zellij unlocks with Ctrl+g, Neovim's leader is Space.",
+      "descriptions": {
+        "de": "Die Tasten von omaflake: Super oder Strg zuerst, einfache Tasten nur in Modi; Zellij entsperrt mit Strg+G, Neovims Leader ist die Leertaste."
+      },
+      "license": "MIT",
+      "keys": {
+        "omaflake/hyprland": {
+          "terminal": "Super+Return",
+          "launcher": "Super+d",
+          "close": "Super+q",
+          "exit": "Super+Shift+e",
+          "fullscreen": "Super+f",
+          "float": "Super+v",
+          "pseudo": "Super+p",
+          "split": "Super+j",
+          "focus": "Super+Arrow",
+          "move": "Super+Shift+Arrow",
+          "screenshot": "Super+Shift+s",
+          "resize": "Super+r",
+          "workspace": "Super+Digit",
+          "to-workspace": "Super+Shift+Digit"
+        },
+        "omaflake/zellij": {
+          "unlock": "Ctrl+g",
+          "lock": "Ctrl+g",
+          "quit": "Ctrl+q",
+          "session": "Super+Shift+Return"
+        },
+        "omaflake/emacs": {
+          "open": "Super+e"
+        },
+        "omaflake/neovim": {
+          "find-files": "Space f f",
+          "find-text": "Space f g",
+          "buffers": "Space f b",
+          "help": "Space f h",
+          "file-tree": "Space e",
+          "next-buffer": "Shift+l",
+          "previous-buffer": "Shift+h",
+          "save": "Space w",
+          "close": "Space q"
+        },
+        "omaflake/typst": {
+          "preview": "Space t p"
+        }
+      },
+      "hash": "24463a01eedc6cb02d362f141ff78193e6cb7c8edc1790196e352c5a914aa905",
+      "files": [
+        {
+          "path": "keymap.toml",
+          "size": 1662,
+          "sha256": "1fc4b4044b27957109bc3fee50052c475432835c85bc6eaa52ca2a84c5e47816"
         }
       ]
     }
@@ -376,9 +1813,11 @@
   "looks": [
     {
       "id": "omaflake.look.catppuccin",
+      "ref": "omaflake/catppuccin",
       "author": "omaflake",
       "name": "catppuccin",
       "path": "looks/omaflake/catppuccin",
+      "version": "1.0.0",
       "title": "Catppuccin Mocha",
       "description": "Soothing pastel on a dark base – the darkest of Catppuccin's four flavours.",
       "descriptions": {
@@ -417,20 +1856,22 @@
           "#a6adc8"
         ]
       },
-      "version": "5022f476e02293c9db83d8a702a2a038760190bf58bed5f2746821fab586ab80",
+      "hash": "73f18d1dfd8ac0daa620b8c5e9aea30af87dc1ccbdc27266aa8a5d7cefbc75e9",
       "files": [
         {
           "path": "look.toml",
-          "size": 1381,
-          "sha256": "bb2155fa046a9700dd2a11e510f32e6b332e0bdeffff7f97993667f6e59a0d4b"
+          "size": 1399,
+          "sha256": "ea65ecdb304d835b6210f8d3dfe01bb7d39b72665dc37d95c0191f7afa31c8ee"
         }
       ]
     },
     {
       "id": "omaflake.look.omaflake",
+      "ref": "omaflake/omaflake",
       "author": "omaflake",
       "name": "omaflake",
       "path": "looks/omaflake/omaflake",
+      "version": "1.0.0",
       "title": "omaflake",
       "description": "Black and high contrast with white text; red and cyan only as fine accents.",
       "descriptions": {
@@ -469,20 +1910,22 @@
           "#FFFFFF"
         ]
       },
-      "version": "9796914e68ebc69b7e701cd9ea50d59e5326f4c050d0521d682a1c132d723442",
+      "hash": "186d659c9771d5d901fa7f90acc47eac2606b297269179746eaefb4181b5b7bb",
       "files": [
         {
           "path": "look.toml",
-          "size": 1415,
-          "sha256": "37a577e2a09deda5ced3f04b7ef4549227eccb3ccf0217d534d3a217914b8997"
+          "size": 1551,
+          "sha256": "e0025d75006c583ff4a916c8ef03e3aff9202f67ffbad08999852a31770c503d"
         }
       ]
     },
     {
       "id": "omaflake.look.rose-pine-dawn",
+      "ref": "omaflake/rose-pine-dawn",
       "author": "omaflake",
       "name": "rose-pine-dawn",
       "path": "looks/omaflake/rose-pine-dawn",
+      "version": "1.0.0",
       "title": "Rosé Pine Dawn",
       "description": "Light and mild – cream, rose, iris and gold.",
       "descriptions": {
@@ -521,20 +1964,22 @@
           "#575279"
         ]
       },
-      "version": "6d42160ecc1c6e667f27b5017fb3f868be1be8fe97539b6ae33ad13f3469def5",
+      "hash": "0929940ffe993cbd680bd4b69a3b3321103b80c90088086653a73cac70c5daf1",
       "files": [
         {
           "path": "look.toml",
-          "size": 1301,
-          "sha256": "fb346f9b8ed498d145c4c02fc20ea5a9af0ad388924de3f053fd3f0408811aab"
+          "size": 1319,
+          "sha256": "cced6317ecd04a79a739af0040b0fad1637cb4312854e69f7965891f19e22cf8"
         }
       ]
     },
     {
       "id": "omaflake.look.vanilla",
+      "ref": "omaflake/vanilla",
       "author": "omaflake",
       "name": "vanilla",
       "path": "looks/omaflake/vanilla",
+      "version": "1.0.0",
       "title": "Vanilla",
       "description": "Every program in its own colours – fonts, layout and keys stay omaflake's.",
       "descriptions": {
@@ -548,12 +1993,12 @@
       "plain": true,
       "homepage": "",
       "swatches": null,
-      "version": "a85263c5ac050812227c8997da3d96b3ab5d0cb9ed739d6e7fdc2ea665bd423e",
+      "hash": "76b3c32a54f7a5c78a1bffbd74f40f6aad7497ad8735d877974b5aba5022cbeb",
       "files": [
         {
           "path": "look.toml",
-          "size": 394,
-          "sha256": "eebbbb82f5db605b9d0f3bf30c9fede6c2a4acd150ad4a33bf89fc38c8479768"
+          "size": 412,
+          "sha256": "cb00354b2713a24c5b526bdc08d9831b28ab7e1bb5575806a3c52df9c8353e57"
         }
       ]
     }
