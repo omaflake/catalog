@@ -1,7 +1,13 @@
-# Module nixos/zellij – the terminal multiplexer. What it does is default.nix next to this file.
+# Module nixos/zellij – the terminal multiplexer. What it does is default.nix next to this file; its key bindings are
+# all here: default.nix writes Zellij's keybinds from them (each mode's binds, `does` then a switch to `after`).
+# The keys are Zellij's "Unlock First (non-colliding)" preset with Ctrl as the primary modifier (zellij 0.45.1,
+# default-plugins/configuration/src/presets.rs, MIT License, Copyright (c) 2020 Zellij contributors), without its Alt
+# shortcuts: the guests' Mac layout makes both Option keys level 3, so no Alt arrives. Lost with them: moving tabs,
+# swap layouts, pane groups. Where the preset binds a key both in a shared block and in a mode, the mode's wins (as in
+# Zellij), so only the binding that works is listed for that mode.
 
-"$schema" = "https://omaflake.dev/schema/module/v1.json"
-version = "1.0.0"
+"$schema" = "https://omaflake.dev/schema/module/v2.json"
+version = "2.0.0"
 author = "omaflake"
 license = "MIT"
 title = "Zellij"
@@ -13,21 +19,777 @@ needs = ["terminal"]
 enhances = ["omaflake/hyprland"]
 runs_in = ["terminal"]
 
-[actions.unlock]
-title = "Unlock Zellij's keys (then p pane, t tab, r resize, m move, s scroll, o session)"
-key = "Ctrl+g"
+# ---------- Modes ----------
 
-[actions.lock]
-title = "Lock Zellij's keys again"
-key = "Ctrl+g"
-mode = "normal"
+[modes.locked]
+title = "Locked"
+title_de = "Gesperrt"
+start = true
 
-[actions.quit]
-title = "Quit Zellij"
-key = "Ctrl+q"
-mode = "normal"
+[modes.normal]
+title = "Unlocked"
+title_de = "Entsperrt"
+
+[modes.pane]
+title = "Pane"
+title_de = "Bereich"
+
+[modes.tab]
+title = "Tab"
+title_de = "Tab"
+
+[modes.resize]
+title = "Resize"
+title_de = "Größe"
+
+[modes.move]
+title = "Move"
+title_de = "Verschieben"
+
+[modes.scroll]
+title = "Scroll"
+title_de = "Scrollen"
+
+[modes.search]
+title = "Search"
+title_de = "Suche"
+
+[modes.entersearch]
+title = "Search term"
+title_de = "Suchbegriff"
+
+[modes.renametab]
+title = "Rename tab"
+title_de = "Tab umbenennen"
+
+[modes.renamepane]
+title = "Rename pane"
+title_de = "Bereich umbenennen"
+
+[modes.session]
+title = "Session"
+title_de = "Sitzung"
+
+# ---------- On the desktop ----------
 
 [actions.session]
 title = "A terminal window in the Zellij session \"main\""
+title_de = "Ein Terminalfenster in der Zellij-Sitzung „main“"
 key = "Super+Shift+Return"
 desktop = true
+
+# ---------- Locking, quitting, entering the modes ----------
+
+[actions.unlock]
+title = "Unlock Zellij's keys"
+title_de = "Zellijs Tasten entsperren"
+key = "Ctrl+g"
+mode = "locked"
+after = "normal"
+
+[actions.lock]
+title = "Lock Zellij's keys again"
+title_de = "Zellijs Tasten wieder sperren"
+key = "Ctrl+g"
+mode = ["normal", "pane", "tab", "resize", "move", "scroll", "search", "entersearch", "session"]
+after = "locked"
+
+[actions.lock-return]
+title = "Lock (back to typing)"
+title_de = "Sperren (zurück zum Tippen)"
+key = "Return"
+mode = ["normal", "pane", "tab", "resize", "move", "scroll", "search", "session"]
+after = "locked"
+
+[actions.lock-escape]
+title = "Lock (cancel)"
+title_de = "Sperren (abbrechen)"
+key = "Escape"
+mode = ["normal", "pane", "tab", "resize", "move", "scroll", "search", "session"]
+after = "locked"
+
+[actions.quit]
+title = "Quit Zellij"
+title_de = "Zellij beenden"
+key = "Ctrl+q"
+mode = ["normal", "pane", "tab", "resize", "move", "scroll", "search", "entersearch", "session"]
+does = "Quit"
+
+[actions.pane-mode]
+title = "Pane mode"
+title_de = "Bereich-Modus"
+key = "p"
+mode = ["normal", "tab", "resize", "scroll"]
+after = "pane"
+
+[actions.tab-mode]
+title = "Tab mode"
+title_de = "Tab-Modus"
+key = "t"
+mode = ["normal", "pane", "resize", "move", "scroll", "search", "session"]
+after = "tab"
+
+[actions.resize-mode]
+title = "Resize mode"
+title_de = "Größe-Modus"
+key = "r"
+mode = ["normal", "move", "scroll", "search", "session"]
+after = "resize"
+
+[actions.move-mode]
+title = "Move mode"
+title_de = "Verschieben-Modus"
+key = "m"
+mode = ["normal", "pane", "tab", "resize", "session"]
+after = "move"
+
+[actions.scroll-mode]
+title = "Scroll mode"
+title_de = "Scroll-Modus"
+key = "s"
+mode = ["normal", "resize", "move", "search"]
+after = "scroll"
+
+[actions.session-mode]
+title = "Session mode"
+title_de = "Sitzungs-Modus"
+key = "o"
+mode = ["normal", "pane", "tab", "resize", "move", "scroll"]
+after = "session"
+
+# ---------- Pane ----------
+
+[actions.leave-pane]
+title = "Leave pane mode"
+title_de = "Bereich-Modus verlassen"
+key = "p"
+mode = "pane"
+after = "normal"
+
+[actions.focus-left]
+title = "Focus the pane on the left"
+title_de = "Bereich links fokussieren"
+key = ["h", "Left"]
+mode = "pane"
+does = 'MoveFocus "Left"'
+
+[actions.focus-down]
+title = "Focus the pane below"
+title_de = "Bereich darunter fokussieren"
+key = ["j", "Down"]
+mode = "pane"
+does = 'MoveFocus "Down"'
+
+[actions.focus-up]
+title = "Focus the pane above"
+title_de = "Bereich darüber fokussieren"
+key = ["k", "Up"]
+mode = "pane"
+does = 'MoveFocus "Up"'
+
+[actions.focus-right]
+title = "Focus the pane on the right"
+title_de = "Bereich rechts fokussieren"
+key = ["l", "Right"]
+mode = "pane"
+does = 'MoveFocus "Right"'
+
+[actions.focus-next]
+title = "Focus the next pane"
+title_de = "Nächsten Bereich fokussieren"
+key = "Tab"
+mode = "pane"
+does = "SwitchFocus"
+
+[actions.focus-last]
+title = "Focus the previous pane"
+title_de = "Vorigen Bereich fokussieren"
+key = ";"
+mode = "pane"
+does = "FocusLastPane"
+
+[actions.new-pane]
+title = "New pane"
+title_de = "Neuer Bereich"
+key = "n"
+mode = "pane"
+does = "NewPane"
+after = "locked"
+
+[actions.new-pane-down]
+title = "New pane below"
+title_de = "Neuer Bereich darunter"
+key = "d"
+mode = "pane"
+does = 'NewPane "Down"'
+after = "locked"
+
+[actions.new-pane-right]
+title = "New pane on the right"
+title_de = "Neuer Bereich rechts"
+key = "r"
+mode = "pane"
+does = 'NewPane "Right"'
+after = "locked"
+
+[actions.new-pane-stacked]
+title = "New pane, stacked"
+title_de = "Neuer Bereich, gestapelt"
+key = "s"
+mode = "pane"
+does = 'NewPane "stacked"'
+after = "locked"
+
+[actions.close-pane]
+title = "Close the pane"
+title_de = "Bereich schließen"
+key = "x"
+mode = "pane"
+does = "CloseFocus"
+after = "locked"
+
+[actions.fullscreen]
+title = "Pane full screen"
+title_de = "Bereich im Vollbild"
+key = "f"
+mode = "pane"
+does = "ToggleFocusFullscreen"
+after = "locked"
+
+[actions.fullscreen-no-ui]
+title = "Pane full screen without frames"
+title_de = "Bereich im Vollbild ohne Rahmen"
+key = "Shift+f"
+mode = "pane"
+does = "ToggleFocusNoUiFullscreen"
+after = "locked"
+
+[actions.pane-frames]
+title = "Show or hide pane frames"
+title_de = "Bereichsrahmen ein- oder ausblenden"
+key = "z"
+mode = "pane"
+does = "TogglePaneFrames"
+after = "locked"
+
+[actions.floating-panes]
+title = "Show or hide floating panes"
+title_de = "Schwebende Bereiche ein- oder ausblenden"
+key = "w"
+mode = "pane"
+does = "ToggleFloatingPanes"
+after = "locked"
+
+[actions.embed-or-float]
+title = "Embed or float the pane"
+title_de = "Bereich einbetten oder schweben lassen"
+key = "e"
+mode = "pane"
+does = "TogglePaneEmbedOrFloating"
+after = "locked"
+
+[actions.pin-pane]
+title = "Pin the floating pane"
+title_de = "Schwebenden Bereich anheften"
+key = "i"
+mode = "pane"
+does = "TogglePanePinned"
+after = "locked"
+
+[actions.rename-pane]
+title = "Rename the pane"
+title_de = "Bereich umbenennen"
+key = "c"
+mode = "pane"
+does = "PaneNameInput 0"
+after = "renamepane"
+
+# ---------- Tab ----------
+
+[actions.leave-tab]
+title = "Leave tab mode"
+title_de = "Tab-Modus verlassen"
+key = "t"
+mode = "tab"
+after = "normal"
+
+[actions.previous-tab]
+title = "Previous tab"
+title_de = "Voriger Tab"
+key = ["h", "Left", "k", "Up"]
+mode = "tab"
+does = "GoToPreviousTab"
+
+[actions.next-tab]
+title = "Next tab"
+title_de = "Nächster Tab"
+key = ["l", "Right", "j", "Down"]
+mode = "tab"
+does = "GoToNextTab"
+
+[actions.go-to-tab]
+title = "Go to tab 1–9"
+title_de = "Zu Tab 1–9"
+key = "Digit"
+mode = "tab"
+does = "GoToTab {digit}"
+after = "locked"
+
+[actions.last-tab]
+title = "Back to the last tab"
+title_de = "Zurück zum letzten Tab"
+key = "Tab"
+mode = "tab"
+does = "ToggleTab"
+
+[actions.new-tab]
+title = "New tab"
+title_de = "Neuer Tab"
+key = "n"
+mode = "tab"
+does = "NewTab"
+after = "locked"
+
+[actions.close-tab]
+title = "Close the tab"
+title_de = "Tab schließen"
+key = "x"
+mode = "tab"
+does = "CloseTab"
+after = "locked"
+
+[actions.sync-tab]
+title = "Type into all panes of the tab"
+title_de = "In alle Bereiche des Tabs tippen"
+key = "s"
+mode = "tab"
+does = "ToggleActiveSyncTab"
+after = "locked"
+
+[actions.break-pane]
+title = "Move the pane to a new tab"
+title_de = "Bereich in einen neuen Tab"
+key = "b"
+mode = "tab"
+does = "BreakPane"
+after = "locked"
+
+[actions.break-pane-right]
+title = "Move the pane to the tab on the right"
+title_de = "Bereich in den Tab rechts"
+key = "]"
+mode = "tab"
+does = "BreakPaneRight"
+after = "locked"
+
+[actions.break-pane-left]
+title = "Move the pane to the tab on the left"
+title_de = "Bereich in den Tab links"
+key = "["
+mode = "tab"
+does = "BreakPaneLeft"
+after = "locked"
+
+[actions.rename-tab]
+title = "Rename the tab"
+title_de = "Tab umbenennen"
+key = "r"
+mode = "tab"
+does = "TabNameInput 0"
+after = "renametab"
+
+# ---------- Resize ----------
+
+[actions.leave-resize]
+title = "Leave resize mode"
+title_de = "Größe-Modus verlassen"
+key = "r"
+mode = "resize"
+after = "normal"
+
+[actions.grow-left]
+title = "Grow to the left"
+title_de = "Nach links vergrößern"
+key = ["h", "Left"]
+mode = "resize"
+does = 'Resize "Increase Left"'
+
+[actions.grow-down]
+title = "Grow downwards"
+title_de = "Nach unten vergrößern"
+key = ["j", "Down"]
+mode = "resize"
+does = 'Resize "Increase Down"'
+
+[actions.grow-up]
+title = "Grow upwards"
+title_de = "Nach oben vergrößern"
+key = ["k", "Up"]
+mode = "resize"
+does = 'Resize "Increase Up"'
+
+[actions.grow-right]
+title = "Grow to the right"
+title_de = "Nach rechts vergrößern"
+key = ["l", "Right"]
+mode = "resize"
+does = 'Resize "Increase Right"'
+
+[actions.shrink-left]
+title = "Shrink from the left"
+title_de = "Von links verkleinern"
+key = "Shift+h"
+mode = "resize"
+does = 'Resize "Decrease Left"'
+
+[actions.shrink-down]
+title = "Shrink from below"
+title_de = "Von unten verkleinern"
+key = "Shift+j"
+mode = "resize"
+does = 'Resize "Decrease Down"'
+
+[actions.shrink-up]
+title = "Shrink from above"
+title_de = "Von oben verkleinern"
+key = "Shift+k"
+mode = "resize"
+does = 'Resize "Decrease Up"'
+
+[actions.shrink-right]
+title = "Shrink from the right"
+title_de = "Von rechts verkleinern"
+key = "Shift+l"
+mode = "resize"
+does = 'Resize "Decrease Right"'
+
+[actions.grow]
+title = "Grow"
+title_de = "Vergrößern"
+key = ["=", "Plus"]
+mode = "resize"
+does = 'Resize "Increase"'
+
+[actions.shrink]
+title = "Shrink"
+title_de = "Verkleinern"
+key = "-"
+mode = "resize"
+does = 'Resize "Decrease"'
+
+# ---------- Move ----------
+
+[actions.leave-move]
+title = "Leave move mode"
+title_de = "Verschieben-Modus verlassen"
+key = "m"
+mode = "move"
+after = "normal"
+
+[actions.move-pane]
+title = "Move the pane forwards"
+title_de = "Bereich vorwärts verschieben"
+key = ["n", "Tab"]
+mode = "move"
+does = "MovePane"
+
+[actions.move-pane-back]
+title = "Move the pane backwards"
+title_de = "Bereich rückwärts verschieben"
+key = "p"
+mode = "move"
+does = "MovePaneBackwards"
+
+[actions.move-left]
+title = "Move the pane left"
+title_de = "Bereich nach links verschieben"
+key = ["h", "Left"]
+mode = "move"
+does = 'MovePane "Left"'
+
+[actions.move-down]
+title = "Move the pane down"
+title_de = "Bereich nach unten verschieben"
+key = ["j", "Down"]
+mode = "move"
+does = 'MovePane "Down"'
+
+[actions.move-up]
+title = "Move the pane up"
+title_de = "Bereich nach oben verschieben"
+key = ["k", "Up"]
+mode = "move"
+does = 'MovePane "Up"'
+
+[actions.move-right]
+title = "Move the pane right"
+title_de = "Bereich nach rechts verschieben"
+key = ["l", "Right"]
+mode = "move"
+does = 'MovePane "Right"'
+
+# ---------- Scroll and search ----------
+
+[actions.leave-scroll]
+title = "Leave scroll mode"
+title_de = "Scroll-Modus verlassen"
+key = "s"
+mode = "scroll"
+after = "normal"
+
+[actions.scroll-down]
+title = "Scroll down"
+title_de = "Nach unten scrollen"
+key = ["j", "Down"]
+mode = ["scroll", "search"]
+does = "ScrollDown"
+
+[actions.scroll-up]
+title = "Scroll up"
+title_de = "Nach oben scrollen"
+key = ["k", "Up"]
+mode = ["scroll", "search"]
+does = "ScrollUp"
+
+[actions.page-down]
+title = "Page down"
+title_de = "Seite nach unten"
+key = ["Ctrl+f", "PageDown", "Right", "l"]
+mode = ["scroll", "search"]
+does = "PageScrollDown"
+
+[actions.page-up]
+title = "Page up"
+title_de = "Seite nach oben"
+key = ["Ctrl+b", "PageUp", "Left", "h"]
+mode = ["scroll", "search"]
+does = "PageScrollUp"
+
+[actions.half-page-down]
+title = "Half a page down"
+title_de = "Halbe Seite nach unten"
+key = "d"
+mode = ["scroll", "search"]
+does = "HalfPageScrollDown"
+
+[actions.half-page-up]
+title = "Half a page up"
+title_de = "Halbe Seite nach oben"
+key = "u"
+mode = ["scroll", "search"]
+does = "HalfPageScrollUp"
+
+[actions.previous-prompt]
+title = "To the previous prompt"
+title_de = "Zum vorigen Prompt"
+key = "["
+mode = ["scroll", "search"]
+does = "ScrollToPreviousPrompt"
+
+[actions.next-prompt]
+title = "To the next prompt"
+title_de = "Zum nächsten Prompt"
+key = "]"
+mode = ["scroll", "search"]
+does = "ScrollToNextPrompt"
+
+[actions.select-command]
+title = "Select the command at this position"
+title_de = "Befehl an dieser Stelle auswählen"
+key = "m"
+mode = ["scroll", "search"]
+does = "SelectCommandAtScrollPosition"
+
+[actions.to-bottom]
+title = "Back to the bottom"
+title_de = "Zurück nach unten"
+key = "Ctrl+c"
+mode = ["scroll", "search"]
+does = "ScrollToBottom"
+after = "locked"
+
+[actions.edit-scrollback]
+title = "Open the scrollback in the editor"
+title_de = "Verlauf im Editor öffnen"
+key = "e"
+mode = "scroll"
+does = "EditScrollback"
+after = "locked"
+
+[actions.copy-output]
+title = "Copy the last command's output"
+title_de = "Ausgabe des letzten Befehls kopieren"
+key = "c"
+mode = "scroll"
+does = "CopyLastCommandOutput"
+after = "locked"
+
+[actions.search]
+title = "Search"
+title_de = "Suchen"
+key = "f"
+mode = "scroll"
+does = "SearchInput 0"
+after = "entersearch"
+
+[actions.search-confirm]
+title = "Search for the term"
+title_de = "Nach dem Begriff suchen"
+key = "Return"
+mode = "entersearch"
+after = "search"
+
+[actions.search-cancel]
+title = "Cancel the search"
+title_de = "Suche abbrechen"
+key = ["Ctrl+c", "Escape"]
+mode = "entersearch"
+after = "scroll"
+
+[actions.search-down]
+title = "Next match"
+title_de = "Nächster Treffer"
+key = "n"
+mode = "search"
+does = 'Search "down"'
+
+[actions.search-up]
+title = "Previous match"
+title_de = "Voriger Treffer"
+key = "p"
+mode = "search"
+does = 'Search "up"'
+
+[actions.search-case]
+title = "Case sensitive on or off"
+title_de = "Groß-/Kleinschreibung beachten an oder aus"
+key = "c"
+mode = "search"
+does = 'SearchToggleOption "CaseSensitivity"'
+
+[actions.search-wrap]
+title = "Wrap around on or off"
+title_de = "Am Ende von vorn an oder aus"
+key = "w"
+mode = "search"
+does = 'SearchToggleOption "Wrap"'
+
+[actions.search-whole-word]
+title = "Whole words on or off"
+title_de = "Ganze Wörter an oder aus"
+key = "o"
+mode = "search"
+does = 'SearchToggleOption "WholeWord"'
+
+# ---------- Renaming ----------
+
+[actions.rename-done]
+title = "Done renaming"
+title_de = "Umbenennen fertig"
+key = ["Ctrl+c", "Return"]
+mode = ["renametab", "renamepane"]
+after = "locked"
+
+[actions.rename-tab-undo]
+title = "Undo the new tab name"
+title_de = "Neuen Tab-Namen verwerfen"
+key = "Escape"
+mode = "renametab"
+does = "UndoRenameTab"
+after = "tab"
+
+[actions.rename-pane-undo]
+title = "Undo the new pane name"
+title_de = "Neuen Bereichsnamen verwerfen"
+key = "Escape"
+mode = "renamepane"
+does = "UndoRenamePane"
+after = "pane"
+
+# ---------- Session ----------
+
+[actions.leave-session]
+title = "Leave session mode"
+title_de = "Sitzungs-Modus verlassen"
+key = "o"
+mode = "session"
+after = "normal"
+
+[actions.detach]
+title = "Detach (the session keeps running)"
+title_de = "Abkoppeln (die Sitzung läuft weiter)"
+key = "d"
+mode = "session"
+does = "Detach"
+
+[actions.session-manager]
+title = "Session manager"
+title_de = "Sitzungsverwaltung"
+key = "w"
+mode = "session"
+does = 'LaunchOrFocusPlugin "session-manager" { floating true; move_to_focused_tab true; }'
+after = "locked"
+
+[actions.layout-manager]
+title = "Layout manager"
+title_de = "Layoutverwaltung"
+key = "l"
+mode = "session"
+does = 'LaunchOrFocusPlugin "zellij:layout-manager" { floating true; move_to_focused_tab true; }'
+after = "locked"
+
+[actions.configuration]
+title = "Zellij's configuration screen"
+title_de = "Zellijs Einstellungen"
+key = "c"
+mode = "session"
+does = 'LaunchOrFocusPlugin "configuration" { floating true; move_to_focused_tab true; }'
+after = "locked"
+
+[actions.plugin-manager]
+title = "Plugin manager"
+title_de = "Plugin-Verwaltung"
+key = "p"
+mode = "session"
+does = 'LaunchOrFocusPlugin "plugin-manager" { floating true; move_to_focused_tab true; }'
+after = "locked"
+
+[actions.share]
+title = "Share the session in a web browser"
+title_de = "Sitzung im Webbrowser teilen"
+key = "s"
+mode = "session"
+does = 'LaunchOrFocusPlugin "zellij:share" { floating true; move_to_focused_tab true; }'
+after = "locked"
+
+[actions.about]
+title = "About Zellij"
+title_de = "Über Zellij"
+key = "a"
+mode = "session"
+does = 'LaunchOrFocusPlugin "zellij:about" { floating true; move_to_focused_tab true; }'
+after = "locked"
+
+[actions.host-session]
+title = "Focus the host session"
+title_de = "Host-Sitzung fokussieren"
+key = "]"
+mode = "session"
+does = "FocusHostSession"
+after = "locked"
+
+[actions.guest-session]
+title = "Focus the guest session"
+title_de = "Gast-Sitzung fokussieren"
+key = "["
+mode = "session"
+does = "FocusGuestSession"
+after = "locked"
+
+[actions.host-fullscreen]
+title = "Host full screen"
+title_de = "Host im Vollbild"
+key = "f"
+mode = "session"
+does = "ToggleHostFullscreen"
+after = "locked"

@@ -25,10 +25,11 @@ LOOKS = ROOT / "looks"
 CATALOG = ROOT / "catalog.json"
 # The JSON Schemas (omaflake/omaflake docs/schema/, published on omaflake.dev): what this catalog is, and what each
 # file names in "$schema" – as omaflake's image flake reads it
-SCHEMA = "https://omaflake.dev/schema/catalog/v4.json"      # v2: systems; v3: looks; v4: modules, key bindings, recipe v2
+SCHEMA = "https://omaflake.dev/schema/catalog/v5.json"      # v2: systems; v3: looks; v4: modules, key bindings, recipe v2;
+#                                                             v5: module v2 and keymap v2 (modes, after, does)
 RECIPE_SCHEMA = "https://omaflake.dev/schema/recipe/v2.json"
-MODULE_SCHEMA = "https://omaflake.dev/schema/module/v1.json"
-KEYMAP_SCHEMA = "https://omaflake.dev/schema/keymap/v1.json"
+MODULE_SCHEMA = "https://omaflake.dev/schema/module/v2.json"
+KEYMAP_SCHEMA = "https://omaflake.dev/schema/keymap/v2.json"
 LOOK_SCHEMA = "https://omaflake.dev/schema/look/v1.json"
 
 PLATFORMS = ("nixos", "macos")
@@ -137,7 +138,8 @@ def common(where, data: dict, schema: str, tags: set[str] | None, licenses: list
 # A key is a chord – modifiers and a key joined by "+" ("Super+Shift+Return", "Ctrl+g") – or, for editors, a sequence
 # of chords separated by spaces ("Space f f"). Digit and Arrow stand for 1–9 and the four arrows.
 MODIFIERS = ("Super", "Ctrl", "Alt", "Shift")
-NAMED = {"Return", "Space", "Escape", "Tab", "Backspace", "Left", "Right", "Up", "Down", "Digit", "Arrow"} \
+NAMED = {"Return", "Space", "Escape", "Tab", "Backspace", "Left", "Right", "Up", "Down", "PageUp", "PageDown", "Plus",
+         "Digit", "Arrow"} \
     | {f"F{i}" for i in range(1, 13)}
 SINGLE = re.compile(r"[a-z0-9`\-=\[\];',./\\]")
 
@@ -166,7 +168,35 @@ def expand(seq: list[tuple[frozenset, str]]) -> list[tuple]:
     return result
 
 
-def check_actions(where, actions, own_keys: bool, errors: list[str]) -> None:
+def as_list(value) -> list[str] | None:
+    """One key or mode as a string, several as a list (module/v2, keymap/v2)"""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, list) and value and all(isinstance(v, str) for v in value):
+        return value
+    return None
+
+
+def check_modes(where, modes, errors: list[str]) -> None:
+    if not isinstance(modes, dict):
+        errors.append(f"{where}: [modes.<name>] tables")
+        return
+    for name, m in modes.items():
+        if not NAME.fullmatch(name) or not isinstance(m, dict):
+            errors.append(f"{where}: mode {name!r} – lowercase letters, digits and -, a table")
+            continue
+        extra = set(m) - {"title", "title_de", "start"}
+        if extra:
+            errors.append(f"{where}: mode {name} has no {', '.join(sorted(extra))}")
+        if not isinstance(m.get("title"), str) or not m["title"].strip():
+            errors.append(f"{where}: mode {name} needs a title")
+        if "start" in m and not isinstance(m["start"], bool):
+            errors.append(f"{where}: mode {name}: start is true or false")
+    if modes and sum(1 for m in modes.values() if isinstance(m, dict) and m.get("start")) != 1:
+        errors.append(f"{where}: one mode has start = true – the one the program starts in")
+
+
+def check_actions(where, actions, modes: dict, errors: list[str]) -> None:
     if not isinstance(actions, dict):
         errors.append(f"{where}: [actions.<name>] tables")
         return
@@ -174,19 +204,42 @@ def check_actions(where, actions, own_keys: bool, errors: list[str]) -> None:
         if not NAME.fullmatch(name) or not isinstance(a, dict):
             errors.append(f"{where}: action {name!r} – lowercase letters, digits and -, a table")
             continue
-        extra = set(a) - {"title", "key", "mode", "desktop", "context"}
+        extra = set(a) - {"title", "title_de", "key", "mode", "after", "does", "own", "desktop", "context"}
         if extra:
             errors.append(f"{where}: action {name} has no {', '.join(sorted(extra))}")
         if not isinstance(a.get("title"), str) or not a["title"].strip():
             errors.append(f"{where}: action {name} needs a title")
-        if parse_key(a.get("key")) is None:
-            errors.append(f"{where}: action {name}: key {a.get('key')!r} – e.g. \"Super+Shift+Return\", \"Ctrl+g\", \"Space f f\"")
-        if "mode" in a and (not isinstance(a["mode"], str) or not NAME.fullmatch(a["mode"])):
-            errors.append(f"{where}: action {name}: mode is a name")
-        if "desktop" in a and not isinstance(a["desktop"], bool):
-            errors.append(f"{where}: action {name}: desktop is true or false")
+        keys = as_list(a.get("key"))
+        if keys is None or any(parse_key(k) is None for k in keys):
+            errors.append(f"{where}: action {name}: key {a.get('key')!r} – e.g. \"Super+Shift+Return\", \"Ctrl+g\", \"Space f f\", or a list")
+        for field in ("mode", "after"):
+            if field not in a:
+                continue
+            names = as_list(a[field]) if field == "mode" else [a[field]] if isinstance(a[field], str) else None
+            if names is None or any(not NAME.fullmatch(n) for n in names):
+                errors.append(f"{where}: action {name}: {field} is a mode's name" + (" or a list" if field == "mode" else ""))
+            elif modes and any(n not in modes for n in names):
+                errors.append(f"{where}: action {name}: {field} names a mode not in [modes]")
+        if "does" in a and (not isinstance(a["does"], str) or not a["does"].strip()):
+            errors.append(f"{where}: action {name}: does is the program's command")
+        for field in ("own", "desktop"):
+            if field in a and not isinstance(a[field], bool):
+                errors.append(f"{where}: action {name}: {field} is true or false")
         if "context" in a and (not isinstance(a["context"], str) or not REF.fullmatch(a["context"])):
             errors.append(f"{where}: action {name}: context is a module, \"<author>/<name>\"")
+
+
+def entry_of(value) -> dict | None:
+    """A key binding set's entry: a key, several keys, or a table with key and/or after (keymap/v2)"""
+    if isinstance(value, dict):
+        if not value or set(value) - {"key", "after"}:
+            return None
+        keys = as_list(value["key"]) if "key" in value else []
+        if keys is None or ("after" in value and not (isinstance(value["after"], str) and NAME.fullmatch(value["after"]))):
+            return None
+        return {"key": keys, "after": value.get("after")}
+    keys = as_list(value)
+    return {"key": keys, "after": None} if keys is not None else None
 
 
 def overlaps(bindings: list[dict], modules: dict[str, dict]) -> list[str]:
@@ -200,8 +253,8 @@ def overlaps(bindings: list[dict], modules: dict[str, dict]) -> list[str]:
         return set(modules.get(ref, {}).get("runs_in", []))
 
     def together(a, b) -> bool:
-        if a["mode"] or b["mode"]:
-            return a["context"] == b["context"] and a["mode"] == b["mode"]
+        if a["modes"] or b["modes"]:
+            return a["context"] == b["context"] and bool(set(a["modes"]) & set(b["modes"]))
         if a["context"] == b["context"] or "desktop" in (a["context"], b["context"]):
             return True
         return bool(provides(a["context"]) & runs_in(b["context"])) or bool(provides(b["context"]) & runs_in(a["context"]))
@@ -220,31 +273,36 @@ def overlaps(bindings: list[dict], modules: dict[str, dict]) -> list[str]:
 
 def key_rule(binding: dict, modules: dict[str, dict]) -> str | None:
     """omaflake's key rule: without a mode a key starts with Super or Ctrl – except an editor's own keys"""
-    if binding["mode"] or modules.get(binding["context"], {}).get("own_keys"):
+    if binding["modes"] or binding["own"] or modules.get(binding["context"], {}).get("own_keys"):
         return None
-    seq = parse_key(binding["key"]) or []
-    if len(seq) != 1 or not ({"Super", "Ctrl"} & seq[0][0]):
-        return f"{binding['module']} {binding['action']} ({binding['key']}): without a mode a key starts with Super or Ctrl"
+    for key in binding["key"].split(" / "):
+        seq = parse_key(key) or []
+        if len(seq) != 1 or not ({"Super", "Ctrl"} & seq[0][0]):
+            return f"{binding['module']} {binding['action']} ({key}): without a mode a key starts with Super or Ctrl"
     return None
 
 
 def bindings_of(platform: str, refs: list[str], keymaps: list[dict], modules: dict[str, dict]) -> list[dict]:
-    """A recipe's key bindings: each module's defaults, then its key binding sets in order (a later one wins)"""
+    """A recipe's key bindings: each module's defaults, then its key binding sets in order (a later one wins; never
+    for a program's own keys)"""
     out = []
     for ref in refs:
         m = modules.get(f"{platform}:{ref}")
         if not m:
             continue
         for action, a in m.get("actions", {}).items():
-            key = a.get("key")
+            keys = as_list(a.get("key")) or []
             for km in keymaps:
-                key = km.get("keys", {}).get(ref, {}).get(action, key)
-            seq = parse_key(key)
-            if seq is None:
+                e = entry_of(km.get("keys", {}).get(ref, {}).get(action)) if not a.get("own") else None
+                if e and e["key"]:
+                    keys = e["key"]
+            seqs = [parse_key(k) for k in keys]
+            if not keys or any(q is None for q in seqs):
                 continue
             context = "desktop" if a.get("desktop") or m.get("desktop") else a.get("context", ref)
-            out.append({"module": ref, "action": action, "key": key, "keys": expand(seq), "mode": a.get("mode"),
-                        "context": context})
+            out.append({"module": ref, "action": action, "key": " / ".join(keys),
+                        "keys": [x for q in seqs for x in expand(q)], "modes": as_list(a.get("mode")) or [],
+                        "own": a.get("own", False), "context": context})
     return out
 
 
@@ -258,7 +316,7 @@ def check_module(folder: Path, data: dict, tags: set[str], licenses: list[str], 
         errors.append(f"{where}: the platform folder is nixos or macos, not {platform}")
     common(where, data, MODULE_SCHEMA, tags, licenses, errors, author, "module.toml")
     extra = set(data) - {"$schema", "version", "author", "license", "title", "description", "tags", "homepage",
-                         "provides", "needs", "enhances", "runs_in", "desktop", "own_keys", "unfree", "actions"}
+                         "provides", "needs", "enhances", "runs_in", "desktop", "own_keys", "unfree", "modes", "actions"}
     for key in sorted(extra):
         if not key.startswith("description_"):
             errors.append(f"{where}: module.toml has no {key}")
@@ -276,7 +334,9 @@ def check_module(folder: Path, data: dict, tags: set[str], licenses: list[str], 
     for key in ("desktop", "own_keys", "unfree"):
         if key in data and not isinstance(data[key], bool):
             errors.append(f"{where}: {key} is true or false")
-    check_actions(where, data.get("actions", {}), data.get("own_keys", False), errors)
+    check_modes(where, data.get("modes", {}), errors)
+    check_actions(where, data.get("actions", {}), data.get("modes", {}) if isinstance(data.get("modes"), dict) else {},
+                  errors)
     if not (folder / "default.nix").is_file():
         errors.append(f"{where}: default.nix is missing")
 
@@ -297,11 +357,16 @@ def check_keymap(folder: Path, data: dict, licenses: list[str], modules: dict[st
         here = [m for k, m in modules.items() if k.split(":", 1)[1] == ref]
         if not here:
             warnings.append(f"{where}: {ref} is not a module of this catalog – its actions are not checked")
-        for action, key in keys.items():
-            if parse_key(key) is None:
-                errors.append(f"{where}: {ref} {action}: key {key!r}")
+        for action, value in keys.items():
+            e = entry_of(value)
+            if e is None or any(parse_key(k) is None for k in e["key"]):
+                errors.append(f"{where}: {ref} {action}: {value!r} – a key, a list of keys, or {{ key, after }}")
             elif here and not any(action in m.get("actions", {}) for m in here):
                 errors.append(f"{where}: {ref} has no action {action}")
+            elif here and any(m.get("actions", {}).get(action, {}).get("own") for m in here):
+                errors.append(f"{where}: {ref} {action} is the program's own key – a set does not change it")
+            elif e["after"] and here and not any(e["after"] in m.get("modes", {}) for m in here):
+                errors.append(f"{where}: {ref} {action}: after {e['after']!r} is not a mode of the module")
 
 
 def check_recipe(folder: Path, data: dict, tags: set[str], licenses: list[str], catalog: dict, errors: list[str],
@@ -632,6 +697,7 @@ def build() -> tuple[dict, list[str], list[str]]:
             "desktop": data.get("desktop", False),
             "own_keys": data.get("own_keys", False),
             "unfree": data.get("unfree", False),
+            "modes": data.get("modes", {}),
             "actions": data.get("actions", {}),
             "hash": content_hash(files),
             "files": files,

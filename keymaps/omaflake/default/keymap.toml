@@ -3,8 +3,8 @@
 # A recipe names key binding sets in `keymaps` (later ones win for the same action); without any, every module uses
 # the defaults of its module.toml. These are those defaults, written down as a set to start your own from.
 
-"$schema" = "https://omaflake.dev/schema/keymap/v1.json"
-version = "1.0.0"
+"$schema" = "https://omaflake.dev/schema/keymap/v2.json"
+version = "1.0.1"
 author = "omaflake"
 license = "MIT"
 title = "omaflake"

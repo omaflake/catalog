@@ -79,7 +79,7 @@ have tested – omaflake shows a recipe only where it runs, and builds it only f
 ## Modules: `module.toml` and `default.nix`
 
 ```toml
-"$schema" = "https://omaflake.dev/schema/module/v1.json"   # required
+"$schema" = "https://omaflake.dev/schema/module/v2.json"   # required
 version = "1.0.0"                # required – raise it with every change (recipes may ask for a version)
 author = "your-github-name"      # required
 license = "MIT"                  # required
@@ -96,11 +96,37 @@ unfree = false                   # true: not free software (the user is told)
 
 [actions.open]                   # an action people can bind a key to, with its default key
 title = "Open zathura"
-key = "Super+z"
+title_de = "Zathura öffnen"      # optional: the title in German (the app shows it there)
+key = "Super+z"                  # or several keys, each doing it: ["h", "Left"]
 desktop = true                   # optional: works everywhere on the desktop (a launcher)
-# mode = "normal"                # optional: only in this mode of the module
 # context = "omaflake/neovim"    # optional: bound inside another module's program
+# own = true                     # optional: the program's own key, shown for reference – sets do not change it
 ```
+
+A program with **modes** (Zellij's pane mode, Hyprland's resize submap) names them, and its actions say where they
+work and where they lead – so that people can see the way to a key (Ctrl+g › p › n) and a key binding set can change
+it:
+
+```toml
+[modes.locked]
+title = "Locked"
+title_de = "Gesperrt"
+start = true                     # the mode the program starts in (exactly one)
+
+[modes.pane]
+title = "Pane"
+
+[actions.new-pane]
+title = "New pane"
+key = "n"
+mode = "pane"                    # only in this mode, or in several: ["pane", "tab"]
+does = "NewPane"                 # optional: what it does in the program's own words
+after = "locked"                 # optional: the mode afterwards; without it, it stays
+```
+
+**List all of a module's keys** – those it sets or changes, and the program's own keys one needs to work with it
+(`own = true`), not every built-in one. Where a program's configuration has keys, the module writes it from its
+actions (`omaflake.bindings`), so the list and the program cannot drift apart (`omaflake/nixos/zellij`).
 
 **Capabilities** are a short, fixed list (`capabilities.toml`): `desktop` (exclusive), `terminal`, `multiplexer`,
 `shell` (exclusive), `editor`, `default-editor` (exclusive – sets `$EDITOR`), `pdf-viewer`. Each says what a module
@@ -115,7 +141,9 @@ nixpkgs), these arguments:
 | Argument | |
 |---|---|
 | `settings` | the user's values: `user`, `fullName`, `email`, `timeZone`, `locale`, `keyboard`, `keyboards`, `macUser` (macOS) |
-| `omaflake.keys` | this module's actions → keys (its defaults, the recipe's key binding sets over them), e.g. `omaflake.keys.open` = `"Super+z"` |
+| `omaflake.keys` | this module's actions → keys (its defaults, the recipe's key binding sets over them), e.g. `omaflake.keys.open` = `"Super+z"` (a list where the action has several) |
+| `omaflake.bindings` | this module's actions as module.toml has them, with the recipe's key binding sets over `key` and `after` – to write a program's configuration |
+| `omaflake.modes` | this module's `[modes]` |
 | `omaflake.allKeys` | every module's keys in the recipe (`omaflake.allKeys."omaflake/zellij".session`) |
 | `omaflake.has "<author>/<name>"` | whether the recipe has that module – for what it enhances |
 | `omaflake.keyLib` | a key for Hyprland (`hyprland`), Zellij (`zellij`), WezTerm (`wezterm` → `{ key; mods; }`), Neovim (`neovim`), Emacs (`emacs`); `expand` for the `Digit` and `Arrow` placeholders |
@@ -135,11 +163,12 @@ lib.mkMerge [ … ]`) for options another module declares.
 
 **Keys:** written as a chord – modifiers (`Super`, the Mac's Cmd; `Ctrl`; `Alt`; `Shift`) and a key joined by `+`:
 `Super+Shift+Return`, `Ctrl+g` – or, for an editor, a sequence: `Space f f`. Keys are lowercase letters, digits,
-punctuation, `Return`, `Space`, `Escape`, `Tab`, `Backspace`, `Left`/`Right`/`Up`/`Down`, `F1`–`F12`, and the
-placeholders `Digit` (1–9) and `Arrow`. **The key rule:** without a mode a key is one chord starting with `Super` or
-`Ctrl` (optionally with `Shift`); plain keys only inside a mode; an editor's own keys (`own_keys`) stay as they are.
-`tools/catalog.py` checks that no two keys of a recipe overlap: the same context and mode; a desktop-wide one with any
-key without a mode; a program's key with one of a program that runs inside it (`runs_in`).
+punctuation, `Plus`, `Return`, `Space`, `Escape`, `Tab`, `Backspace`, `Left`/`Right`/`Up`/`Down`, `PageUp`/`PageDown`,
+`F1`–`F12`, and the placeholders `Digit` (1–9; `{digit}` in `does`) and `Arrow`. A capital is `Shift+h`. **The key
+rule:** without a mode a key is one chord starting with `Super` or `Ctrl` (optionally with `Shift`); plain keys only
+inside a mode; an editor's own keys (`own_keys`, `own`) stay as they are. `tools/catalog.py` checks that no two keys of
+a recipe overlap: the same context and a mode they share; a desktop-wide one with any key without a mode; a program's
+key with one of a program that runs inside it (`runs_in`).
 
 What a module must not do:
 
@@ -155,7 +184,7 @@ Files: at most 1 MiB each and 5 MiB per module, no symbolic links.
 ## Key bindings: `keymap.toml`
 
 ```toml
-"$schema" = "https://omaflake.dev/schema/keymap/v1.json"   # required
+"$schema" = "https://omaflake.dev/schema/keymap/v2.json"   # required
 version = "1.0.0"                # required
 author = "your-github-name"      # required
 license = "MIT"                  # required
@@ -164,10 +193,14 @@ description = "Super+t opens a terminal."                    # required
 
 [keys."omaflake/hyprland"]       # a module's actions → keys (any of them)
 terminal = "Super+t"
+
+[keys."omaflake/zellij"]
+focus-left = ["h", "Left", "Ctrl+h"]   # several keys
+new-pane = { after = "pane" }          # the mode afterwards: stay in pane mode (key unchanged)
 ```
 
-A set gives keys only to the actions it names; a recipe may combine several (`keymaps = ["omaflake/default",
-"you/mine"]`), a later one wins.
+A set gives keys (and `after`) only to the actions it names, never to a program's own keys; a recipe may combine
+several (`keymaps = ["omaflake/default", "you/mine"]`), a later one wins.
 
 ## Testing
 

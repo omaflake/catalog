@@ -11,10 +11,10 @@ that builds images and turns looks into configuration) lives in `omaflake/omafla
 
 - **Language:** everything in this repository is English. Talk to the maintainer in German.
 - **Public from day one:** no personal data in tracked files (names, home paths, host names, keys).
-- **The format is an interface.** `catalog.json` (`$schema` catalog/v4), the folder layouts
+- **The format is an interface.** `catalog.json` (`$schema` catalog/v5), the folder layouts
   `recipes/<author>/<platform>/<name>/`, `modules/<author>/<platform>/<name>/`, `keymaps/<author>/<name>/` and
-  `looks/<author>/<name>/`, the fields of `recipe.toml` (recipe/v2), `module.toml` (module/v1), `keymap.toml`
-  (keymap/v1), `look.toml` (look/v1) and `capabilities.toml`, and the module arguments (`omaflake.keys`, `has`, …) are
+  `looks/<author>/<name>/`, the fields of `recipe.toml` (recipe/v2), `module.toml` (module/v2), `keymap.toml`
+  (keymap/v2), `look.toml` (look/v1) and `capabilities.toml`, and the module arguments (`omaflake.keys`, `bindings`, `modes`, `has`, …) are
   what omaflake and its image flake read; the JSON Schemas live in omaflake's
   `docs/schema/`. Change them only together with omaflake, and raise the version in `tools/catalog.py` for changes an
   older omaflake would misread.

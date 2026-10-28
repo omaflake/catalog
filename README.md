@@ -99,7 +99,7 @@ No look is built into omaflake: every one is installed from here and can be remo
 
 ## How omaflake uses `catalog.json`
 
-`catalog.json` (schema `catalog/v4`) lists every recipe (what it is made of, its requirements and how a VM runs),
+`catalog.json` (schema `catalog/v5`) lists every recipe (what it is made of, its requirements and how a VM runs),
 module (version, capabilities, actions), key binding set, look (title, appearance, main colours for a preview) and the
 capabilities, each with its files' sizes and SHA-256 and a content hash. omaflake
 

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://omaflake.dev/schema/catalog/v4.json",
+  "$schema": "https://omaflake.dev/schema/catalog/v5.json",
   "source": {
     "name": "omaflake",
     "description": "The official omaflake recipes, modules, key bindings and looks, reviewed by the omaflake core team.",
@@ -544,7 +544,7 @@
       "platform": "macos",
       "name": "desktop",
       "path": "modules/omaflake/macos/desktop",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "macOS desktop",
       "description": "A minimal Dock, Finder opening Downloads, the look's appearance (light or dark, accent, icons, folders, wallpaper), no desktop widgets, a quiet menu bar and a private-by-default Safari.",
       "descriptions": {
@@ -564,8 +564,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "173ffcf813d5e41fa1880632c2e7a35db49ac2401be1b09c4c450297744c43da",
+      "hash": "a37283801a935e606172083e8936c468e63673bb4945609a99d9a04de6d1f1bf",
       "files": [
         {
           "path": "assets/safari-bookmarks-seed.plist",
@@ -590,7 +591,7 @@
         {
           "path": "module.toml",
           "size": 704,
-          "sha256": "56923d749ef28d3786315cace05311fc94188fa96f0cb7bc8388bd0c8a3e7b1d"
+          "sha256": "0b66e868de66a5149419fa0ef5130bed2cb75424f8859ae9c1246dcd158fd81d"
         }
       ]
     },
@@ -601,7 +602,7 @@
       "platform": "macos",
       "name": "homebrew",
       "path": "modules/omaflake/macos/homebrew",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Homebrew",
       "description": "Homebrew, installed declaratively (nix-homebrew), for what Nix does not have; taps stay changeable.",
       "descriptions": {
@@ -619,8 +620,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "d2f1a6486018fd8a7c43b3aa0e6706c68bd9d2f9b43c85335b17d346b7eb4bee",
+      "hash": "9027916326064d12f71715f684be4eeb97276c1f2ed4586f921405d58205e42a",
       "files": [
         {
           "path": "default.nix",
@@ -630,7 +632,7 @@
         {
           "path": "module.toml",
           "size": 473,
-          "sha256": "53b292c9b5e2d27457cee73666d78e024d95488b1a63964c10aa208137fc7c0b"
+          "sha256": "e007f212c253cd58a7dbc18eb6bda89864f422c37019eddd3b8f772baca196a7"
         }
       ]
     },
@@ -641,7 +643,7 @@
       "platform": "macos",
       "name": "latex",
       "path": "modules/omaflake/macos/latex",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "LaTeX",
       "description": "TeX Live (full) and texlab. With Neovim: vimtex (the PDF in Preview); with VS Code: LaTeX Workshop, building on save.",
       "descriptions": {
@@ -662,8 +664,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "1246649bd4949693c61e22edf5a0772c274da40fb778ae8bb37a6a0f0249c947",
+      "hash": "fbb9ef68be374d4cc938e85e75c94da201b7feca923949388df7ccb40de455ca",
       "files": [
         {
           "path": "default.nix",
@@ -673,7 +676,7 @@
         {
           "path": "module.toml",
           "size": 551,
-          "sha256": "53f23296202479726a8b6bfffa0a8ab1cb68784a386241da27eca31261b8f11a"
+          "sha256": "548866b9f72b31742f03aaa1d54b15f8aa02e5e556a416f27bc974dd883dad42"
         }
       ]
     },
@@ -684,7 +687,7 @@
       "platform": "macos",
       "name": "lazygit",
       "path": "modules/omaflake/macos/lazygit",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "lazygit",
       "description": "lazygit, a terminal UI for git.",
       "descriptions": {
@@ -702,8 +705,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "917a3b88776c723767539835dc8c17e319bd567b2a4266a51fdeb453167c0f1e",
+      "hash": "2c6e791de20f26a9cf02cde2e1fada283bfe9675de3dd226ce993ed3cc62ed70",
       "files": [
         {
           "path": "default.nix",
@@ -713,7 +717,7 @@
         {
           "path": "module.toml",
           "size": 345,
-          "sha256": "fa4f9180441d367a97e1dab308f537dc67cc075a56b709704bbda0e1bd8c04b4"
+          "sha256": "09353afe610c9e30653b6065d4f676f904ccec47e70707af13cd1996c53bcb56"
         }
       ]
     },
@@ -724,7 +728,7 @@
       "platform": "macos",
       "name": "neovim",
       "path": "modules/omaflake/macos/neovim",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Neovim",
       "description": "Neovim with the look's colours; ~/.config/nvim/init.lua is written once and then yours.",
       "descriptions": {
@@ -748,8 +752,9 @@
       "desktop": false,
       "own_keys": true,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "b105fd3d1644516fe4f1da5323774bbd4ded27537ea0e4424254db0a4c1a8682",
+      "hash": "c020dfa02e145727b80493b7a2cfc9c2eb993029d7c5f6d33fb6870d3795b2aa",
       "files": [
         {
           "path": "default.nix",
@@ -759,7 +764,7 @@
         {
           "path": "module.toml",
           "size": 547,
-          "sha256": "10cdc1796aae8de9f14556bbb03a536061afe4562dc1f826e5977299c623e41c"
+          "sha256": "abdea1fa9c3c8f0a7d92c81ea07c5bc577479acf2816f277dd4d77810e08a8f9"
         }
       ]
     },
@@ -770,7 +775,7 @@
       "platform": "macos",
       "name": "omaflake-dev",
       "path": "modules/omaflake/macos/omaflake-dev",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "omaflake development",
       "description": "For developing omaflake on macOS: the omaflake Test app (sound, microphone, clipboard status; in the Dock) and tools.",
       "descriptions": {
@@ -789,8 +794,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "104b908d4078e4afe4fa02cd8db69cf6a6369c53f528b672c734590917872cc1",
+      "hash": "18dbcd752a35eac8491aa69b57c006a7f9dd9535ab01b45dcb80a36f778ff69d",
       "files": [
         {
           "path": "default.nix",
@@ -800,7 +806,7 @@
         {
           "path": "module.toml",
           "size": 547,
-          "sha256": "e8b8c881792173caf81171916f5e571b6e590e65bab7973a9df73deb8b75fd88"
+          "sha256": "cab1ffd27ba71ec4b916629b30f2ca99684f3a96e887b3057da3bf2a6d3cca0e"
         },
         {
           "path": "omaflake-test.icns",
@@ -821,7 +827,7 @@
       "platform": "macos",
       "name": "pandoc",
       "path": "modules/omaflake/macos/pandoc",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "pandoc",
       "description": "pandoc, to convert between document formats.",
       "descriptions": {
@@ -839,8 +845,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "80329b09d5a07e61401c6b9933abbf533c6dcfaa1b7966bca8d6b65cb017463b",
+      "hash": "3e5d27fe796f24a23e2515bc1f008980766350d812b5cfcae491b5e1058b11ab",
       "files": [
         {
           "path": "default.nix",
@@ -850,7 +857,7 @@
         {
           "path": "module.toml",
           "size": 357,
-          "sha256": "c16934dc49c0d9d901a322d0c433507fdacee9e56f04be3a59df393c2c15e496"
+          "sha256": "c7fb3620aa6e04dd883f59f3a8757bee196940ce08cd56ce3a9f84c2d4e5fc74"
         }
       ]
     },
@@ -861,7 +868,7 @@
       "platform": "macos",
       "name": "shell",
       "path": "modules/omaflake/macos/shell",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Terminal tools",
       "description": "git, Neovim, ripgrep, fd, jq and htop.",
       "descriptions": {
@@ -880,8 +887,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "b145713900a6aa18e83864c7ca493116cedd08b900a818c655b89530ac35c963",
+      "hash": "dec29e15290c0b93a0d083eedaa1e96d646504ade4c0538f845dc524c70c8170",
       "files": [
         {
           "path": "default.nix",
@@ -891,7 +899,7 @@
         {
           "path": "module.toml",
           "size": 365,
-          "sha256": "1016093c98e003282999fedb8e01dd98cb12870df9696f791e45fa67cc04729b"
+          "sha256": "7d75eaf10fc0b1230c2eaeeaaf4bad6ed3b45ae01137197e3bfb25670c0e57d7"
         }
       ]
     },
@@ -902,7 +910,7 @@
       "platform": "macos",
       "name": "typst",
       "path": "modules/omaflake/macos/typst",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Typst",
       "description": "Typst and the tinymist language server; with VS Code its Tinymist extension.",
       "descriptions": {
@@ -922,8 +930,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "075800beacaf7322a11fd46fb1014f753673480bf1c97b1deea69268438ecb69",
+      "hash": "25dccddeed98dd1fa3c24057b90f171cab4746db82710bb7f43748f64d94a881",
       "files": [
         {
           "path": "default.nix",
@@ -933,7 +942,7 @@
         {
           "path": "module.toml",
           "size": 445,
-          "sha256": "1d7e9bfe3c51dc87d4ad9ae8e37ef772ec0dd5332faf41a511ceddada5441ab6"
+          "sha256": "c3881b9be29c19533ac651efa647233708b672f33accfa8eb862872dbf3868f4"
         }
       ]
     },
@@ -944,7 +953,7 @@
       "platform": "macos",
       "name": "vscode",
       "path": "modules/omaflake/macos/vscode",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "VS Code",
       "description": "Visual Studio Code with LTeX+ (spelling and grammar), GitLens and the Nix IDE – LaTeX and Typst modules add theirs. VS Code is not free software.",
       "descriptions": {
@@ -964,8 +973,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": true,
+      "modes": {},
       "actions": {},
-      "hash": "b3430d8b3e6cead616020cbe200d2b39802f71e7714d140ea63fcc34d055e17b",
+      "hash": "e8e6eb3ab1168d3e4c422fc4703c6916cc255e1f2838914ec167eec49ea38b38",
       "files": [
         {
           "path": "default.nix",
@@ -975,7 +985,7 @@
         {
           "path": "module.toml",
           "size": 612,
-          "sha256": "38be1cbcafb87c944ca3f339c56d6a3a271d5c68afef04b4094783454416379b"
+          "sha256": "ac8912a93a9bff0a346ddbf100dcd08ae9043972b543432a82613d70f13123d4"
         }
       ]
     },
@@ -986,7 +996,7 @@
       "platform": "macos",
       "name": "wezterm",
       "path": "modules/omaflake/macos/wezterm",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "WezTerm",
       "description": "The WezTerm terminal with JetBrains Mono and the look's colours; with Zellij a key opens a window in its session.",
       "descriptions": {
@@ -1009,8 +1019,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "0a5b0345593048bc1839e6a4ce7422dca05d872c7763edb0b40db473ae04f861",
+      "hash": "09736f80943843e588bb3b4fe4171a783e442697607a9be4b0101448cb486f88",
       "files": [
         {
           "path": "default.nix",
@@ -1020,7 +1031,7 @@
         {
           "path": "module.toml",
           "size": 575,
-          "sha256": "ca846db4bcbeccf79b368a229ec674c692295b5d06835983caeba6bad2a606b4"
+          "sha256": "5fd288e332475f242d6292bd0d102d99836c403c708a28b4da5ee8aa518811ba"
         },
         {
           "path": "wezterm.lua",
@@ -1036,7 +1047,7 @@
       "platform": "macos",
       "name": "zellij",
       "path": "modules/omaflake/macos/zellij",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Zellij",
       "description": "The Zellij multiplexer; its session \"main\" opens in a WezTerm window of its own (Cmd+Shift+Return) or with zj.",
       "descriptions": {
@@ -1061,6 +1072,7 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {
         "session": {
           "title": "A terminal window in the Zellij session \"main\"",
@@ -1068,7 +1080,7 @@
           "context": "omaflake/wezterm"
         }
       },
-      "hash": "9abfc4d3481910fdb232a616a4d671cac68c37cb4092167fec44b6ebab642d5a",
+      "hash": "e24c65e622bd3ba561eed80afee89c5cf9b9bc2a5cf8733bd12ccb548ca2f2d0",
       "files": [
         {
           "path": "default.nix",
@@ -1078,7 +1090,7 @@
         {
           "path": "module.toml",
           "size": 723,
-          "sha256": "539778efdcfc0efb0bf338f5f295bcca609a6c5d3b5f89865788b310f81e39da"
+          "sha256": "0792a92e5cd1f6ee785d033f5196a450e026d450a2e49a3c6df1f9fcfe7750a3"
         }
       ]
     },
@@ -1089,7 +1101,7 @@
       "platform": "nixos",
       "name": "emacs",
       "path": "modules/omaflake/nixos/emacs",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Emacs",
       "description": "Emacs (pure GTK, native on Wayland), preconfigured: Vertico, Consult, Corfu, Magit, Eglot and tree-sitter; the default editor ($EDITOR opens files in the running Emacs).",
       "descriptions": {
@@ -1112,6 +1124,7 @@
       "desktop": false,
       "own_keys": true,
       "unfree": false,
+      "modes": {},
       "actions": {
         "open": {
           "title": "Open Emacs",
@@ -1119,7 +1132,7 @@
           "desktop": true
         }
       },
-      "hash": "a4545c765fdc494576ba2b69b0a3e7a7e786700aa40c99a5c95564dbc6878924",
+      "hash": "e16163586f8051c9d9de6056d983ae777972198dd0a8866bbbc551a548c6c96c",
       "files": [
         {
           "path": "default.nix",
@@ -1129,7 +1142,7 @@
         {
           "path": "module.toml",
           "size": 791,
-          "sha256": "56288488aaa6510779bd8e90b6fcdce6fbf5e1189b9f990e108efe0bb41f9f09"
+          "sha256": "93d21707cfd915a4cc257b83011146a0ef3ff4413f32eb6a015137838e840917"
         }
       ]
     },
@@ -1140,7 +1153,7 @@
       "platform": "nixos",
       "name": "hyprland",
       "path": "modules/omaflake/nixos/hyprland",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Hyprland",
       "description": "The Hyprland desktop with Waybar, the Fuzzel launcher, Mako notifications, PipeWire audio and the window following the VM's size.",
       "descriptions": {
@@ -1163,6 +1176,7 @@
       "desktop": true,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {
         "terminal": {
           "title": "Open a terminal",
@@ -1221,7 +1235,7 @@
           "key": "Super+Shift+Digit"
         }
       },
-      "hash": "9f1d9770a67709a15d6d5530c3f5b712fd298afc6f0c0ae0b7b1273c8f9a693d",
+      "hash": "a75ac0d3e13957901ade6cfb64e58768abae70b7bd7f04a1f0701007698eb6d7",
       "files": [
         {
           "path": "default.nix",
@@ -1231,7 +1245,7 @@
         {
           "path": "module.toml",
           "size": 1766,
-          "sha256": "2fa36b9309cbf8a99819c2d89d82fac847961cc0b3af04727ffd4405322c825b"
+          "sha256": "9aa5a4118da2eb39a0c631b9fa8279e2ce210e4222899d2cc51a6ccaa1102551"
         }
       ]
     },
@@ -1242,7 +1256,7 @@
       "platform": "nixos",
       "name": "latex",
       "path": "modules/omaflake/nixos/latex",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "LaTeX",
       "description": "TeX Live (full) and the texlab language server. With Neovim: vimtex compiles on every save; with zathura: SyncTeX jumps between text and PDF (Ctrl+click).",
       "descriptions": {
@@ -1265,8 +1279,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "c5b5dbb0b1487a804f8e5d4d94e6d68e4e1db154ff4066f06ddcf5614a2c2870",
+      "hash": "58c168c231cedd18337ceed8f92f88dd57dae3bbe6b984fb587b34d07e1b141f",
       "files": [
         {
           "path": "default.nix",
@@ -1276,7 +1291,7 @@
         {
           "path": "module.toml",
           "size": 653,
-          "sha256": "bb8ad954e9e0f003332bf8070ddc7748c243c6f16c504f92f8b44c1f6c47a5f6"
+          "sha256": "04d82795224d8345e32c9f808e09643586a3aaab8ec9763629ce335f651ed5cb"
         }
       ]
     },
@@ -1287,7 +1302,7 @@
       "platform": "nixos",
       "name": "neovim",
       "path": "modules/omaflake/nixos/neovim",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Neovim",
       "description": "Neovim, preconfigured: Telescope, Neo-tree, Bufferline, Lualine, Treesitter, Gitsigns, Which-key; the default editor ($EDITOR).",
       "descriptions": {
@@ -1311,6 +1326,7 @@
       "desktop": false,
       "own_keys": true,
       "unfree": false,
+      "modes": {},
       "actions": {
         "find-files": {
           "title": "Find files",
@@ -1349,7 +1365,7 @@
           "key": "Space q"
         }
       },
-      "hash": "906103d23c30fa6e763f8066214ab9573747a993ab21dca70588fd6f5b464553",
+      "hash": "bd35b7b08561f05bf2fb2a508b85cca865bb30be1c7423cef9d24bc2c860c5af",
       "files": [
         {
           "path": "default.nix",
@@ -1359,7 +1375,7 @@
         {
           "path": "module.toml",
           "size": 1231,
-          "sha256": "b08ef84f62eedb908796d5b2f16164916fe21b1174f693309c007cf8179a0fcd"
+          "sha256": "69a00e98e28523c9d063c9fe70a6c31e9d0370bbb1b725e575bf5063d83f7df2"
         }
       ]
     },
@@ -1370,7 +1386,7 @@
       "platform": "nixos",
       "name": "omaflake-dev",
       "path": "modules/omaflake/nixos/omaflake-dev",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "omaflake development",
       "description": "For developing omaflake: omaflake itself (the Linux app, omaf, omaf ui), the omaflake Test app (camera, sound, microphone), debug tools and omaflake's status in Waybar.",
       "descriptions": {
@@ -1391,8 +1407,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "19c1b67211dbd9042a1badd46330cafb31cdac8f7be4a0f5c7b5fc18efa91dde",
+      "hash": "6cc23dfbf0a8b8658ceba25f4bb954a45c9974ce25e6afced61472b73300d4f6",
       "files": [
         {
           "path": "default.nix",
@@ -1402,7 +1419,7 @@
         {
           "path": "module.toml",
           "size": 691,
-          "sha256": "81dfdd8efb64b0b4fe1c7af62f60cc7765f8c9f6eb0b40c2d8595972090e8a60"
+          "sha256": "6321b7956b60ab0d5d24ceeb537650128b0e838c565e41c214a8502a23f64768"
         },
         {
           "path": "omaflake-test.py",
@@ -1418,7 +1435,7 @@
       "platform": "nixos",
       "name": "pandoc",
       "path": "modules/omaflake/nixos/pandoc",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "pandoc",
       "description": "pandoc, to convert between document formats.",
       "descriptions": {
@@ -1436,8 +1453,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "a4a526c0f7f290241be4edc04a0cf2bb275baa43072405bcf64173b2996667ed",
+      "hash": "da1428a2d754d67183ad67296b628314c3cb7eefddbda990c49e584060dd4236",
       "files": [
         {
           "path": "default.nix",
@@ -1447,7 +1465,7 @@
         {
           "path": "module.toml",
           "size": 357,
-          "sha256": "6617a4d1c4b7636a0e172c0ee8bd80769328d90dcc25143f96ed7ed262d62b01"
+          "sha256": "01485532c4e10bd46ac805d4d46f5b2b4a373e88f16d49fe76d3774e8527782f"
         }
       ]
     },
@@ -1458,7 +1476,7 @@
       "platform": "nixos",
       "name": "python-data",
       "path": "modules/omaflake/nixos/python-data",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Python for data",
       "description": "Python with numpy, pandas, matplotlib and JupyterLab.",
       "descriptions": {
@@ -1477,8 +1495,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "77f62c2102504fdccc57c238e183f034548b9355b0edb85a8fd9abe35ac69238",
+      "hash": "de433198101f9ff76318e4a68c702044f9fd66fbaa66b24bcbfecd2d4d89a99c",
       "files": [
         {
           "path": "default.nix",
@@ -1488,7 +1507,7 @@
         {
           "path": "module.toml",
           "size": 404,
-          "sha256": "405e46e6f0c7b9d6ebec812e37a9c4314066de345a3e6cb1291cad3f9c7925d3"
+          "sha256": "a22eff362c2f815a4ae9762fb6a191f146b8d1a9e6641658a6db897f216202f2"
         }
       ]
     },
@@ -1499,7 +1518,7 @@
       "platform": "nixos",
       "name": "shell",
       "path": "modules/omaflake/nixos/shell",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Shell",
       "description": "Zsh with suggestions and highlighting, the Starship prompt, and ripgrep, fd, bat, eza, fzf, jq, btop and fastfetch.",
       "descriptions": {
@@ -1519,8 +1538,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "35d6dbb98248fc740d961bc7c2a9ce70a6c9c7c55fe22b67e930250a8994fada",
+      "hash": "0381b0b4c2d23ef38951b9359f63da8dd4f0abf8bf1c8227a064c177073d335a",
       "files": [
         {
           "path": "default.nix",
@@ -1530,7 +1550,7 @@
         {
           "path": "module.toml",
           "size": 546,
-          "sha256": "0996b7a982ace5e0addb1c18142da6cf4019a3100178b47bb1a9a274621bd956"
+          "sha256": "9add3646b4d26d9dcdec2e2966d0c2717415553f4026e9764238fc8b6a6a4131"
         }
       ]
     },
@@ -1541,7 +1561,7 @@
       "platform": "nixos",
       "name": "typst",
       "path": "modules/omaflake/nixos/typst",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Typst",
       "description": "Typst and the tinymist language server. With Neovim: a live PDF beside the editor, compiled on every save.",
       "descriptions": {
@@ -1564,6 +1584,7 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {
         "preview": {
           "title": "Typst: the PDF beside the editor, compiled on every save",
@@ -1571,7 +1592,7 @@
           "context": "omaflake/neovim"
         }
       },
-      "hash": "676098d3855f4b11f780abadce5fd87afd3853c05a769247ed6a7630e52c8f25",
+      "hash": "d60e13f7dc503b246bf7140550894e8e02f172b05ce292742dfb4e4828e41d40",
       "files": [
         {
           "path": "default.nix",
@@ -1581,7 +1602,7 @@
         {
           "path": "module.toml",
           "size": 684,
-          "sha256": "6f98bc65764db48c1f39842537f7ba5dfb5c9fddd50f642b6b09819309bd36e1"
+          "sha256": "8ca9c730c52f65ae78bc4d66f13d167978b88d963b379bdd4171600f34e312b9"
         }
       ]
     },
@@ -1592,7 +1613,7 @@
       "platform": "nixos",
       "name": "wezterm",
       "path": "modules/omaflake/nixos/wezterm",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "WezTerm",
       "description": "The WezTerm terminal on the GPU, with JetBrains Mono and the look's colours.",
       "descriptions": {
@@ -1613,8 +1634,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "cb07a0b61be012cf22dc1d44c9dfa7daed3e2a03c4900f4b250ce779d7c8ca2d",
+      "hash": "f128e2d102a641c37fda61729fdceb23389c831e9a553d50506db43197540510",
       "files": [
         {
           "path": "default.nix",
@@ -1624,7 +1646,7 @@
         {
           "path": "module.toml",
           "size": 464,
-          "sha256": "47894fa0e15481cc1d650cbea5bdb470811d65569e0e46c1b1fba83376d4801d"
+          "sha256": "60840aae65edc1c6aca0675d7f5e77520d12ff16e54bc66f741f3a5c3b76e18b"
         }
       ]
     },
@@ -1635,7 +1657,7 @@
       "platform": "nixos",
       "name": "zathura",
       "path": "modules/omaflake/nixos/zathura",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Zathura",
       "description": "The zathura PDF viewer: reloads a PDF when it changes, copies to the clipboard, shows PDFs in the look's colours.",
       "descriptions": {
@@ -1655,8 +1677,9 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {},
       "actions": {},
-      "hash": "12bf446501eb95e374c93d306c93b7293153862dcbd6d491da87747a3d446b95",
+      "hash": "f8d1ae5991458dbbd8840bb681f077ce7f59d65300a3e310adb75056b95952d1",
       "files": [
         {
           "path": "default.nix",
@@ -1666,7 +1689,7 @@
         {
           "path": "module.toml",
           "size": 544,
-          "sha256": "22a336dc04d3f3ff9cb1388bdfb5b0e051ec4005b9aa78b2f28b9f5fba17073b"
+          "sha256": "0710a101be17ddb5084d037d2235af95d93bd9a46beea004eb084b231959d06b"
         }
       ]
     },
@@ -1677,7 +1700,7 @@
       "platform": "nixos",
       "name": "zellij",
       "path": "modules/omaflake/nixos/zellij",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "title": "Zellij",
       "description": "The Zellij multiplexer with keys that leave the editor's alone: locked until Ctrl+g. Its session \"main\" opens in a window of its own (Super+Shift+Return) or with zj.",
       "descriptions": {
@@ -1704,43 +1727,958 @@
       "desktop": false,
       "own_keys": false,
       "unfree": false,
+      "modes": {
+        "locked": {
+          "title": "Locked",
+          "title_de": "Gesperrt",
+          "start": true
+        },
+        "normal": {
+          "title": "Unlocked",
+          "title_de": "Entsperrt"
+        },
+        "pane": {
+          "title": "Pane",
+          "title_de": "Bereich"
+        },
+        "tab": {
+          "title": "Tab",
+          "title_de": "Tab"
+        },
+        "resize": {
+          "title": "Resize",
+          "title_de": "Größe"
+        },
+        "move": {
+          "title": "Move",
+          "title_de": "Verschieben"
+        },
+        "scroll": {
+          "title": "Scroll",
+          "title_de": "Scrollen"
+        },
+        "search": {
+          "title": "Search",
+          "title_de": "Suche"
+        },
+        "entersearch": {
+          "title": "Search term",
+          "title_de": "Suchbegriff"
+        },
+        "renametab": {
+          "title": "Rename tab",
+          "title_de": "Tab umbenennen"
+        },
+        "renamepane": {
+          "title": "Rename pane",
+          "title_de": "Bereich umbenennen"
+        },
+        "session": {
+          "title": "Session",
+          "title_de": "Sitzung"
+        }
+      },
       "actions": {
+        "session": {
+          "title": "A terminal window in the Zellij session \"main\"",
+          "title_de": "Ein Terminalfenster in der Zellij-Sitzung „main“",
+          "key": "Super+Shift+Return",
+          "desktop": true
+        },
         "unlock": {
-          "title": "Unlock Zellij's keys (then p pane, t tab, r resize, m move, s scroll, o session)",
-          "key": "Ctrl+g"
+          "title": "Unlock Zellij's keys",
+          "title_de": "Zellijs Tasten entsperren",
+          "key": "Ctrl+g",
+          "mode": "locked",
+          "after": "normal"
         },
         "lock": {
           "title": "Lock Zellij's keys again",
+          "title_de": "Zellijs Tasten wieder sperren",
           "key": "Ctrl+g",
-          "mode": "normal"
+          "mode": [
+            "normal",
+            "pane",
+            "tab",
+            "resize",
+            "move",
+            "scroll",
+            "search",
+            "entersearch",
+            "session"
+          ],
+          "after": "locked"
+        },
+        "lock-return": {
+          "title": "Lock (back to typing)",
+          "title_de": "Sperren (zurück zum Tippen)",
+          "key": "Return",
+          "mode": [
+            "normal",
+            "pane",
+            "tab",
+            "resize",
+            "move",
+            "scroll",
+            "search",
+            "session"
+          ],
+          "after": "locked"
+        },
+        "lock-escape": {
+          "title": "Lock (cancel)",
+          "title_de": "Sperren (abbrechen)",
+          "key": "Escape",
+          "mode": [
+            "normal",
+            "pane",
+            "tab",
+            "resize",
+            "move",
+            "scroll",
+            "search",
+            "session"
+          ],
+          "after": "locked"
         },
         "quit": {
           "title": "Quit Zellij",
+          "title_de": "Zellij beenden",
           "key": "Ctrl+q",
-          "mode": "normal"
+          "mode": [
+            "normal",
+            "pane",
+            "tab",
+            "resize",
+            "move",
+            "scroll",
+            "search",
+            "entersearch",
+            "session"
+          ],
+          "does": "Quit"
         },
-        "session": {
-          "title": "A terminal window in the Zellij session \"main\"",
-          "key": "Super+Shift+Return",
-          "desktop": true
+        "pane-mode": {
+          "title": "Pane mode",
+          "title_de": "Bereich-Modus",
+          "key": "p",
+          "mode": [
+            "normal",
+            "tab",
+            "resize",
+            "scroll"
+          ],
+          "after": "pane"
+        },
+        "tab-mode": {
+          "title": "Tab mode",
+          "title_de": "Tab-Modus",
+          "key": "t",
+          "mode": [
+            "normal",
+            "pane",
+            "resize",
+            "move",
+            "scroll",
+            "search",
+            "session"
+          ],
+          "after": "tab"
+        },
+        "resize-mode": {
+          "title": "Resize mode",
+          "title_de": "Größe-Modus",
+          "key": "r",
+          "mode": [
+            "normal",
+            "move",
+            "scroll",
+            "search",
+            "session"
+          ],
+          "after": "resize"
+        },
+        "move-mode": {
+          "title": "Move mode",
+          "title_de": "Verschieben-Modus",
+          "key": "m",
+          "mode": [
+            "normal",
+            "pane",
+            "tab",
+            "resize",
+            "session"
+          ],
+          "after": "move"
+        },
+        "scroll-mode": {
+          "title": "Scroll mode",
+          "title_de": "Scroll-Modus",
+          "key": "s",
+          "mode": [
+            "normal",
+            "resize",
+            "move",
+            "search"
+          ],
+          "after": "scroll"
+        },
+        "session-mode": {
+          "title": "Session mode",
+          "title_de": "Sitzungs-Modus",
+          "key": "o",
+          "mode": [
+            "normal",
+            "pane",
+            "tab",
+            "resize",
+            "move",
+            "scroll"
+          ],
+          "after": "session"
+        },
+        "leave-pane": {
+          "title": "Leave pane mode",
+          "title_de": "Bereich-Modus verlassen",
+          "key": "p",
+          "mode": "pane",
+          "after": "normal"
+        },
+        "focus-left": {
+          "title": "Focus the pane on the left",
+          "title_de": "Bereich links fokussieren",
+          "key": [
+            "h",
+            "Left"
+          ],
+          "mode": "pane",
+          "does": "MoveFocus \"Left\""
+        },
+        "focus-down": {
+          "title": "Focus the pane below",
+          "title_de": "Bereich darunter fokussieren",
+          "key": [
+            "j",
+            "Down"
+          ],
+          "mode": "pane",
+          "does": "MoveFocus \"Down\""
+        },
+        "focus-up": {
+          "title": "Focus the pane above",
+          "title_de": "Bereich darüber fokussieren",
+          "key": [
+            "k",
+            "Up"
+          ],
+          "mode": "pane",
+          "does": "MoveFocus \"Up\""
+        },
+        "focus-right": {
+          "title": "Focus the pane on the right",
+          "title_de": "Bereich rechts fokussieren",
+          "key": [
+            "l",
+            "Right"
+          ],
+          "mode": "pane",
+          "does": "MoveFocus \"Right\""
+        },
+        "focus-next": {
+          "title": "Focus the next pane",
+          "title_de": "Nächsten Bereich fokussieren",
+          "key": "Tab",
+          "mode": "pane",
+          "does": "SwitchFocus"
+        },
+        "focus-last": {
+          "title": "Focus the previous pane",
+          "title_de": "Vorigen Bereich fokussieren",
+          "key": ";",
+          "mode": "pane",
+          "does": "FocusLastPane"
+        },
+        "new-pane": {
+          "title": "New pane",
+          "title_de": "Neuer Bereich",
+          "key": "n",
+          "mode": "pane",
+          "does": "NewPane",
+          "after": "locked"
+        },
+        "new-pane-down": {
+          "title": "New pane below",
+          "title_de": "Neuer Bereich darunter",
+          "key": "d",
+          "mode": "pane",
+          "does": "NewPane \"Down\"",
+          "after": "locked"
+        },
+        "new-pane-right": {
+          "title": "New pane on the right",
+          "title_de": "Neuer Bereich rechts",
+          "key": "r",
+          "mode": "pane",
+          "does": "NewPane \"Right\"",
+          "after": "locked"
+        },
+        "new-pane-stacked": {
+          "title": "New pane, stacked",
+          "title_de": "Neuer Bereich, gestapelt",
+          "key": "s",
+          "mode": "pane",
+          "does": "NewPane \"stacked\"",
+          "after": "locked"
+        },
+        "close-pane": {
+          "title": "Close the pane",
+          "title_de": "Bereich schließen",
+          "key": "x",
+          "mode": "pane",
+          "does": "CloseFocus",
+          "after": "locked"
+        },
+        "fullscreen": {
+          "title": "Pane full screen",
+          "title_de": "Bereich im Vollbild",
+          "key": "f",
+          "mode": "pane",
+          "does": "ToggleFocusFullscreen",
+          "after": "locked"
+        },
+        "fullscreen-no-ui": {
+          "title": "Pane full screen without frames",
+          "title_de": "Bereich im Vollbild ohne Rahmen",
+          "key": "Shift+f",
+          "mode": "pane",
+          "does": "ToggleFocusNoUiFullscreen",
+          "after": "locked"
+        },
+        "pane-frames": {
+          "title": "Show or hide pane frames",
+          "title_de": "Bereichsrahmen ein- oder ausblenden",
+          "key": "z",
+          "mode": "pane",
+          "does": "TogglePaneFrames",
+          "after": "locked"
+        },
+        "floating-panes": {
+          "title": "Show or hide floating panes",
+          "title_de": "Schwebende Bereiche ein- oder ausblenden",
+          "key": "w",
+          "mode": "pane",
+          "does": "ToggleFloatingPanes",
+          "after": "locked"
+        },
+        "embed-or-float": {
+          "title": "Embed or float the pane",
+          "title_de": "Bereich einbetten oder schweben lassen",
+          "key": "e",
+          "mode": "pane",
+          "does": "TogglePaneEmbedOrFloating",
+          "after": "locked"
+        },
+        "pin-pane": {
+          "title": "Pin the floating pane",
+          "title_de": "Schwebenden Bereich anheften",
+          "key": "i",
+          "mode": "pane",
+          "does": "TogglePanePinned",
+          "after": "locked"
+        },
+        "rename-pane": {
+          "title": "Rename the pane",
+          "title_de": "Bereich umbenennen",
+          "key": "c",
+          "mode": "pane",
+          "does": "PaneNameInput 0",
+          "after": "renamepane"
+        },
+        "leave-tab": {
+          "title": "Leave tab mode",
+          "title_de": "Tab-Modus verlassen",
+          "key": "t",
+          "mode": "tab",
+          "after": "normal"
+        },
+        "previous-tab": {
+          "title": "Previous tab",
+          "title_de": "Voriger Tab",
+          "key": [
+            "h",
+            "Left",
+            "k",
+            "Up"
+          ],
+          "mode": "tab",
+          "does": "GoToPreviousTab"
+        },
+        "next-tab": {
+          "title": "Next tab",
+          "title_de": "Nächster Tab",
+          "key": [
+            "l",
+            "Right",
+            "j",
+            "Down"
+          ],
+          "mode": "tab",
+          "does": "GoToNextTab"
+        },
+        "go-to-tab": {
+          "title": "Go to tab 1–9",
+          "title_de": "Zu Tab 1–9",
+          "key": "Digit",
+          "mode": "tab",
+          "does": "GoToTab {digit}",
+          "after": "locked"
+        },
+        "last-tab": {
+          "title": "Back to the last tab",
+          "title_de": "Zurück zum letzten Tab",
+          "key": "Tab",
+          "mode": "tab",
+          "does": "ToggleTab"
+        },
+        "new-tab": {
+          "title": "New tab",
+          "title_de": "Neuer Tab",
+          "key": "n",
+          "mode": "tab",
+          "does": "NewTab",
+          "after": "locked"
+        },
+        "close-tab": {
+          "title": "Close the tab",
+          "title_de": "Tab schließen",
+          "key": "x",
+          "mode": "tab",
+          "does": "CloseTab",
+          "after": "locked"
+        },
+        "sync-tab": {
+          "title": "Type into all panes of the tab",
+          "title_de": "In alle Bereiche des Tabs tippen",
+          "key": "s",
+          "mode": "tab",
+          "does": "ToggleActiveSyncTab",
+          "after": "locked"
+        },
+        "break-pane": {
+          "title": "Move the pane to a new tab",
+          "title_de": "Bereich in einen neuen Tab",
+          "key": "b",
+          "mode": "tab",
+          "does": "BreakPane",
+          "after": "locked"
+        },
+        "break-pane-right": {
+          "title": "Move the pane to the tab on the right",
+          "title_de": "Bereich in den Tab rechts",
+          "key": "]",
+          "mode": "tab",
+          "does": "BreakPaneRight",
+          "after": "locked"
+        },
+        "break-pane-left": {
+          "title": "Move the pane to the tab on the left",
+          "title_de": "Bereich in den Tab links",
+          "key": "[",
+          "mode": "tab",
+          "does": "BreakPaneLeft",
+          "after": "locked"
+        },
+        "rename-tab": {
+          "title": "Rename the tab",
+          "title_de": "Tab umbenennen",
+          "key": "r",
+          "mode": "tab",
+          "does": "TabNameInput 0",
+          "after": "renametab"
+        },
+        "leave-resize": {
+          "title": "Leave resize mode",
+          "title_de": "Größe-Modus verlassen",
+          "key": "r",
+          "mode": "resize",
+          "after": "normal"
+        },
+        "grow-left": {
+          "title": "Grow to the left",
+          "title_de": "Nach links vergrößern",
+          "key": [
+            "h",
+            "Left"
+          ],
+          "mode": "resize",
+          "does": "Resize \"Increase Left\""
+        },
+        "grow-down": {
+          "title": "Grow downwards",
+          "title_de": "Nach unten vergrößern",
+          "key": [
+            "j",
+            "Down"
+          ],
+          "mode": "resize",
+          "does": "Resize \"Increase Down\""
+        },
+        "grow-up": {
+          "title": "Grow upwards",
+          "title_de": "Nach oben vergrößern",
+          "key": [
+            "k",
+            "Up"
+          ],
+          "mode": "resize",
+          "does": "Resize \"Increase Up\""
+        },
+        "grow-right": {
+          "title": "Grow to the right",
+          "title_de": "Nach rechts vergrößern",
+          "key": [
+            "l",
+            "Right"
+          ],
+          "mode": "resize",
+          "does": "Resize \"Increase Right\""
+        },
+        "shrink-left": {
+          "title": "Shrink from the left",
+          "title_de": "Von links verkleinern",
+          "key": "Shift+h",
+          "mode": "resize",
+          "does": "Resize \"Decrease Left\""
+        },
+        "shrink-down": {
+          "title": "Shrink from below",
+          "title_de": "Von unten verkleinern",
+          "key": "Shift+j",
+          "mode": "resize",
+          "does": "Resize \"Decrease Down\""
+        },
+        "shrink-up": {
+          "title": "Shrink from above",
+          "title_de": "Von oben verkleinern",
+          "key": "Shift+k",
+          "mode": "resize",
+          "does": "Resize \"Decrease Up\""
+        },
+        "shrink-right": {
+          "title": "Shrink from the right",
+          "title_de": "Von rechts verkleinern",
+          "key": "Shift+l",
+          "mode": "resize",
+          "does": "Resize \"Decrease Right\""
+        },
+        "grow": {
+          "title": "Grow",
+          "title_de": "Vergrößern",
+          "key": [
+            "=",
+            "Plus"
+          ],
+          "mode": "resize",
+          "does": "Resize \"Increase\""
+        },
+        "shrink": {
+          "title": "Shrink",
+          "title_de": "Verkleinern",
+          "key": "-",
+          "mode": "resize",
+          "does": "Resize \"Decrease\""
+        },
+        "leave-move": {
+          "title": "Leave move mode",
+          "title_de": "Verschieben-Modus verlassen",
+          "key": "m",
+          "mode": "move",
+          "after": "normal"
+        },
+        "move-pane": {
+          "title": "Move the pane forwards",
+          "title_de": "Bereich vorwärts verschieben",
+          "key": [
+            "n",
+            "Tab"
+          ],
+          "mode": "move",
+          "does": "MovePane"
+        },
+        "move-pane-back": {
+          "title": "Move the pane backwards",
+          "title_de": "Bereich rückwärts verschieben",
+          "key": "p",
+          "mode": "move",
+          "does": "MovePaneBackwards"
+        },
+        "move-left": {
+          "title": "Move the pane left",
+          "title_de": "Bereich nach links verschieben",
+          "key": [
+            "h",
+            "Left"
+          ],
+          "mode": "move",
+          "does": "MovePane \"Left\""
+        },
+        "move-down": {
+          "title": "Move the pane down",
+          "title_de": "Bereich nach unten verschieben",
+          "key": [
+            "j",
+            "Down"
+          ],
+          "mode": "move",
+          "does": "MovePane \"Down\""
+        },
+        "move-up": {
+          "title": "Move the pane up",
+          "title_de": "Bereich nach oben verschieben",
+          "key": [
+            "k",
+            "Up"
+          ],
+          "mode": "move",
+          "does": "MovePane \"Up\""
+        },
+        "move-right": {
+          "title": "Move the pane right",
+          "title_de": "Bereich nach rechts verschieben",
+          "key": [
+            "l",
+            "Right"
+          ],
+          "mode": "move",
+          "does": "MovePane \"Right\""
+        },
+        "leave-scroll": {
+          "title": "Leave scroll mode",
+          "title_de": "Scroll-Modus verlassen",
+          "key": "s",
+          "mode": "scroll",
+          "after": "normal"
+        },
+        "scroll-down": {
+          "title": "Scroll down",
+          "title_de": "Nach unten scrollen",
+          "key": [
+            "j",
+            "Down"
+          ],
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "ScrollDown"
+        },
+        "scroll-up": {
+          "title": "Scroll up",
+          "title_de": "Nach oben scrollen",
+          "key": [
+            "k",
+            "Up"
+          ],
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "ScrollUp"
+        },
+        "page-down": {
+          "title": "Page down",
+          "title_de": "Seite nach unten",
+          "key": [
+            "Ctrl+f",
+            "PageDown",
+            "Right",
+            "l"
+          ],
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "PageScrollDown"
+        },
+        "page-up": {
+          "title": "Page up",
+          "title_de": "Seite nach oben",
+          "key": [
+            "Ctrl+b",
+            "PageUp",
+            "Left",
+            "h"
+          ],
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "PageScrollUp"
+        },
+        "half-page-down": {
+          "title": "Half a page down",
+          "title_de": "Halbe Seite nach unten",
+          "key": "d",
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "HalfPageScrollDown"
+        },
+        "half-page-up": {
+          "title": "Half a page up",
+          "title_de": "Halbe Seite nach oben",
+          "key": "u",
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "HalfPageScrollUp"
+        },
+        "previous-prompt": {
+          "title": "To the previous prompt",
+          "title_de": "Zum vorigen Prompt",
+          "key": "[",
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "ScrollToPreviousPrompt"
+        },
+        "next-prompt": {
+          "title": "To the next prompt",
+          "title_de": "Zum nächsten Prompt",
+          "key": "]",
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "ScrollToNextPrompt"
+        },
+        "select-command": {
+          "title": "Select the command at this position",
+          "title_de": "Befehl an dieser Stelle auswählen",
+          "key": "m",
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "SelectCommandAtScrollPosition"
+        },
+        "to-bottom": {
+          "title": "Back to the bottom",
+          "title_de": "Zurück nach unten",
+          "key": "Ctrl+c",
+          "mode": [
+            "scroll",
+            "search"
+          ],
+          "does": "ScrollToBottom",
+          "after": "locked"
+        },
+        "edit-scrollback": {
+          "title": "Open the scrollback in the editor",
+          "title_de": "Verlauf im Editor öffnen",
+          "key": "e",
+          "mode": "scroll",
+          "does": "EditScrollback",
+          "after": "locked"
+        },
+        "copy-output": {
+          "title": "Copy the last command's output",
+          "title_de": "Ausgabe des letzten Befehls kopieren",
+          "key": "c",
+          "mode": "scroll",
+          "does": "CopyLastCommandOutput",
+          "after": "locked"
+        },
+        "search": {
+          "title": "Search",
+          "title_de": "Suchen",
+          "key": "f",
+          "mode": "scroll",
+          "does": "SearchInput 0",
+          "after": "entersearch"
+        },
+        "search-confirm": {
+          "title": "Search for the term",
+          "title_de": "Nach dem Begriff suchen",
+          "key": "Return",
+          "mode": "entersearch",
+          "after": "search"
+        },
+        "search-cancel": {
+          "title": "Cancel the search",
+          "title_de": "Suche abbrechen",
+          "key": [
+            "Ctrl+c",
+            "Escape"
+          ],
+          "mode": "entersearch",
+          "after": "scroll"
+        },
+        "search-down": {
+          "title": "Next match",
+          "title_de": "Nächster Treffer",
+          "key": "n",
+          "mode": "search",
+          "does": "Search \"down\""
+        },
+        "search-up": {
+          "title": "Previous match",
+          "title_de": "Voriger Treffer",
+          "key": "p",
+          "mode": "search",
+          "does": "Search \"up\""
+        },
+        "search-case": {
+          "title": "Case sensitive on or off",
+          "title_de": "Groß-/Kleinschreibung beachten an oder aus",
+          "key": "c",
+          "mode": "search",
+          "does": "SearchToggleOption \"CaseSensitivity\""
+        },
+        "search-wrap": {
+          "title": "Wrap around on or off",
+          "title_de": "Am Ende von vorn an oder aus",
+          "key": "w",
+          "mode": "search",
+          "does": "SearchToggleOption \"Wrap\""
+        },
+        "search-whole-word": {
+          "title": "Whole words on or off",
+          "title_de": "Ganze Wörter an oder aus",
+          "key": "o",
+          "mode": "search",
+          "does": "SearchToggleOption \"WholeWord\""
+        },
+        "rename-done": {
+          "title": "Done renaming",
+          "title_de": "Umbenennen fertig",
+          "key": [
+            "Ctrl+c",
+            "Return"
+          ],
+          "mode": [
+            "renametab",
+            "renamepane"
+          ],
+          "after": "locked"
+        },
+        "rename-tab-undo": {
+          "title": "Undo the new tab name",
+          "title_de": "Neuen Tab-Namen verwerfen",
+          "key": "Escape",
+          "mode": "renametab",
+          "does": "UndoRenameTab",
+          "after": "tab"
+        },
+        "rename-pane-undo": {
+          "title": "Undo the new pane name",
+          "title_de": "Neuen Bereichsnamen verwerfen",
+          "key": "Escape",
+          "mode": "renamepane",
+          "does": "UndoRenamePane",
+          "after": "pane"
+        },
+        "leave-session": {
+          "title": "Leave session mode",
+          "title_de": "Sitzungs-Modus verlassen",
+          "key": "o",
+          "mode": "session",
+          "after": "normal"
+        },
+        "detach": {
+          "title": "Detach (the session keeps running)",
+          "title_de": "Abkoppeln (die Sitzung läuft weiter)",
+          "key": "d",
+          "mode": "session",
+          "does": "Detach"
+        },
+        "session-manager": {
+          "title": "Session manager",
+          "title_de": "Sitzungsverwaltung",
+          "key": "w",
+          "mode": "session",
+          "does": "LaunchOrFocusPlugin \"session-manager\" { floating true; move_to_focused_tab true; }",
+          "after": "locked"
+        },
+        "layout-manager": {
+          "title": "Layout manager",
+          "title_de": "Layoutverwaltung",
+          "key": "l",
+          "mode": "session",
+          "does": "LaunchOrFocusPlugin \"zellij:layout-manager\" { floating true; move_to_focused_tab true; }",
+          "after": "locked"
+        },
+        "configuration": {
+          "title": "Zellij's configuration screen",
+          "title_de": "Zellijs Einstellungen",
+          "key": "c",
+          "mode": "session",
+          "does": "LaunchOrFocusPlugin \"configuration\" { floating true; move_to_focused_tab true; }",
+          "after": "locked"
+        },
+        "plugin-manager": {
+          "title": "Plugin manager",
+          "title_de": "Plugin-Verwaltung",
+          "key": "p",
+          "mode": "session",
+          "does": "LaunchOrFocusPlugin \"plugin-manager\" { floating true; move_to_focused_tab true; }",
+          "after": "locked"
+        },
+        "share": {
+          "title": "Share the session in a web browser",
+          "title_de": "Sitzung im Webbrowser teilen",
+          "key": "s",
+          "mode": "session",
+          "does": "LaunchOrFocusPlugin \"zellij:share\" { floating true; move_to_focused_tab true; }",
+          "after": "locked"
+        },
+        "about": {
+          "title": "About Zellij",
+          "title_de": "Über Zellij",
+          "key": "a",
+          "mode": "session",
+          "does": "LaunchOrFocusPlugin \"zellij:about\" { floating true; move_to_focused_tab true; }",
+          "after": "locked"
+        },
+        "host-session": {
+          "title": "Focus the host session",
+          "title_de": "Host-Sitzung fokussieren",
+          "key": "]",
+          "mode": "session",
+          "does": "FocusHostSession",
+          "after": "locked"
+        },
+        "guest-session": {
+          "title": "Focus the guest session",
+          "title_de": "Gast-Sitzung fokussieren",
+          "key": "[",
+          "mode": "session",
+          "does": "FocusGuestSession",
+          "after": "locked"
+        },
+        "host-fullscreen": {
+          "title": "Host full screen",
+          "title_de": "Host im Vollbild",
+          "key": "f",
+          "mode": "session",
+          "does": "ToggleHostFullscreen",
+          "after": "locked"
         }
       },
-      "hash": "6d0aafcda9cf45fc3617f1164a0a7ae85ce7e38978f8fd3e5d2a8249013a1e25",
+      "hash": "34b15b6962dadb490f405608d6b68db098fbd8711a00b36d8feb8085ad2030d9",
       "files": [
         {
           "path": "default.nix",
-          "size": 1905,
-          "sha256": "33445b83708fbdbab8961a769a66992a77c80f83ec033ab23728777706ed0801"
+          "size": 2782,
+          "sha256": "8fd7e15dd7479bcaa160ac4e128199249607180cc5ee43d3db7e8482ba74925d"
         },
         {
           "path": "module.toml",
-          "size": 1152,
-          "sha256": "ca6475ce1eb4c35a4bc4f2ffaf3c2a7b55dcb2e02b8397b28391fb63f4e5c65f"
-        },
-        {
-          "path": "unlock-first.kdl",
-          "size": 8355,
-          "sha256": "462f4d0dedce1cc2841fdeb1cde0e7a828dc4b376e3554b6d1b9992daa9ee63c"
+          "size": 17767,
+          "sha256": "7c4b424f89b8238aaf3a6c48f6c2d0334cb67172a41723f51087e9790700b8df"
         }
       ]
     }
@@ -1752,7 +2690,7 @@
       "author": "omaflake",
       "name": "default",
       "path": "keymaps/omaflake/default",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "omaflake",
       "description": "omaflake's keys: Super or Ctrl first, plain keys only in modes; Zellij unlocks with Ctrl+g, Neovim's leader is Space.",
       "descriptions": {
@@ -1800,12 +2738,12 @@
           "preview": "Space t p"
         }
       },
-      "hash": "24463a01eedc6cb02d362f141ff78193e6cb7c8edc1790196e352c5a914aa905",
+      "hash": "25342f19bfa87443ec4ec4a7b13a0fa49cfedfc218c6fa8c01719c7954cbecd7",
       "files": [
         {
           "path": "keymap.toml",
           "size": 1662,
-          "sha256": "1fc4b4044b27957109bc3fee50052c475432835c85bc6eaa52ca2a84c5e47816"
+          "sha256": "c467f4756790fbf6b9a22cbf34c15f0c422e62499816a391668052747c6a4c9d"
         }
       ]
     }
