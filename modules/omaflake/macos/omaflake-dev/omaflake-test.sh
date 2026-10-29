@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: MIT
 # omaflake Test (macOS guest, lab recipe): checks sound, microphone and clipboard from inside the VM.
 # A small app made of a shell script and AppleScript dialogs (no compiler needed in the image).
 export LANG=en_US.UTF-8

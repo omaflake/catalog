@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: wezterm – the terminal. WezTerm instead of kitty: kitty draws no text under virgl (GL context and glyphs,
 # omaflake plan B23); WezTerm renders cleanly on the GPU. The look's settings come from /etc/omaflake/look/wezterm.lua
 # (omaflake's platform), merged over these.

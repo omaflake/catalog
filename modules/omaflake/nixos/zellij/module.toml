@@ -7,7 +7,7 @@
 # Zellij), so only the binding that works is listed for that mode.
 
 "$schema" = "https://omaflake.dev/schema/module/v2.json"
-version = "2.0.0"
+version = "2.0.1"
 author = "omaflake"
 license = "MIT"
 title = "Zellij"

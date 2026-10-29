@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: vscode (macOS) – VS Code with extensions from Nix (other modules add theirs with
 # `omaflake.vscode.extensions` and `omaflake.vscode.settings`); its settings.json is written once and then belongs to
 # the user. VS Code is not free software; allowed here only for it.

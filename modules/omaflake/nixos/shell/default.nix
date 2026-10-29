@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: shell – zsh (the platform's login shell) with suggestions, highlighting and aliases, Starship, fzf and the
 # terminal tools; the prompt, bat and fzf in the guest look's colours.
 { config, lib, pkgs, settings, ... }:

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: hyprland – the desktop. Hyprland (started from the shell after the auto-login on TTY1), Waybar, Fuzzel,
 # Mako, PipeWire, fonts, and a helper that follows the VM window's size. Its colours are the guest look's; its keys
 # are the recipe's (module.toml's defaults, overridden by the recipe's key bindings). Other modules' launchers

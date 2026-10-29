@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: neovim – the editor, preconfigured, and the default editor ($EDITOR). Its colours are the guest look's
 # (/etc/omaflake/look/nvim.lua, omaflake's platform); its keys the recipe's.
 { lib, pkgs, settings, omaflake, ... }:

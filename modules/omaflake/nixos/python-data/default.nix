@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: python-data – Python for analysis: numpy, pandas, matplotlib, JupyterLab
 { pkgs, ... }:
 

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: zellij – the multiplexer, with Zellij's "Unlock First" keys so that the editor keeps its Ctrl keys. The
 # keybinds are written from module.toml's actions (with the recipe's key binding sets over them): in each mode a bind
 # per key – `does`, then a switch to `after` (before `does` for the modes that take typed input, as Zellij's presets

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: omaflake-dev (macOS) – for developing omaflake on macOS guests: the "omaflake Test" app (sound, microphone,
 # clipboard status; in the Dock and via Spotlight) and debug tools.
 { lib, pkgs, ... }:

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: wezterm (macOS) – WezTerm with JetBrains Mono, in the Dock; ~/.wezterm.lua is written once and then belongs
 # to the user. With Zellij its session key opens a window in Zellij's session "main".
 { lib, pkgs, omaflake, ... }:

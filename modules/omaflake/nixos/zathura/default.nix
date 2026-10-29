@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: zathura – the PDF viewer, the default for PDFs. It reloads a PDF when it changes; a dark look shows PDFs
 # inverted in its colours.
 { config, lib, pkgs, settings, ... }:

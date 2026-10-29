@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: emacs – the editor, preconfigured – pure GTK, native on Wayland, in the guest look's colours.
 # Vertico/Orderless/Marginalia/Consult for finding things, Corfu for completion, Magit, Eglot (built in) and
 # tree-sitter grammars from Nix. Its open key (Super+e by default) starts it; it runs a server, so $EDITOR

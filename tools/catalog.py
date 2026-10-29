@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Check every recipe, module, key binding set and look in this repository and write catalog.json – the one file
 omaflake reads to browse it.
 

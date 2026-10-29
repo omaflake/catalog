@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: latex (macOS) – TeX Live (scheme-full: latexmk, biber, chktex, latexindent, all packages) and texlab. With
 # Neovim: vimtex (\ll compiles, \lv shows the PDF in Preview); with VS Code: LaTeX Workshop (latexmk, PDF in a tab,
 # SyncTeX, building on save). Other modules' options are set only when the recipe has them (lib.optionalAttrs on

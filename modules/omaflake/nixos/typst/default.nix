@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: typst – Typst and tinymist. With Neovim: the preview key (Space t p by default) compiles the file now and on
 # every save and shows the PDF in the PDF viewer (zathura when it is there).
 { lib, pkgs, settings, omaflake, ... }:

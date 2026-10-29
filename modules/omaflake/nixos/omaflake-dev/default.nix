@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: omaflake-dev – for developing omaflake: everything to check the host integrations (camera, sound,
 # microphone, clipboard, 3D) plus debug tools, and omaflake itself (the Linux app `omaflake`, the CLI `omaf`, its TUI
 # `omaf ui`) to try the Linux interfaces. VMs cannot start in here (no nested virtualisation).

@@ -1,7 +1,7 @@
 # Module macos/shell – Terminal tools. What it does is default.nix next to this file.
 
 "$schema" = "https://omaflake.dev/schema/module/v2.json"
-version = "1.0.1"
+version = "1.0.2"
 author = "omaflake"
 license = "MIT"
 title = "Terminal tools"

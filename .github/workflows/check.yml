@@ -1,3 +1,7 @@
+# SPDX-License-Identifier: MIT
+# Every recipe valid and catalog.json up to date; the licence check (REUSE) and a sign-off (DCO) on every commit of a
+# pull request, both from falkoss/starterpack, pinned by commit. Actions are pinned by commit, with the version as a
+# comment.
 name: check
 
 on:
@@ -12,11 +16,8 @@ jobs:
   catalog:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      # Every recipe valid, catalog.json up to date; warnings show in the log for the reviewers
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Every recipe valid, catalog.json up to date (the runner's Python 3.12); warnings show in the log for the reviewers
       - run: python3 tools/catalog.py --check
 
   # OPEN: evaluate (and build) every changed recipe against omaflake's image flake – omaflake/omaflake's nix/, with
@@ -24,3 +25,8 @@ jobs:
   #   nix flake check --no-build path:<omaflake>/nix --override-input omaflake-recipes path:$PWD/recipes
   # (NixOS on an arm64 Linux runner, macOS evaluation on a macOS runner – a nix-darwin build needs a macOS base). Needs
   # omaflake/omaflake to be public, or a token with read access to it.
+
+  licences:
+    uses: falkoss/starterpack/.github/workflows/reuse.yml@1e2fad7b6afb0f45f7d62d6a9472c97484ff4585
+  sign-off:
+    uses: falkoss/starterpack/.github/workflows/dco.yml@1e2fad7b6afb0f45f7d62d6a9472c97484ff4585

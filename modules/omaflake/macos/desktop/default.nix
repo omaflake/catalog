@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: desktop (macOS) – a minimal Dock, Finder opening Downloads, the guest look's system appearance (light or
 # dark, accent, icons, folders, wallpaper), no desktop widgets, a quiet menu bar and a private-by-default Safari with
 # google.com as start page. Keys were read from a guest after setting them by hand in System Settings (omaflake plan

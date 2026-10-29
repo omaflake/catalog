@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+# Licence and copyright of files that cannot carry a header (REUSE specification 3.3) – the recipes, modules, key
+# bindings and looks are data and code under MIT; source files name their licence in an SPDX header.
+version = 1
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "falkOSS – Falcon Lake Open Source Software gUG (haftungsbeschränkt) i. G. and the omaflake contributors"
+SPDX-License-Identifier = "MIT"
+
+# A copy of omaflake's app icon from omaflake/brand – kept as it is, under its licence.
+[[annotations]]
+path = "**/*.icns"
+precedence = "override"
+SPDX-FileCopyrightText = "falkOSS – Falcon Lake Open Source Software gUG (haftungsbeschränkt) i. G."
+SPDX-License-Identifier = "CC-BY-ND-4.0"

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: neovim (macOS) – Neovim as the default editor; ~/.config/nvim/init.lua is written once (the look, a few
 # options, what other modules add with `omaflake.neovim.init`) and then belongs to the user.
 { config, lib, pkgs, ... }:

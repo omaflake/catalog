@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """omaflake Test – checks the Mac integrations from inside a NixOS guest (lab recipe).
 
 Camera: shows /dev/video42 ("Mac Camera") in mpv; the Mac's camera runs only while the window is open.

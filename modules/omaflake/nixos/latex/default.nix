@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: latex – TeX Live (full: latexmk, biber, chktex, latexindent, every package) and texlab. With Neovim: vimtex
 # with latexmk compiling on every save (Space l l starts it and opens the PDF, Space l v jumps to the cursor's place
 # in the PDF – vimtex's own keys); with zathura: SyncTeX, Ctrl+click in the PDF jumps back to the line.

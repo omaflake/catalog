@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: shell (macOS) – terminal tools from Nix
 { pkgs, ... }:
 

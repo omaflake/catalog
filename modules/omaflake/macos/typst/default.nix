@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Module: typst (macOS) – Typst and tinymist; with VS Code the Tinymist extension (set only when the recipe has VS Code)
 { lib, pkgs, omaflake, ... }:
 
