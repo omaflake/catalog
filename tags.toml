@@ -4,6 +4,7 @@
 [tags]
 desktop = "a graphical desktop environment"
 development = "for developing software"
+docker = "the Docker engine and containers"
 emacs = "GNU Emacs"
 homebrew = "Homebrew inside the guest"
 hyprland = "the Hyprland Wayland compositor"

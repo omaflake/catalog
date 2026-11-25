@@ -1,0 +1,27 @@
+# Recipe nixos/docker – what is in it (modules), how it looks and which keys it uses, how a VM from it runs.
+# A recipe is data only. Fields: see CONTRIBUTING.md at the root of this repository.
+
+"$schema" = "https://omaflake.dev/schema/recipe/v2.json"
+author = "omaflake"
+license = "MIT"
+description = "A headless Docker VM: the Docker engine for itself and for the macOS VMs of its omaflake networks."
+description_de = "Eine Docker-VM ohne Fenster: die Docker-Engine für sich selbst und für die macOS-VMs ihrer omaflake-Netze."
+tags = ["docker", "development", "terminal"]
+platform = "nixos"
+systems = ["aarch64-linux", "x86_64-linux"]
+
+modules = [
+  "omaflake/shell",
+  "omaflake/docker",
+]
+
+[requirements]                     # the least a VM from it needs; a smaller profile gets a warning
+cpus = 2
+memory_gb = 4
+disk_gb = 60
+
+[vm]                               # how a VM from it runs
+display = "none"
+network = "shared"
+share = true
+ephemeral = false

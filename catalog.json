@@ -244,6 +244,59 @@
       ]
     },
     {
+      "id": "omaflake.nixos.docker",
+      "author": "omaflake",
+      "kind": "nixos",
+      "name": "docker",
+      "path": "recipes/omaflake/nixos/docker",
+      "description": "A headless Docker VM: the Docker engine for itself and for the macOS VMs of its omaflake networks.",
+      "descriptions": {
+        "de": "Eine Docker-VM ohne Fenster: die Docker-Engine für sich selbst und für die macOS-VMs ihrer omaflake-Netze."
+      },
+      "tags": [
+        "docker",
+        "development",
+        "terminal"
+      ],
+      "license": "MIT",
+      "lab": false,
+      "systems": [
+        "aarch64-linux",
+        "x86_64-linux"
+      ],
+      "homepage": "",
+      "modules": [
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/docker"
+        }
+      ],
+      "look": null,
+      "keymaps": [],
+      "requirements": {
+        "cpus": 2,
+        "memory_gb": 4,
+        "disk_gb": 60
+      },
+      "vm": {
+        "display": "none",
+        "network": "shared",
+        "share": true,
+        "ephemeral": false
+      },
+      "locales": {},
+      "version": "f3bb89015d26ed0aaae9033d982958699afacfeb4e02d0dcf321d88bb1040f8d",
+      "files": [
+        {
+          "path": "recipe.toml",
+          "size": 961,
+          "sha256": "2dec133aa5c4fc5a3dd7a6d562774caaed932b68b9d75f46c208d7df1fa43a00"
+        }
+      ]
+    },
+    {
       "id": "omaflake.nixos.emacs-minimal",
       "author": "omaflake",
       "kind": "nixos",
@@ -1091,6 +1144,48 @@
           "path": "module.toml",
           "size": 723,
           "sha256": "46e62ac3ef8bb91e0cd64183d424fb16dc2d0ea896d4a1798425c8745fd1a4b5"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.docker",
+      "ref": "omaflake/docker",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "docker",
+      "path": "modules/omaflake/nixos/docker",
+      "version": "1.0.0",
+      "title": "Docker",
+      "description": "The Docker engine with Compose; other VMs on its omaflake networks use it with DOCKER_HOST=tcp://<address>:2375.",
+      "descriptions": {
+        "de": "Die Docker-Engine mit Compose; andere VMs in ihren omaflake-Netzen nutzen sie mit DOCKER_HOST=tcp://<Adresse>:2375."
+      },
+      "tags": [
+        "docker",
+        "development"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "modes": {},
+      "actions": {},
+      "hash": "1be501428d0faa5306c95f3b11397af9ee86f4892ec8087e32dc64056a263e70",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 1336,
+          "sha256": "94896b6cf9e100ee212fa44de6665466f9dbfde4823480ac499f8730e0f5497d"
+        },
+        {
+          "path": "module.toml",
+          "size": 555,
+          "sha256": "a27e2e334acc46920884ecd152a6320f581211689189d3add479bb6340aae1bf"
         }
       ]
     },
