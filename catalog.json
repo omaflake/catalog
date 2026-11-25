@@ -1656,11 +1656,11 @@
       "platform": "nixos",
       "name": "typst",
       "path": "modules/omaflake/nixos/typst",
-      "version": "1.0.2",
+      "version": "1.1.0",
       "title": "Typst",
-      "description": "Typst and the tinymist language server. With Neovim: a live PDF beside the editor, compiled on every save.",
+      "description": "Typst and the tinymist language server. With Neovim: a live PDF beside the editor, compiled on every save; multi-file projects compile from their main file.",
       "descriptions": {
-        "de": "Typst und der Sprachserver tinymist. Mit Neovim: ein Live-PDF neben dem Editor, kompiliert bei jedem Speichern."
+        "de": "Typst und der Sprachserver tinymist. Mit Neovim: ein Live-PDF neben dem Editor, kompiliert bei jedem Speichern; mehrteilige Projekte ab ihrer Hauptdatei."
       },
       "tags": [
         "typst"
@@ -1687,17 +1687,17 @@
           "context": "omaflake/neovim"
         }
       },
-      "hash": "22f867e28cf9eb2ee0e7159cdbeb1d7892e34ab4f0562d7ed804521c2e056111",
+      "hash": "3c70fe76d26f214918e6547cc09289f89cd40797deef2bbe50f67db00eac247c",
       "files": [
         {
           "path": "default.nix",
-          "size": 2489,
-          "sha256": "7c2396e8b5f6b4f9c711f962e6490e7e1cd5b9569e8dff62a370274773dd8eb3"
+          "size": 7778,
+          "sha256": "7d1d47b7cf2e829a2cbde8953ac7e875b66e835c97493f1a858cec129937715d"
         },
         {
           "path": "module.toml",
-          "size": 684,
-          "sha256": "b65061a2e509b60749848d34d60f609ea3dd7e41f531b712f88edc8a06836494"
+          "size": 776,
+          "sha256": "51d48898b1cb019820c6c4f5ee16d95fc0bd3d1433a036d0ce1b936c08589f89"
         }
       ]
     },
