@@ -103,6 +103,25 @@ desktop = true                   # optional: works everywhere on the desktop (a 
 # own = true                     # optional: the program's own key, shown for reference – sets do not change it
 ```
 
+**Files nobody may pass on** (Xcode): the module's Nix asks for them with `requireFile` (a name and a hash – no cache
+has them), and module.toml says where omaflake finds them – module/v3, omaflake 0.8.3 and later (plan B198). omaflake
+looks for the file in `search`, unpacks it (`.xip`, `.zip`) and adds it to the Nix Store before the build, checked
+against the hash; when it is nowhere, the build page asks for it ("Choose …", `omaf files add`). A module without
+files stays at module/v2, so older omaflakes keep reading it.
+
+```toml
+"$schema" = "https://omaflake.dev/schema/module/v3.json"
+
+[[files]]
+name = "Xcode.app"                                    # the requireFile's name
+hash = "sha256-zs5OMdddog5+11qHlkkDMC7liJ4qllxmF4qiVy4zdf8="   # its hash (SRI); `nix hash path Xcode.app`
+# mode = "flat"                                       # a single file; default "recursive" (a folder, or a file as NAR)
+title = "Xcode 27.2"
+from = ["Xcode_27.2.xip", "Xcode.app"]                # the names it comes as – the download first
+search = ["~/Downloads", "~/Desktop"]                 # where to look; not where another version may be
+url = "https://developer.apple.com/download/all/?q=Xcode%2027.2"
+```
+
 A program with **modes** (Zellij's pane mode, Hyprland's resize submap) names them, and its actions say where they
 work and where they lead – so that people can see the way to a key (Ctrl+g › p › n) and a key binding set can change
 it:

@@ -1206,11 +1206,11 @@
       "platform": "macos",
       "name": "xcode",
       "path": "modules/omaflake/macos/xcode",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "title": "Xcode",
-      "description": "Xcode 27.2 from the Nix store, copied to Applications and in the Dock, selected and ready (licence accepted, first launch done). Apple does not allow passing Xcode on: download Xcode_27.2.xip yourself and add it to the Nix store once – the build says how. Xcode is not free software.",
+      "description": "Xcode 27.2 from the Nix store, copied to Applications and in the Dock, selected and ready (licence accepted, first launch done). Apple does not allow passing Xcode on: download Xcode_27.2.xip yourself – omaflake finds it in your Downloads folder, or you choose it on the build page. Xcode is not free software.",
       "descriptions": {
-        "de": "Xcode 27.2 aus dem Nix-Store, in Programme kopiert und im Dock, ausgewählt und bereit (Lizenz angenommen, erster Start erledigt). Apple erlaubt nicht, Xcode weiterzugeben: Lade Xcode_27.2.xip selbst und lege es einmal in den Nix-Store – der Build sagt, wie. Xcode ist keine freie Software."
+        "de": "Xcode 27.2 aus dem Nix-Store, in Programme kopiert und im Dock, ausgewählt und bereit (Lizenz angenommen, erster Start erledigt). Apple erlaubt nicht, Xcode weiterzugeben: Lade Xcode_27.2.xip selbst – omaflake findet es in deinem Download-Ordner, oder du wählst es auf der Build-Seite aus. Xcode ist keine freie Software."
       },
       "tags": [
         "development",
@@ -1227,7 +1227,7 @@
       "unfree": true,
       "modes": {},
       "actions": {},
-      "hash": "612704c04b7efdc049cbcfca854b8a011cd705cdcab6f9404913c8f0e6f336a2",
+      "hash": "b337e35cd9479e3354da7328706a4fb5820451f018ae7a86873f41aa5db51c74",
       "files": [
         {
           "path": "default.nix",
@@ -1236,8 +1236,8 @@
         },
         {
           "path": "module.toml",
-          "size": 867,
-          "sha256": "691e8cfcc41094feb842cae1c41995d07e8823f64e26a268a0819a6734762536"
+          "size": 1407,
+          "sha256": "b7f5fe217ca1055dcbb98852befcac8c1ba28a195228cd6d4a2580a6007a3769"
         }
       ]
     },

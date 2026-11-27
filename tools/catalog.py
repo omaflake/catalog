@@ -30,6 +30,10 @@ SCHEMA = "https://omaflake.dev/schema/catalog/v5.json"      # v2: systems; v3: l
 #                                                             v5: module v2 and keymap v2 (modes, after, does)
 RECIPE_SCHEMA = "https://omaflake.dev/schema/recipe/v2.json"
 MODULE_SCHEMA = "https://omaflake.dev/schema/module/v2.json"
+# module/v3 (omaflake 0.8.3, plan B198): v2 and `[[files]]` – only modules that need files use it, so older omaflakes
+# keep reading every other module
+MODULE_SCHEMA_V3 = "https://omaflake.dev/schema/module/v3.json"
+SRI_SHA256 = re.compile(r"sha256-[A-Za-z0-9+/]{43}=")
 KEYMAP_SCHEMA = "https://omaflake.dev/schema/keymap/v2.json"
 LOOK_SCHEMA = "https://omaflake.dev/schema/look/v1.json"
 
@@ -307,6 +311,34 @@ def bindings_of(platform: str, refs: list[str], keymaps: list[dict], modules: di
     return out
 
 
+def check_files(where, files, errors: list[str]) -> None:
+    """module/v3's [[files]] (plan B198): files the module needs to be built, which nobody may pass on"""
+    if not isinstance(files, list):
+        errors.append(f"{where}: files is a list of [[files]] tables")
+        return
+    for i, f in enumerate(files):
+        at = f"{where}: files[{i}]"
+        if not isinstance(f, dict):
+            errors.append(f"{at} is a table")
+            continue
+        extra = set(f) - {"name", "hash", "mode", "title", "from", "search", "url"}
+        for key in sorted(extra):
+            errors.append(f"{at} has no {key}")
+        if not isinstance(f.get("name"), str) or not f["name"] or "/" in f["name"]:
+            errors.append(f"{at}: name is the requireFile's name (\"Xcode.app\")")
+        if not isinstance(f.get("hash"), str) or not SRI_SHA256.fullmatch(f["hash"]):
+            errors.append(f"{at}: hash is the requireFile's sha256 in SRI form (sha256-…=)")
+        if f.get("mode", "recursive") not in ("recursive", "flat"):
+            errors.append(f"{at}: mode is recursive or flat")
+        for key in ("from", "search"):
+            if not isinstance(f.get(key, []), list) or not all(isinstance(x, str) and x for x in f.get(key, [])):
+                errors.append(f"{at}: {key} is a list of names")
+        if not f.get("from") or not f.get("search"):
+            errors.append(f"{at}: from and search say what to look for where (omaflake finds it by itself then)")
+        if "url" in f and not (isinstance(f["url"], str) and f["url"].startswith("https://")):
+            errors.append(f"{at}: url is an https:// address")
+
+
 def check_module(folder: Path, data: dict, tags: set[str], licenses: list[str], capabilities: dict,
                  errors: list[str]) -> None:
     where = folder.relative_to(ROOT)
@@ -315,9 +347,14 @@ def check_module(folder: Path, data: dict, tags: set[str], licenses: list[str], 
         errors.append(f"{where}: author and name use lowercase letters, digits and -")
     if platform not in PLATFORMS:
         errors.append(f"{where}: the platform folder is nixos or macos, not {platform}")
-    common(where, data, MODULE_SCHEMA, tags, licenses, errors, author, "module.toml")
+    v3 = data.get("$schema") == MODULE_SCHEMA_V3
+    common(where, data, MODULE_SCHEMA_V3 if v3 else MODULE_SCHEMA, tags, licenses, errors, author, "module.toml")
     extra = set(data) - {"$schema", "version", "author", "license", "title", "description", "tags", "homepage",
-                         "provides", "needs", "enhances", "runs_in", "desktop", "own_keys", "unfree", "modes", "actions"}
+                         "provides", "needs", "enhances", "runs_in", "desktop", "own_keys", "unfree", "modes", "actions",
+                         *(["files"] if v3 else [])}
+    if "files" in data and not v3:
+        errors.append(f"{where}: files needs \"$schema\" = \"{MODULE_SCHEMA_V3}\"")
+    check_files(where, data.get("files", []) if v3 else [], errors)
     for key in sorted(extra):
         if not key.startswith("description_"):
             errors.append(f"{where}: module.toml has no {key}")
