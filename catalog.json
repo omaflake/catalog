@@ -655,7 +655,7 @@
       "platform": "macos",
       "name": "docker-client",
       "path": "modules/omaflake/macos/docker-client",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "title": "Docker client",
       "description": "The docker command with Compose and Buildx for the Docker engine of another VM: give this VM the port 2375 of that VM (omaflake's ports of other VMs, 2375=<VM>).",
       "descriptions": {
@@ -676,17 +676,17 @@
       "unfree": false,
       "modes": {},
       "actions": {},
-      "hash": "3c1dd3f0fe4bb4efb50217cccacfbc58134a1785ee455cdbc7d842f623a75df6",
+      "hash": "18a3e12ada2d97b1e481b66ef2203bccfbba6e0ea728816c449e000524388691",
       "files": [
         {
           "path": "default.nix",
-          "size": 1202,
-          "sha256": "bfa2a9aca457efb5e473b94ee8a2d3b30d9cec70f116df8f6b0a671214a69c00"
+          "size": 1415,
+          "sha256": "71d0c483de7f3b2f0031fcbb7f1fb93a140d1547275a05e769d81de8bf5d0a4a"
         },
         {
           "path": "module.toml",
           "size": 661,
-          "sha256": "24918948be2a5f855fe6dc49e0d1cb1efe34062a8de9de800f05684801960a67"
+          "sha256": "7e3afb471444ccda025c11ddf3dcbfa686843fe6e0ec2ebb1d9e120685da12d0"
         }
       ]
     },
@@ -1740,7 +1740,7 @@
       "platform": "nixos",
       "name": "typst",
       "path": "modules/omaflake/nixos/typst",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "title": "Typst",
       "description": "Typst and the tinymist language server. With Neovim: a live PDF beside the editor, compiled on every save; multi-file projects compile from their main file.",
       "descriptions": {
@@ -1771,17 +1771,17 @@
           "context": "omaflake/neovim"
         }
       },
-      "hash": "3c70fe76d26f214918e6547cc09289f89cd40797deef2bbe50f67db00eac247c",
+      "hash": "ba180ed1db77b1bd752d4a01a747ae87cee17ec75ab0824b0a79b30bbbb7d5b3",
       "files": [
         {
           "path": "default.nix",
-          "size": 7778,
-          "sha256": "7d1d47b7cf2e829a2cbde8953ac7e875b66e835c97493f1a858cec129937715d"
+          "size": 7781,
+          "sha256": "f7a97068f3a0b34d33e7445b67069833a32d3d8e5955704f26f795f29b81d67a"
         },
         {
           "path": "module.toml",
           "size": 776,
-          "sha256": "51d48898b1cb019820c6c4f5ee16d95fc0bd3d1433a036d0ce1b936c08589f89"
+          "sha256": "09ec83201f13e2c49fa029aa9e3022086dadbe5afc6d69c66a086fcf0351899d"
         }
       ]
     },

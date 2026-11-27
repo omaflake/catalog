@@ -16,10 +16,10 @@ in
         -- Typst: the main file of a document is the file that includes the current one (`include "…"`), followed
         -- upwards until no file includes it; without one the current file is its own main file. Candidates are the .typ
         -- files in the current file's folder and its parents; the search stops at a folder with .git, at the home
-        -- folder, at the share folder (/mnt/share) and after ten folders. The project folder (typst --root, tinymist's
+        -- folder, at a volume (/Volumes/<name>) and after ten folders. The project folder (typst --root, tinymist's
         -- root) is the main file's folder, so "/lib/x.typ" in a chapter resolves from there.
         local function typst_boundary(dir)
-          return dir == "/" or dir == "/mnt/share" or dir == vim.uv.fs_realpath(vim.uv.os_homedir() or "/")
+          return dir == "/" or vim.fs.dirname(dir) == "/Volumes" or dir == vim.uv.fs_realpath(vim.uv.os_homedir() or "/")
             or vim.uv.fs_stat(dir .. "/.git") ~= nil
         end
 
@@ -74,9 +74,9 @@ in
         end
 
         -- The preview key compiles the document now and on every save of one of its files and shows the PDF in zathura.
-        -- Not `typst watch`: it and zathura's reload rely on file change events, which the share folder (/mnt/share,
-        -- 9p) does not deliver. So neovim compiles on save into ~/.cache/typst/<main>.pdf, which the PDF viewer shows,
-        -- and copies the PDF next to the main file (on the share: there for the host too). A save recompiles when the
+        -- Not `typst watch`: it and zathura's reload rely on file change events, which volumes (/Volumes/<name>,
+        -- 9p) do not deliver. So neovim compiles on save into ~/.cache/typst/<main>.pdf, which the PDF viewer shows,
+        -- and copies the PDF next to the main file (on a volume: there for the Mac too). A save recompiles when the
         -- file is one the last compile read (typst --deps: chapters, imports, bibliography); before that every .typ
         -- file below the project folder counts. One autocommand group per main file.
         local function typst_live()

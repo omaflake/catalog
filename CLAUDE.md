@@ -3,7 +3,7 @@
 ## Context
 
 `omaflake/catalog`: the official catalog of omaflake – recipes, modules, key bindings and looks (plan B140, B142; it
-replaces the archived `omaflake/recipes`) – and the template for other sources. omaflake itself (app, CLI, guest modules, the image flake
+replaces `omaflake/recipes`, archived since 2026-11-27) – and the template for other sources. omaflake itself (app, CLI, guest modules, the image flake
 that builds images and turns looks into configuration) lives in `omaflake/omaflake`, checked out next to this one as
 `../omaflake`; its design for sources is `../omaflake/docs/spec.md` §11.3, the catalog decision plan B140.
 

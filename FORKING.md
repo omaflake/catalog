@@ -69,6 +69,7 @@ repository over the GitHub API with it. On the command line: `omaf sources add h
 
 ## Status
 
-omaflake reads recipe sources since plan B107 (its spec §11.3). The format here – `catalog.json` (`catalog/v3`), the folder
-layouts, `recipe.toml` (`recipe/v1`) and `look.toml` (`look/v1`; schemas on omaflake.dev/schema) – is what it reads (looks:
-OPEN, plan B140); until the first public release it can still change.
+omaflake reads recipe sources since plan B107 (its spec §11.3). The format here – `catalog.json` (`catalog/v5`), the folder
+layouts, `recipe.toml` (`recipe/v2`), `module.toml` (`module/v2`), `keymap.toml` (`keymap/v2`) and `look.toml`
+(`look/v1`; schemas on omaflake.dev/schema) – is what it reads (looks install since omaflake 0.6.0); before omaflake
+1.0 it can still change.

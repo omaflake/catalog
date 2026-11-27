@@ -9,7 +9,7 @@ gives users something the catalog does not have yet.
 
 ## Modules: safety
 
-A module's Nix code is evaluated on the user's computer and its result runs in their VM, often with a shared folder and
+A module's Nix code is evaluated on the user's computer and its result runs in their VM, often with volumes (folders of the host) and
 network. Read every file.
 
 - [ ] Every fetch is pinned with a hash (`fetchFromGitHub`, `fetchurl` with `hash`); no `builtins.fetch*` without

@@ -59,7 +59,7 @@ disk_gb = 40
 [vm]                             # how a VM from it runs – required
 display = "gpu"                  # none (headless) | window | gpu (window with 3D, NixOS)
 network = "shared"               # shared | isolated (NixOS only) | none – required
-share = true                     # share a folder: /mnt/share (NixOS), ~/Share (macOS) – required
+share = true                     # volumes: folders of the Mac, each at /Volumes/<name> in the guest – required
 ephemeral = false                # discard changes at power-off – required
 audio = true                     # optional: audio, microphone, clipboard, camera (camera: NixOS)
 

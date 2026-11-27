@@ -6,6 +6,9 @@
 # VMs must be in one omaflake network. Bind mounts name paths on the Docker VM: give both VMs the same volume under the
 # same name, then /Volumes/<name>/… is the same path in both (omaflake plan B187).
 #
+# OPEN (omaflake plan B193): in macOS VMs the ports of other VMs are refused for now; until that is fixed, set
+# DOCKER_HOST=tcp://<the Docker VM's address in the network>:2375 (`omaf networks show <network>`).
+#
 # DOCKER_HOST reaches shells, not apps started from the Finder or the Dock (an editor's Docker integration): nix-darwin's
 # launchd.user.envVariables sets it with `launchctl setenv` while the system is activated – at a VM's start that is
 # before anyone logs in, and the value is gone (checked in a macOS 27 guest); a launch agent would bring a background

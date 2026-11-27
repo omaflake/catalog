@@ -51,9 +51,10 @@ tools/catalog.py                    checks everything (also overlapping keys) an
 | `omaflake/nixos/emacs-minimal` | hyprland, shell, wezterm, emacs |
 | `omaflake/macos/minimal` | desktop, shell |
 | `omaflake/macos/research` | desktop, shell, wezterm, zellij, neovim, latex, typst, vscode, pandoc, lazygit, homebrew |
+| `omaflake/nixos/docker` | shell, docker – headless: the Docker engine for the other VMs of its networks |
 | `omaflake/nixos/lab`, `omaflake/macos/lab` | for developing omaflake itself (shown in developer mode only): + omaflake-dev |
 
-All with the look `omaflake/omaflake` and the key bindings `omaflake/default`.
+All but `nixos/docker` (headless) with the look `omaflake/omaflake` and the key bindings `omaflake/default`.
 
 ## Modules
 
@@ -70,6 +71,8 @@ All with the look `omaflake/omaflake` and the key bindings `omaflake/default`.
 | `typst` | Typst, tinymist; a live PDF with Neovim |
 | `python-data` | numpy, pandas, matplotlib, JupyterLab |
 | `pandoc` | pandoc |
+| `docker` | the Docker engine with Compose; other VMs of its networks use it on port 2375; starts after the volumes |
+| `docker-client` | the docker command, Compose and Buildx for another VM's engine (`DOCKER_HOST=tcp://127.0.0.1:2375` with the port forwarded) |
 | `omaflake-dev` | omaflake itself, the omaflake Test app, debug tools (for developing omaflake) |
 
 | macOS | |
@@ -80,6 +83,7 @@ All with the look `omaflake/omaflake` and the key bindings `omaflake/default`.
 | `latex`, `typst` | TeX Live and Typst; vimtex with Neovim, LaTeX Workshop and Tinymist with VS Code |
 | `vscode` | VS Code with LTeX+, GitLens, Nix IDE (not free software) |
 | `homebrew`, `pandoc`, `lazygit` | one thing each |
+| `docker-client` | as on NixOS (OPEN: ports of other VMs in macOS VMs, omaflake plan B193 – use the Docker VM's address meanwhile) |
 | `omaflake-dev` | the omaflake Test app and tools |
 
 Key bindings: `omaflake/default` – omaflake's keys (Super or Ctrl first; Zellij unlocks with Ctrl+g; Neovim's leader
