@@ -1,11 +1,11 @@
 # Module macos/xcode – Xcode. What it does is default.nix next to this file.
 
 "$schema" = "https://omaflake.dev/schema/module/v2.json"
-version = "1.0.0"
+version = "1.0.1"
 author = "omaflake"
 license = "MIT"
 title = "Xcode"
-description = "Xcode 27.2 from the Nix store, selected and ready (licence accepted, first launch done). Apple does not allow passing Xcode on: download Xcode_27.2.xip yourself and add it to the Nix store once – the build says how. Xcode is not free software."
-description_de = "Xcode 27.2 aus dem Nix-Store, ausgewählt und bereit (Lizenz angenommen, erster Start erledigt). Apple erlaubt nicht, Xcode weiterzugeben: Lade Xcode_27.2.xip selbst und lege es einmal in den Nix-Store – der Build sagt, wie. Xcode ist keine freie Software."
+description = "Xcode 27.2 from the Nix store, copied to Applications and in the Dock, selected and ready (licence accepted, first launch done). Apple does not allow passing Xcode on: download Xcode_27.2.xip yourself and add it to the Nix store once – the build says how. Xcode is not free software."
+description_de = "Xcode 27.2 aus dem Nix-Store, in Programme kopiert und im Dock, ausgewählt und bereit (Lizenz angenommen, erster Start erledigt). Apple erlaubt nicht, Xcode weiterzugeben: Lade Xcode_27.2.xip selbst und lege es einmal in den Nix-Store – der Build sagt, wie. Xcode ist keine freie Software."
 tags = ["development", "xcode"]
 unfree = true
