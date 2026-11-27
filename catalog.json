@@ -244,6 +244,70 @@
       ]
     },
     {
+      "id": "omaflake.macos.xcode",
+      "author": "omaflake",
+      "kind": "macos",
+      "name": "xcode",
+      "path": "recipes/omaflake/macos/xcode",
+      "description": "minimal plus Xcode 27.2 and Homebrew, for apps on Apple's platforms. Xcode is not free software; download it yourself once – the build says how.",
+      "descriptions": {
+        "de": "minimal plus Xcode 27.2 und Homebrew, für Apps auf Apples Plattformen. Xcode ist keine freie Software; lade es einmal selbst – der Build sagt, wie."
+      },
+      "tags": [
+        "development",
+        "xcode",
+        "homebrew"
+      ],
+      "license": "MIT",
+      "lab": false,
+      "systems": [
+        "aarch64-darwin"
+      ],
+      "homepage": "",
+      "modules": [
+        {
+          "id": "omaflake/desktop"
+        },
+        {
+          "id": "omaflake/shell"
+        },
+        {
+          "id": "omaflake/homebrew"
+        },
+        {
+          "id": "omaflake/xcode"
+        }
+      ],
+      "look": {
+        "id": "omaflake/omaflake"
+      },
+      "keymaps": [
+        {
+          "id": "omaflake/default"
+        }
+      ],
+      "requirements": {
+        "cpus": 4,
+        "memory_gb": 16,
+        "disk_gb": 120
+      },
+      "vm": {
+        "display": "window",
+        "network": "shared",
+        "share": true,
+        "ephemeral": false
+      },
+      "locales": {},
+      "version": "6c8fa347d5cbef20e17a2f28bf3506bc0f4d3427c6e8e0440d4793dc413324ef",
+      "files": [
+        {
+          "path": "recipe.toml",
+          "size": 1206,
+          "sha256": "02f430836f60eed478e2c5afe66106a00f55a8dec55032c9e957c76eb4b67ec7"
+        }
+      ]
+    },
+    {
       "id": "omaflake.nixos.docker",
       "author": "omaflake",
       "kind": "nixos",
@@ -1132,6 +1196,48 @@
           "path": "wezterm.lua",
           "size": 1616,
           "sha256": "8d819d2ab46c7f903bb74178e31cb9e4e4d1b0aed591f3d8cc88b5006a239c13"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.xcode",
+      "ref": "omaflake/xcode",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "xcode",
+      "path": "modules/omaflake/macos/xcode",
+      "version": "1.0.0",
+      "title": "Xcode",
+      "description": "Xcode 27.2 from the Nix store, selected and ready (licence accepted, first launch done). Apple does not allow passing Xcode on: download Xcode_27.2.xip yourself and add it to the Nix store once – the build says how. Xcode is not free software.",
+      "descriptions": {
+        "de": "Xcode 27.2 aus dem Nix-Store, ausgewählt und bereit (Lizenz angenommen, erster Start erledigt). Apple erlaubt nicht, Xcode weiterzugeben: Lade Xcode_27.2.xip selbst und lege es einmal in den Nix-Store – der Build sagt, wie. Xcode ist keine freie Software."
+      },
+      "tags": [
+        "development",
+        "xcode"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": true,
+      "modes": {},
+      "actions": {},
+      "hash": "b6b4d50f31ae2876a5ccdf6ad0099a0174990c52816a874ffca90929fe6003f5",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 3314,
+          "sha256": "8664cb6f5a3f87bfc9b5f40aea1f7c53e4e49c602563fb2788d5633a010ab51d"
+        },
+        {
+          "path": "module.toml",
+          "size": 793,
+          "sha256": "7bccfd3f342eabeb08c0f8365531852075f995e37f33a130f6f01aa4368f4efb"
         }
       ]
     },

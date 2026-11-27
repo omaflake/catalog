@@ -20,6 +20,7 @@ test = "testing omaflake itself"
 typst = "Typst"
 vscode = "Visual Studio Code"
 wezterm = "the WezTerm terminal"
+xcode = "Apple's Xcode"
 zellij = "the Zellij terminal multiplexer"
 
 # The tags looks may use (looks/<author>/<name>/look.toml)

@@ -1,0 +1,31 @@
+# Recipe macos/xcode – what is in it (modules), how it looks and which keys it uses, how a VM from it runs.
+# A recipe is data only. Fields: see CONTRIBUTING.md at the root of this repository.
+
+"$schema" = "https://omaflake.dev/schema/recipe/v2.json"
+author = "omaflake"
+license = "MIT"
+description = "minimal plus Xcode 27.2 and Homebrew, for apps on Apple's platforms. Xcode is not free software; download it yourself once – the build says how."
+description_de = "minimal plus Xcode 27.2 und Homebrew, für Apps auf Apples Plattformen. Xcode ist keine freie Software; lade es einmal selbst – der Build sagt, wie."
+tags = ["development", "xcode", "homebrew"]
+platform = "macos"
+systems = ["aarch64-darwin"]
+
+modules = [
+  "omaflake/desktop",
+  "omaflake/shell",
+  "omaflake/homebrew",
+  "omaflake/xcode",
+]
+look = "omaflake/omaflake"          # suggested; the build may choose another installed look
+keymaps = ["omaflake/default"]
+
+[requirements]                     # the least a VM from it needs; a smaller profile gets a warning
+cpus = 4
+memory_gb = 16
+disk_gb = 120
+
+[vm]                               # how a VM from it runs
+display = "window"
+network = "shared"
+share = true
+ephemeral = false
