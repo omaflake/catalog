@@ -1,0 +1,10 @@
+# Module nixos/docker-client – the Docker command line for the engine of another VM. What it does is default.nix next to this file.
+
+"$schema" = "https://omaflake.dev/schema/module/v2.json"
+version = "1.0.0"
+author = "omaflake"
+license = "MIT"
+title = "Docker client"
+description = "The docker command with Compose and Buildx for the Docker engine of another VM: give this VM the port 2375 of that VM (omaflake's ports of other VMs, 2375=<VM>)."
+description_de = "Der Befehl docker mit Compose und Buildx für die Docker-Engine einer anderen VM: gib dieser VM den Port 2375 jener VM (omaflakes Ports anderer VMs, 2375=<VM>)."
+tags = ["docker", "development"]

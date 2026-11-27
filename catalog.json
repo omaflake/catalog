@@ -249,9 +249,9 @@
       "kind": "nixos",
       "name": "docker",
       "path": "recipes/omaflake/nixos/docker",
-      "description": "A headless Docker VM: the Docker engine for itself and for the macOS VMs of its omaflake networks.",
+      "description": "A headless Docker VM: the Docker engine for itself and for the other VMs of its omaflake networks.",
       "descriptions": {
-        "de": "Eine Docker-VM ohne Fenster: die Docker-Engine für sich selbst und für die macOS-VMs ihrer omaflake-Netze."
+        "de": "Eine Docker-VM ohne Fenster: die Docker-Engine für sich selbst und für die anderen VMs ihrer omaflake-Netze."
       },
       "tags": [
         "docker",
@@ -287,12 +287,12 @@
         "ephemeral": false
       },
       "locales": {},
-      "version": "f3bb89015d26ed0aaae9033d982958699afacfeb4e02d0dcf321d88bb1040f8d",
+      "version": "afb6943bae265de033123373adefd4629bc57915a1668ea078e78c234bd54529",
       "files": [
         {
           "path": "recipe.toml",
-          "size": 961,
-          "sha256": "2dec133aa5c4fc5a3dd7a6d562774caaed932b68b9d75f46c208d7df1fa43a00"
+          "size": 963,
+          "sha256": "84d84868b8e58a8d2b4c62e6caacfd4713b0fd4123f6d013952d68f379dee8da"
         }
       ]
     },
@@ -645,6 +645,48 @@
           "path": "module.toml",
           "size": 704,
           "sha256": "f272d6b90b913521a6cd79e4008935f471521521c067a9335ed2be0e0646051f"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.macos.docker-client",
+      "ref": "omaflake/docker-client",
+      "author": "omaflake",
+      "platform": "macos",
+      "name": "docker-client",
+      "path": "modules/omaflake/macos/docker-client",
+      "version": "1.0.0",
+      "title": "Docker client",
+      "description": "The docker command with Compose and Buildx for the Docker engine of another VM: give this VM the port 2375 of that VM (omaflake's ports of other VMs, 2375=<VM>).",
+      "descriptions": {
+        "de": "Der Befehl docker mit Compose und Buildx für die Docker-Engine einer anderen VM: gib dieser VM den Port 2375 jener VM (omaflakes Ports anderer VMs, 2375=<VM>)."
+      },
+      "tags": [
+        "docker",
+        "development"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "modes": {},
+      "actions": {},
+      "hash": "a21386fb26085aa681fbe3f82e2c4a2e07d5c2dc4ad9bad75ae029630d5c136b",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 785,
+          "sha256": "bb04d26770a3e26bd7f1a3f88ad63cabe856bf303e09be58f12019fbb61245d2"
+        },
+        {
+          "path": "module.toml",
+          "size": 661,
+          "sha256": "24918948be2a5f855fe6dc49e0d1cb1efe34062a8de9de800f05684801960a67"
         }
       ]
     },
@@ -1154,11 +1196,11 @@
       "platform": "nixos",
       "name": "docker",
       "path": "modules/omaflake/nixos/docker",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "title": "Docker",
-      "description": "The Docker engine with Compose; other VMs on its omaflake networks use it with DOCKER_HOST=tcp://<address>:2375.",
+      "description": "The Docker engine with Compose; other VMs on its omaflake networks use it on port 2375 (module docker-client).",
       "descriptions": {
-        "de": "Die Docker-Engine mit Compose; andere VMs in ihren omaflake-Netzen nutzen sie mit DOCKER_HOST=tcp://<Adresse>:2375."
+        "de": "Die Docker-Engine mit Compose; andere VMs in ihren omaflake-Netzen nutzen sie über Port 2375 (Modul docker-client)."
       },
       "tags": [
         "docker",
@@ -1175,17 +1217,59 @@
       "unfree": false,
       "modes": {},
       "actions": {},
-      "hash": "1be501428d0faa5306c95f3b11397af9ee86f4892ec8087e32dc64056a263e70",
+      "hash": "b66ce9f5f706eafeabcca6c8fd897eb14cab3c1f390469fb60ded69c08654218",
       "files": [
         {
           "path": "default.nix",
-          "size": 1336,
-          "sha256": "94896b6cf9e100ee212fa44de6665466f9dbfde4823480ac499f8730e0f5497d"
+          "size": 1271,
+          "sha256": "dcd4dad726187db25b8365861b0edac457a7ef9dcc862082b562007011dd42dd"
         },
         {
           "path": "module.toml",
-          "size": 555,
-          "sha256": "a27e2e334acc46920884ecd152a6320f581211689189d3add479bb6340aae1bf"
+          "size": 554,
+          "sha256": "eda40030590fc0b67778432f0359a3a4a55e84a178c73268a0f1522391b61fb2"
+        }
+      ]
+    },
+    {
+      "id": "omaflake.nixos.docker-client",
+      "ref": "omaflake/docker-client",
+      "author": "omaflake",
+      "platform": "nixos",
+      "name": "docker-client",
+      "path": "modules/omaflake/nixos/docker-client",
+      "version": "1.0.0",
+      "title": "Docker client",
+      "description": "The docker command with Compose and Buildx for the Docker engine of another VM: give this VM the port 2375 of that VM (omaflake's ports of other VMs, 2375=<VM>).",
+      "descriptions": {
+        "de": "Der Befehl docker mit Compose und Buildx für die Docker-Engine einer anderen VM: gib dieser VM den Port 2375 jener VM (omaflakes Ports anderer VMs, 2375=<VM>)."
+      },
+      "tags": [
+        "docker",
+        "development"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "provides": [],
+      "needs": [],
+      "enhances": [],
+      "runs_in": [],
+      "desktop": false,
+      "own_keys": false,
+      "unfree": false,
+      "modes": {},
+      "actions": {},
+      "hash": "e265922db6ec2dd47f7855b427ce21cd9e3749f37768115c285ba5713a8b12c4",
+      "files": [
+        {
+          "path": "default.nix",
+          "size": 792,
+          "sha256": "6e5dd18848aa21fa1bf43d02f09e94d340604c6b780b1f5e0a0d55f889635a68"
+        },
+        {
+          "path": "module.toml",
+          "size": 661,
+          "sha256": "c97b7ac7e4bfdb10078d88d7183802f556f59e42a83fae8f39283a7797f47f1f"
         }
       ]
     },

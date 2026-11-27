@@ -4,8 +4,8 @@
 "$schema" = "https://omaflake.dev/schema/recipe/v2.json"
 author = "omaflake"
 license = "MIT"
-description = "A headless Docker VM: the Docker engine for itself and for the macOS VMs of its omaflake networks."
-description_de = "Eine Docker-VM ohne Fenster: die Docker-Engine für sich selbst und für die macOS-VMs ihrer omaflake-Netze."
+description = "A headless Docker VM: the Docker engine for itself and for the other VMs of its omaflake networks."
+description_de = "Eine Docker-VM ohne Fenster: die Docker-Engine für sich selbst und für die anderen VMs ihrer omaflake-Netze."
 tags = ["docker", "development", "terminal"]
 platform = "nixos"
 systems = ["aarch64-linux", "x86_64-linux"]
