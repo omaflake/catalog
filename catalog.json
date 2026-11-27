@@ -676,12 +676,12 @@
       "unfree": false,
       "modes": {},
       "actions": {},
-      "hash": "a21386fb26085aa681fbe3f82e2c4a2e07d5c2dc4ad9bad75ae029630d5c136b",
+      "hash": "3c1dd3f0fe4bb4efb50217cccacfbc58134a1785ee455cdbc7d842f623a75df6",
       "files": [
         {
           "path": "default.nix",
-          "size": 785,
-          "sha256": "bb04d26770a3e26bd7f1a3f88ad63cabe856bf303e09be58f12019fbb61245d2"
+          "size": 1202,
+          "sha256": "bfa2a9aca457efb5e473b94ee8a2d3b30d9cec70f116df8f6b0a671214a69c00"
         },
         {
           "path": "module.toml",
@@ -1217,12 +1217,12 @@
       "unfree": false,
       "modes": {},
       "actions": {},
-      "hash": "b66ce9f5f706eafeabcca6c8fd897eb14cab3c1f390469fb60ded69c08654218",
+      "hash": "534cd22aa69a0701e6c4427eb2227f0f2d528c9a6224e653b3ac4d26098aa9ce",
       "files": [
         {
           "path": "default.nix",
-          "size": 1271,
-          "sha256": "dcd4dad726187db25b8365861b0edac457a7ef9dcc862082b562007011dd42dd"
+          "size": 1835,
+          "sha256": "7b6d326596b566e5feea77b33b2cac98a26c98958b94268ff0b773a20d8fbbf4"
         },
         {
           "path": "module.toml",

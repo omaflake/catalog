@@ -9,6 +9,11 @@
 #
 # Bind mounts name paths on this VM. omaflake mounts a volume at /Volumes/<name> in every guest (omaflake plan B187),
 # so `docker run -v "$PWD":/app` from another VM works when both have the volume under the same name.
+#
+# The engine starts with the VM – containers with a restart policy are up after a reboot, not only once a client
+# connects (the socket alone would start it then) – and after omaflake's volumes are mounted: a container started at
+# boot binds /Volumes/<name>, not the empty folder below it. Images from before omaflake 0.8.1 have no
+# omaflake-volumes.service; the ordering does nothing there.
 { pkgs, settings, ... }:
 
 {
@@ -20,4 +25,10 @@
   environment.systemPackages = [ pkgs.docker-compose ];
   users.users.${settings.user}.extraGroups = [ "docker" ];
   networking.firewall.allowedTCPPorts = [ 2375 ];
+
+  systemd.services.docker = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "omaflake-volumes.service" ];
+    wants = [ "omaflake-volumes.service" ];
+  };
 }
